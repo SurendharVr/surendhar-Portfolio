@@ -17,11 +17,16 @@ const reasons = [
   },
 ];
 
-export default function WhyUs() {
+export default function WhyUs({
+  showEyebrow = true,
+}: {
+  showEyebrow?: boolean;
+}) {
   const [lead, ...rest] = reasons;
   return (
     <section className="section section-muted">
       <div className="container">
+        {showEyebrow && <p className="eyebrow">Why This Studio</p>}
         <h2>Why work with a small studio?</h2>
         <div className="reasons-grid">
           <div className="capability-card reasons-lead">

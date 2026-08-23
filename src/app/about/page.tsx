@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Background from "@/components/Background";
+import WhyUs from "@/components/WhyUs";
 import HowWeWork from "@/components/HowWeWork";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
@@ -20,6 +21,7 @@ export default function AboutPage() {
   return (
     <>
       <Background showHowIWork={false} headingLevel="h1" priority />
+      <WhyUs />
       <HowWeWork showEyebrow={false} />
       <Contact showEyebrow={false} />
       <ScrollEffects />

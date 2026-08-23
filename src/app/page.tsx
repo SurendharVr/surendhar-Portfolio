@@ -4,7 +4,6 @@ import Problem from "@/components/Problem";
 import TrustStrip from "@/components/TrustStrip";
 import HowWeWork from "@/components/HowWeWork";
 import Work from "@/components/Work";
-import WhyUs from "@/components/WhyUs";
 import Services from "@/components/Services";
 import SignatureOffer from "@/components/SignatureOffer";
 import EntryPoints from "@/components/EntryPoints";
@@ -24,9 +23,8 @@ export default function Home() {
       <Services showEyebrow={false} />
       <SignatureOffer />
       <HowWeWork />
-      <Products showEyebrow={false} />
-      <WhyUs />
-      <Background showEyebrow={false} />
+      <Products />
+      <Background />
       <EntryPoints />
       <Contact showEyebrow={false} />
       <ScrollEffects />
