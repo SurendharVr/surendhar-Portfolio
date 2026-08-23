@@ -696,27 +696,41 @@ button:focus-visible {
   margin-bottom: var(--space-2);
 }
 .background-intro { max-width: 68ch; }
-.highlight-list {
-  max-width: 60ch;
-  margin: var(--space-4) 0;
+.question-grid {
+  list-style: none;
+  margin: var(--space-4) 0 var(--space-6);
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
 }
-.highlight-list li {
-  position: relative;
-  padding-left: var(--space-4);
-  margin-bottom: var(--space-2);
+.question-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.question-mark {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--color-accent) 14%, transparent);
+  color: var(--color-accent);
+}
+.question-card p {
+  margin: 0;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--color-foreground);
 }
-.highlight-list li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.6em;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-accent);
-}
+.process-label { margin-top: var(--space-2); }
 .philosophy-line {
   font-family: var(--font-display);
   font-size: clamp(1.2rem, 2vw, 1.5rem);
@@ -954,6 +968,16 @@ button:focus-visible {
 .process-steps li {
   position: relative;
   flex: 0 0 100%;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
+}
+.process-steps li:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: color-mix(in srgb, var(--color-accent) 30%, var(--color-border));
 }
 .process-number {
   display: block;
@@ -1072,6 +1096,7 @@ button:focus-visible {
   .ladder-item:hover { padding-inline: var(--space-2); }
   .offer-grid { grid-template-columns: repeat(2, 1fr); }
   .problem-grid { grid-template-columns: repeat(2, 1fr); }
+  .question-grid { grid-template-columns: repeat(2, 1fr); }
   .process-steps li { flex-basis: calc((100% - 2 * var(--space-4)) / 3); }
 }
 

@@ -13,6 +13,7 @@ const GROUPS: { container: string; item: string }[] = [
   { container: ".process-steps", item: "li" },
   { container: ".system-chain", item: "li" },
   { container: ".problem-grid", item: ".problem-card" },
+  { container: ".question-grid", item: ".question-card" },
   { container: ".contact-list", item: "li" },
 ];
 

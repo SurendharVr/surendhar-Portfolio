@@ -23,7 +23,7 @@ export default function Home() {
       <Work showEyebrow={false} />
       <Services showEyebrow={false} />
       <SignatureOffer />
-      <HowWeWork showEyebrow={false} />
+      <HowWeWork />
       <Products showEyebrow={false} />
       <WhyUs />
       <Background showEyebrow={false} />

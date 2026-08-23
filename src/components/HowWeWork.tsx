@@ -13,6 +13,19 @@ const steps = [
   { n: "05", title: "Optimise", body: "Measure, improve, grow." },
 ];
 
+const questionIcon = (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      d="M9.5 9a2.5 2.5 0 115 1c0 1.5-2.5 1.8-2.5 3.5"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <circle cx="12" cy="17.3" r="1" fill="currentColor" />
+  </svg>
+);
+
 export default function HowWeWork({
   showEyebrow = true,
 }: {
@@ -24,15 +37,20 @@ export default function HowWeWork({
         {showEyebrow && <p className="eyebrow">How I Work</p>}
         <h2>Good design isn&apos;t the starting point. Understanding is.</h2>
         <p className="background-intro">
-          Before I design a page, I figure out what the page needs to accomplish.
+          Before I design a page, I figure out what it needs to accomplish.
         </p>
-        <ul className="highlight-list">
+        <ul className="question-grid">
           {questions.map((q) => (
-            <li key={q}>{q}</li>
+            <li className="question-card" key={q}>
+              <span className="question-mark" aria-hidden="true">
+                {questionIcon}
+              </span>
+              <p>{q}</p>
+            </li>
           ))}
         </ul>
-        <p className="background-intro">
-          Only then do I design the experience — the same five steps every time:
+        <p className="mini-heading process-label">
+          The process — same five steps every time
         </p>
         <ol className="process-steps">
           {steps.map((step) => (
