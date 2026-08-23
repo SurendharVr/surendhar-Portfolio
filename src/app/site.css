@@ -297,6 +297,12 @@ button:focus-visible {
   background: var(--color-muted);
   color: var(--color-accent);
 }
+/* Below 481px there isn't room for logo + WhatsApp icon + theme toggle +
+   hamburger in one row, so the row's theme toggle is hidden and a copy
+   inside the mobile nav dropdown takes over; both are <button class="theme-toggle">
+   so they're told apart by DOM position, not an extra class. */
+.nav-row > button.theme-toggle { display: none; }
+.main-nav > button.theme-toggle { align-self: flex-start; margin-top: var(--space-2); }
 .nav-toggle {
   display: inline-flex;
   align-items: center;
@@ -1120,6 +1126,8 @@ button:focus-visible {
 @media (min-width: 481px) {
   .nav-row { gap: var(--space-5); }
   .logo { font-size: 1.1rem; }
+  .nav-row > button.theme-toggle { display: inline-flex; }
+  .main-nav > button.theme-toggle { display: none; }
   .stat-card { flex-basis: calc((100% - var(--space-4)) / 2); }
   .reasons-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .work-card { flex-basis: calc((100% - var(--space-4)) / 2); }
