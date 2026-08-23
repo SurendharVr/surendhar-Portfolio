@@ -432,7 +432,7 @@ button:focus-visible {
 }
 
 /* ===== Proof / stats ===== */
-.proof { padding-block: var(--space-6); position: relative; z-index: 1; }
+.proof { padding-block: var(--space-7); position: relative; z-index: 1; }
 .trust-tags {
   text-align: center;
   text-transform: uppercase;
@@ -453,29 +453,60 @@ button:focus-visible {
 /* Mobile-first: 1 column by default; 2 columns from 481px; the 4/3-column
    desktop split (plus the stat-grid-3 3-up variant) is restored at 1025px+. */
 .stat-card {
+  position: relative;
+  overflow: hidden;
   flex: 0 0 100%;
   background: var(--color-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: var(--space-4);
-  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+  padding: var(--space-5);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
+}
+/* The "backlight" — a soft blurred glow seated behind the number, always
+   faintly lit, blooming brighter on hover. */
+.stat-card::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: -50px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-accent) 45%, transparent);
+  filter: blur(42px);
+  opacity: 0.28;
+  transition: opacity var(--transition-medium), transform var(--transition-medium);
+  animation: stat-glow-pulse 5s ease-in-out infinite;
+  pointer-events: none;
 }
 .stat-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-card-hover);
+  border-color: color-mix(in srgb, var(--color-accent) 30%, var(--color-border));
+}
+.stat-card:hover::before {
+  opacity: 0.55;
+  transform: scale(1.15);
 }
 .stat-number {
+  position: relative;
   display: block;
   font-family: var(--font-display);
   font-size: 2.5rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--color-foreground);
+  color: var(--color-accent-strong);
   margin-bottom: var(--space-1);
 }
 .stat-label {
+  position: relative;
   color: var(--color-muted-foreground);
   font-size: 0.92rem;
+}
+
+@keyframes stat-glow-pulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.4; }
 }
 
 /* ===== Sections ===== */
