@@ -17,11 +17,15 @@ export default function Services({
         <div className="offer-grid">
           {offers.map((offer) => (
             <article className="offer-card" key={offer.title}>
-              <div className="icon-badge" aria-hidden="true">
-                {offer.icon}
+              <div className="offer-card-head">
+                <div className="icon-badge" aria-hidden="true">
+                  {offer.icon}
+                </div>
+                <div>
+                  <p className="offer-category">{offer.category}</p>
+                  <h3>{offer.title}</h3>
+                </div>
               </div>
-              <p className="offer-category">{offer.category}</p>
-              <h3>{offer.title}</h3>
               <p>{offer.body}</p>
               <Link className="offer-link" href={`/services/${offer.slug}`}>
                 {offer.cta} {arrowIcon}
@@ -40,10 +44,12 @@ export default function Services({
         <div className="offer-grid">
           {partnerships.map((plan) => (
             <article className="offer-card" key={plan.title}>
-              <div className="icon-badge" aria-hidden="true">
-                {plan.icon}
+              <div className="offer-card-head">
+                <div className="icon-badge" aria-hidden="true">
+                  {plan.icon}
+                </div>
+                <h3>{plan.title}</h3>
               </div>
-              <h3>{plan.title}</h3>
               <p>{plan.body}</p>
               <a className="offer-link" href="/contact">
                 {plan.cta} {arrowIcon}
