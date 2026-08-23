@@ -561,6 +561,20 @@ button:focus-visible {
   color: var(--color-foreground);
   max-width: 60ch;
 }
+.problem-list {
+  list-style: none;
+  margin: var(--space-5) 0;
+  padding: 0;
+  max-width: 60ch;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.problem-list li {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-foreground);
+}
 .capability-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import Problem from "@/components/Problem";
 import TrustStrip from "@/components/TrustStrip";
 import HowWeWork from "@/components/HowWeWork";
 import Work from "@/components/Work";
@@ -15,6 +16,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Problem />
       <TrustStrip />
       <Work showEyebrow={false} />
       <Services showEyebrow={false} />
