@@ -658,6 +658,7 @@ button:focus-visible {
 .work-grid {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   justify-content: center;
   gap: var(--space-4);
   margin-top: var(--space-5);
@@ -730,6 +731,36 @@ button:focus-visible {
   font-size: 0.92rem;
   color: var(--color-secondary);
   line-height: 1.55;
+}
+.work-expand-toggle {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 6px;
+  margin-top: var(--space-3);
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  cursor: pointer;
+}
+.work-expand-toggle:hover { color: var(--color-accent-strong); }
+.work-expand-icon {
+  display: inline-flex;
+  transition: transform var(--transition-fast);
+}
+.work-expand-icon.is-open { transform: rotate(180deg); }
+.work-details-collapsible {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--transition-medium);
+}
+.work-details-collapsible.is-open { grid-template-rows: 1fr; }
+.work-details-collapsible > div { overflow: hidden; }
+.work-details-collapsible .work-details {
+  padding-top: var(--space-4);
 }
 .work-link {
   display: inline-flex;
