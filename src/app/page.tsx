@@ -16,14 +16,14 @@ export default function Home() {
     <>
       <Hero />
       <TrustStrip />
-      <HowWeWork />
       <Work />
-      <WhyUs />
       <Services />
       <SignatureOffer />
-      <EntryPoints />
+      <HowWeWork />
       <Products />
+      <WhyUs />
       <Background />
+      <EntryPoints />
       <Contact />
       <ScrollEffects />
     </>
