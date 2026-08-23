@@ -4,16 +4,23 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 
 export default function Hero() {
+  const eyebrowRef = useRef<HTMLParagraphElement>(null);
   const line1Ref = useRef<HTMLSpanElement>(null);
   const line2Ref = useRef<HTMLSpanElement>(null);
+  const subRef = useRef<HTMLParagraphElement>(null);
+  const actionsRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const targets = [line1Ref.current, line2Ref.current].filter(
-      (el): el is HTMLSpanElement => el !== null
-    );
+    const targets = [
+      eyebrowRef.current,
+      line1Ref.current,
+      line2Ref.current,
+      subRef.current,
+      actionsRef.current,
+    ].filter((el): el is HTMLElement => el !== null);
     if (!targets.length) return;
 
     let cancelled = false;
@@ -74,7 +81,9 @@ export default function Hero() {
     <section className="hero" id="top">
       <div className="container">
         <div className="hero-copy hero-copy-solo">
-          <p className="eyebrow">Independent Digital Studio</p>
+          <p className="eyebrow" ref={eyebrowRef}>
+            Independent Digital Studio
+          </p>
           <h1>
             <span className="hero-line" ref={line1Ref}>
               Your business has something worth choosing.
@@ -83,11 +92,11 @@ export default function Hero() {
               Your digital presence should make that obvious.
             </span>
           </h1>
-          <p className="hero-sub">
+          <p className="hero-sub" ref={subRef}>
             We turn complex businesses, offers and ideas into clear digital experiences
             that people understand, trust and act on.
           </p>
-          <div className="hero-actions">
+          <div className="hero-actions" ref={actionsRef}>
             <Link className="btn btn-accent" href="/contact" ref={ctaRef}>
               Start a Project
             </Link>
