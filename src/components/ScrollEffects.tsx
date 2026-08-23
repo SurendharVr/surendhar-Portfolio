@@ -23,6 +23,23 @@ export default function ScrollEffects() {
 
     let cancelled = false;
     let ctx: { revert: () => void } | undefined;
+    const fallbacks: number[] = [];
+
+    // Safety net: if GSAP's rAF-driven ticker ever stalls (backgrounded tab,
+    // throttling, etc.) a scroll-triggered tween can freeze at its "from"
+    // state and leave content permanently invisible. Force the true end
+    // state via a plain timer, scheduled from the moment each trigger fires,
+    // so nothing can stay stuck hidden.
+    function armFallback(els: HTMLElement[]) {
+      const id = window.setTimeout(() => {
+        if (cancelled) return;
+        els.forEach((el) => {
+          el.style.opacity = "1";
+          el.style.transform = "none";
+        });
+      }, 1500);
+      fallbacks.push(id);
+    }
 
     const requestIdle =
       typeof window.requestIdleCallback === "function"
@@ -47,6 +64,7 @@ export default function ScrollEffects() {
                   trigger: el,
                   start: "top 88%",
                   toggleActions: "play none none none",
+                  onEnter: () => armFallback([el]),
                 },
               });
             });
@@ -65,6 +83,7 @@ export default function ScrollEffects() {
                     trigger: group,
                     start: "top 88%",
                     toggleActions: "play none none none",
+                    onEnter: () => armFallback(Array.from(items)),
                   },
                 });
               });
@@ -77,6 +96,7 @@ export default function ScrollEffects() {
     return () => {
       cancelled = true;
       ctx?.revert();
+      fallbacks.forEach((id) => window.clearTimeout(id));
     };
   }, []);
 

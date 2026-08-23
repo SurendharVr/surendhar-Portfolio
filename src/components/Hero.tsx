@@ -25,6 +25,7 @@ export default function Hero() {
     if (!targets.length) return;
 
     let cancelled = false;
+    let fallback: number | undefined;
     import("gsap").then(({ default: gsap }) => {
       if (cancelled) return;
       gsap.set(targets, { opacity: 0, y: 16 });
@@ -36,9 +37,21 @@ export default function Hero() {
         stagger: 0.12,
         delay: 0.1,
       });
+      // Safety net: if GSAP's rAF-driven ticker ever stalls (backgrounded
+      // tab, throttling, etc.) the tween can freeze at its "from" state and
+      // leave the hero permanently invisible. Force the true end state via
+      // a plain timer so content can never get stuck hidden.
+      fallback = window.setTimeout(() => {
+        if (cancelled) return;
+        targets.forEach((el) => {
+          el.style.opacity = "1";
+          el.style.transform = "none";
+        });
+      }, 1500);
     });
     return () => {
       cancelled = true;
+      if (fallback !== undefined) window.clearTimeout(fallback);
     };
   }, []);
 
