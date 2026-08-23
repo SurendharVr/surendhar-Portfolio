@@ -59,6 +59,31 @@ export default function Contact({
           <li>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path
+                d="M17.6 6.32A7.85 7.85 0 0012.05 4a7.94 7.94 0 00-6.9 11.89L4 20l4.24-1.11a7.93 7.93 0 003.8.97c4.38 0 7.94-3.56 7.94-7.94a7.9 7.9 0 00-2.38-5.6z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M9.5 8.5h-.6c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.1 0 1.2.9 2.4 1 2.6.1.1 1.7 2.7 4.2 3.7 2.1.8 2.5.7 3 .6.4-.1 1.3-.5 1.5-1 .2-.5.2-1 .1-1-.1-.1-.2-.2-.5-.3l-1.3-.6c-.2-.1-.4-.1-.5.1l-.5.7c-.1.1-.2.2-.4.1-.2-.1-.9-.3-1.7-1-.6-.6-1-1.3-1.2-1.5-.1-.2 0-.3.1-.4l.4-.5c.1-.1.1-.3.1-.4"
+                stroke="currentColor"
+                strokeWidth="1.3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <a
+              href="https://wa.me/917013333935"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WhatsApp
+            </a>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
                 d="M16 8a6 6 0 016 6v6h-4v-6a2 2 0 00-4 0v6h-4v-6a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"
                 stroke="currentColor"
                 strokeWidth="2"
