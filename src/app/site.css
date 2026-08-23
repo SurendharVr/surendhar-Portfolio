@@ -435,7 +435,7 @@ button:focus-visible {
   margin-bottom: var(--space-3);
 }
 .hero-copy h1 {
-  font-size: clamp(2.9rem, 6.5vw, 5.25rem);
+  font-size: clamp(2.1rem, 6.5vw, 5.25rem);
   letter-spacing: -0.02em;
   font-weight: 700;
   color: var(--color-foreground);
@@ -556,7 +556,7 @@ button:focus-visible {
 }
 .section h1,
 .section h2 {
-  font-size: clamp(2rem, 3.6vw, 2.85rem);
+  font-size: clamp(1.75rem, 3.6vw, 2.85rem);
   color: var(--color-foreground);
   max-width: 30ch;
 }
@@ -670,6 +670,17 @@ button:focus-visible {
   width: 36px;
   height: 36px;
   margin-bottom: 0;
+  flex-shrink: 0;
+}
+/* The WhatsApp icon is already a self-contained colour badge (green circle +
+   glyph), so it skips .icon-badge's tinted background instead of nesting
+   one badge inside another. */
+.whatsapp-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
   flex-shrink: 0;
 }
 
@@ -1074,7 +1085,12 @@ button:focus-visible {
 .contact-sub { max-width: 46ch; opacity: 0.85; }
 .section-dark .eyebrow-on-dark { color: var(--color-highlight); background: rgba(255, 216, 77, 0.14); }
 .section-dark .icon-badge { color: var(--color-highlight); background: rgba(255, 216, 77, 0.14); }
-.cta-heading { font-size: clamp(2.25rem, 4.2vw, 3.25rem); }
+/* Matches the specificity of ".section h1, .section h2" (type + class) so
+   this actually wins instead of silently losing to that rule's font-size. */
+h1.cta-heading,
+h2.cta-heading {
+  font-size: clamp(2rem, 4.2vw, 3.25rem);
+}
 .contact-grid {
   position: relative;
   z-index: 1;

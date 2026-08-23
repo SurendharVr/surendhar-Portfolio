@@ -1,4 +1,5 @@
 import { waLink } from "@/lib/whatsapp";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 
 export default function Contact({
   headingLevel = "h2",
@@ -74,23 +75,8 @@ export default function Contact({
             <a href="tel:+919655326333">+91 96553 26333</a>
           </li>
           <li>
-            <span className="icon-badge icon-badge-sm" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M17.6 6.32A7.85 7.85 0 0012.05 4a7.94 7.94 0 00-6.9 11.89L4 20l4.24-1.11a7.93 7.93 0 003.8.97c4.38 0 7.94-3.56 7.94-7.94a7.9 7.9 0 00-2.38-5.6z"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M9.5 8.5h-.6c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.1 0 1.2.9 2.4 1 2.6.1.1 1.7 2.7 4.2 3.7 2.1.8 2.5.7 3 .6.4-.1 1.3-.5 1.5-1 .2-.5.2-1 .1-1-.1-.1-.2-.2-.5-.3l-1.3-.6c-.2-.1-.4-.1-.5.1l-.5.7c-.1.1-.2.2-.4.1-.2-.1-.9-.3-1.7-1-.6-.6-1-1.3-1.2-1.5-.1-.2 0-.3.1-.4l.4-.5c.1-.1.1-.3.1-.4"
-                  stroke="currentColor"
-                  strokeWidth="1.3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+            <span className="whatsapp-badge" aria-hidden="true">
+              <WhatsAppIcon size={28} />
             </span>
             <a
               href={waLink("Hi, I'd like to get in touch.")}
