@@ -13,7 +13,7 @@ export default function ProductsPage() {
   return (
     <>
       <Products headingLevel="h1" />
-      <Contact />
+      <Contact showEyebrow={false} />
       <ScrollEffects />
     </>
   );

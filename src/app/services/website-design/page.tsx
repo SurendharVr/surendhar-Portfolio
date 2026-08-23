@@ -35,7 +35,6 @@ export default function WebsiteDesignPage() {
 
       <section className="section section-muted">
         <div className="container">
-          <p className="eyebrow">Recent work</p>
           <h2>Two real websites, built end to end</h2>
           <div className="work-grid">
             <article className="work-card">
@@ -85,7 +84,7 @@ export default function WebsiteDesignPage() {
         </div>
       </section>
 
-      <Contact />
+      <Contact showEyebrow={false} />
       <ScrollEffects />
     </>
   );

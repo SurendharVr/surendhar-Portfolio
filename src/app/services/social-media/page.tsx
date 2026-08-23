@@ -33,18 +33,17 @@ export default function SocialMediaPage() {
 
       <section className="section section-muted">
         <div className="container">
-          <p className="eyebrow">What&apos;s included</p>
           <h2>Day-to-day page handling</h2>
-          <div className="capability-grid">
-            <div className="capability-card">
+          <div className="capability-rows">
+            <div className="capability-row">
               <p className="mini-heading">Content creation</p>
               <p>Posts and captions planned around what your audience actually responds to, not just posting for the sake of it.</p>
             </div>
-            <div className="capability-card">
+            <div className="capability-row">
               <p className="mini-heading">Page handling</p>
               <p>Day-to-day management so your page stays active, responsive, and on-brand without it falling on you.</p>
             </div>
-            <div className="capability-card">
+            <div className="capability-row">
               <p className="mini-heading">Sales-backed strategy</p>
               <p>A decade of sales experience shapes what gets posted and why — built to move people toward a decision.</p>
             </div>
@@ -52,7 +51,7 @@ export default function SocialMediaPage() {
         </div>
       </section>
 
-      <Contact />
+      <Contact showEyebrow={false} />
       <ScrollEffects />
     </>
   );

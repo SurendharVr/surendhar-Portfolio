@@ -9,6 +9,14 @@ export const metadata: Metadata = {
     "Sales-backed strategy behind every page, post, and product decision — for small businesses that want to grow smarter, not just louder.",
 };
 
+const steps = [
+  { n: "01", title: "Discover", body: "Understand the business." },
+  { n: "02", title: "Define", body: "Find the positioning and opportunity." },
+  { n: "03", title: "Design", body: "Build the experience." },
+  { n: "04", title: "Develop", body: "Turn the system into reality." },
+  { n: "05", title: "Optimise", body: "Measure, improve, grow." },
+];
+
 export default function GrowthStrategyPage() {
   return (
     <>
@@ -33,31 +41,25 @@ export default function GrowthStrategyPage() {
 
       <section className="section section-muted">
         <div className="container">
-          <p className="eyebrow">The approach</p>
           <h2>Discover, define, design, develop, optimise</h2>
           <p className="background-intro">
             Every strategy engagement runs through the same system used for full builds
             like Flavours Tec Kitchen and VAAV Kitchen &amp; Caterers — grounded in over a
             decade of B2B/B2C sales experience, not guesswork.
           </p>
-          <div className="capability-grid">
-            <div className="capability-card">
-              <p className="mini-heading">What I build</p>
-              <p>Websites, social media management, and digital products — planned, designed, and shipped end to end.</p>
-            </div>
-            <div className="capability-card">
-              <p className="mini-heading">How I work</p>
-              <p>Discover, Define, Design, Develop, Optimise — so decisions are based on the business, not guesswork.</p>
-            </div>
-            <div className="capability-card">
-              <p className="mini-heading">What you get</p>
-              <p>10+ years of reading what makes people buy shapes every page, post, and product decision.</p>
-            </div>
-          </div>
+          <ol className="process-steps">
+            {steps.map((step) => (
+              <li key={step.n}>
+                <span className="process-number">{step.n}</span>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
-      <Contact />
+      <Contact showEyebrow={false} />
       <ScrollEffects />
     </>
   );

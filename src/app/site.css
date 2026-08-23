@@ -577,6 +577,17 @@ button:focus-visible {
 }
 .capability-card p:last-child { margin-bottom: 0; font-size: 0.95rem; }
 
+.capability-rows {
+  margin-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+  max-width: 68ch;
+}
+.capability-row {
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+.capability-row p:last-child { margin-bottom: 0; }
+
 /* ===== Work / case studies ===== */
 .work-grid {
   display: flex;
@@ -676,20 +687,6 @@ button:focus-visible {
   overflow: hidden;
   margin-bottom: var(--space-4);
   background: var(--color-card);
-}
-.work-thumb-bar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 14px;
-  background: var(--color-muted);
-  border-bottom: 1px solid var(--color-border);
-}
-.work-thumb-bar span {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-border);
 }
 .work-thumb {
   position: relative;

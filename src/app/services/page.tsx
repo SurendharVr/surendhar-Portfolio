@@ -14,8 +14,8 @@ export default function ServicesPage() {
   return (
     <>
       <Services headingLevel="h1" />
-      <SignatureOffer />
-      <Contact />
+      <SignatureOffer showEyebrow={false} />
+      <Contact showEyebrow={false} />
       <ScrollEffects />
     </>
   );

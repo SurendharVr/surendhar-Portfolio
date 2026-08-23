@@ -13,11 +13,6 @@ export default function WorkThumb({
 }) {
   return (
     <div className="work-thumb-frame">
-      <div className="work-thumb-bar" aria-hidden="true">
-        <span />
-        <span />
-        <span />
-      </div>
       <div className={`work-thumb${cover ? " work-thumb-cover" : ""}`}>
         <Image src={src} alt={alt} fill sizes={sizes} />
       </div>

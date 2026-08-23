@@ -34,7 +34,6 @@ export default function DigitalProductsServicePage() {
 
       <section className="section section-muted">
         <div className="container">
-          <p className="eyebrow">Recent work</p>
           <h2>A real digital product, live on Amazon</h2>
           <div className="work-grid work-grid-2">
             <article className="work-card">
@@ -63,7 +62,7 @@ export default function DigitalProductsServicePage() {
         </div>
       </section>
 
-      <Contact />
+      <Contact showEyebrow={false} />
       <ScrollEffects />
     </>
   );

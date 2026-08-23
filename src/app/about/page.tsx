@@ -14,8 +14,8 @@ export default function AboutPage() {
   return (
     <>
       <Background showHowIWork={false} headingLevel="h1" />
-      <HowWeWork />
-      <Contact />
+      <HowWeWork showEyebrow={false} />
+      <Contact showEyebrow={false} />
       <ScrollEffects />
     </>
   );

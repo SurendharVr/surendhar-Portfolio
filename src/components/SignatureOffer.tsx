@@ -9,11 +9,15 @@ const steps = [
   "Optimisation",
 ];
 
-export default function SignatureOffer() {
+export default function SignatureOffer({
+  showEyebrow = true,
+}: {
+  showEyebrow?: boolean;
+}) {
   return (
     <section className="section signature-offer" id="digital-presence-system">
       <div className="container">
-        <p className="eyebrow">The Flagship Offer</p>
+        {showEyebrow && <p className="eyebrow">The Flagship Offer</p>}
         <h2>The Digital Presence System</h2>
         <p className="background-intro">
           Instead of a website, a social page, and a digital product built separately and

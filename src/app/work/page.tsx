@@ -13,7 +13,7 @@ export default function WorkPage() {
   return (
     <>
       <Work headingLevel="h1" />
-      <Contact />
+      <Contact showEyebrow={false} />
       <ScrollEffects />
     </>
   );
