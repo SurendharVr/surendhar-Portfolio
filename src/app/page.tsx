@@ -1,13 +1,13 @@
 import Hero from "@/components/Hero";
 import TrustStrip from "@/components/TrustStrip";
-import Understanding from "@/components/Understanding";
-import Services from "@/components/Services";
-import SignatureOffer from "@/components/SignatureOffer";
+import HowWeWork from "@/components/HowWeWork";
 import Work from "@/components/Work";
 import WhyUs from "@/components/WhyUs";
+import Services from "@/components/Services";
+import SignatureOffer from "@/components/SignatureOffer";
+import EntryPoints from "@/components/EntryPoints";
 import Products from "@/components/Products";
 import Background from "@/components/Background";
-import Process from "@/components/Process";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
 
@@ -16,14 +16,14 @@ export default function Home() {
     <>
       <Hero />
       <TrustStrip />
-      <Understanding />
-      <Services />
-      <SignatureOffer />
+      <HowWeWork />
       <Work />
       <WhyUs />
+      <Services />
+      <SignatureOffer />
+      <EntryPoints />
       <Products />
       <Background />
-      <Process />
       <Contact />
       <ScrollEffects />
     </>

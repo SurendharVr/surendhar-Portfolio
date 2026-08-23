@@ -11,7 +11,7 @@ const steps = [
 
 export default function SignatureOffer() {
   return (
-    <section className="section signature-offer">
+    <section className="section signature-offer" id="digital-presence-system">
       <div className="container">
         <p className="eyebrow">The Flagship Offer</p>
         <h2>The Digital Presence System</h2>

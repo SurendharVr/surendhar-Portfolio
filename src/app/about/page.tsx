@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Background from "@/components/Background";
-import Process from "@/components/Process";
+import HowWeWork from "@/components/HowWeWork";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
 
@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <Background />
-      <Process />
+      <Background showHowIWork={false} />
+      <HowWeWork />
       <Contact />
       <ScrollEffects />
     </>

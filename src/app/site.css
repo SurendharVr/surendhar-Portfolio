@@ -282,9 +282,12 @@ button:focus-visible {
   z-index: 0;
   pointer-events: none;
 }
-.hero-grid {
+.hero-copy-solo {
   position: relative;
   z-index: 1;
+  max-width: 760px;
+}
+.about-grid {
   display: grid;
   grid-template-columns: 7fr 5fr;
   gap: var(--space-7);
@@ -312,6 +315,7 @@ button:focus-visible {
 .hl {
   color: var(--color-accent);
 }
+.hero-line { display: inline-block; }
 .hero-sub { font-size: 1.1rem; max-width: 52ch; }
 .hero-actions {
   display: flex;
@@ -438,6 +442,36 @@ button:focus-visible {
 }
 .services-subgroup .mini-heading { font-size: 0.95rem; }
 .services-subgroup .background-intro { margin-bottom: 0; }
+
+/* ===== Entry point ladder ===== */
+.ladder-list {
+  margin-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+.ladder-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding-block: var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  transition: padding-inline var(--transition-medium);
+}
+.ladder-item:hover { padding-inline: var(--space-2); }
+.ladder-tier {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: var(--space-1);
+}
+.ladder-meta h3 { font-size: 1.15rem; margin-bottom: var(--space-1); }
+.ladder-meta p:last-child { margin-bottom: 0; max-width: 52ch; }
+.ladder-link {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
 .icon-badge {
   width: 46px;
   height: 46px;
@@ -522,6 +556,7 @@ button:focus-visible {
   margin-top: var(--space-6);
 }
 .capability-grid-4 { grid-template-columns: repeat(4, 1fr); }
+.capability-grid-2 { grid-template-columns: repeat(2, 1fr); max-width: 760px; }
 .capability-card {
   background: var(--color-card);
   border: 1px solid var(--color-border);
@@ -754,10 +789,10 @@ button:focus-visible {
 }
 
 @media (max-width: 768px) {
-  .hero-grid { grid-template-columns: 1fr; text-align: center; }
+  .hero-copy-solo { text-align: center; margin-inline: auto; }
   .hero-sub { margin-inline: auto; }
   .hero-actions { justify-content: center; }
-  .hero-media { order: -1; }
+  .about-grid { grid-template-columns: 1fr; text-align: center; }
   .main-nav {
     position: absolute;
     top: 100%;
@@ -778,6 +813,8 @@ button:focus-visible {
   .contact-list li { justify-content: center; }
   .contact-list li:hover { transform: none; }
   .section-dark .hero-actions { justify-content: center; }
+  .ladder-item { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+  .ladder-item:hover { padding-inline: 0; }
   .offer-grid { grid-template-columns: 1fr; }
   .process-steps { grid-template-columns: repeat(2, 1fr); }
   .system-chain { justify-content: center; }
@@ -787,6 +824,7 @@ button:focus-visible {
   .stat-grid { grid-template-columns: 1fr; }
   .capability-grid { grid-template-columns: 1fr; }
   .capability-grid-4 { grid-template-columns: 1fr; }
+  .capability-grid-2 { grid-template-columns: 1fr; }
   .stat-grid-3 { grid-template-columns: 1fr; }
   .work-grid { grid-template-columns: 1fr; }
   .work-grid-2 { grid-template-columns: 1fr; }
