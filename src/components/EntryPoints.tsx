@@ -52,7 +52,6 @@ export default function EntryPoints() {
   return (
     <section className="section section-muted">
       <div className="container">
-        <p className="eyebrow">Where to Start</p>
         <h2>Choose your starting point.</h2>
         <p className="background-intro">
           Not every visitor is ready for the same thing — pick whatever fits where you are

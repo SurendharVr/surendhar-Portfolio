@@ -16,15 +16,15 @@ export default function Home() {
     <>
       <Hero />
       <TrustStrip />
-      <Work />
-      <Services />
+      <Work showEyebrow={false} />
+      <Services showEyebrow={false} />
       <SignatureOffer />
-      <HowWeWork />
-      <Products />
+      <HowWeWork showEyebrow={false} />
+      <Products showEyebrow={false} />
       <WhyUs />
-      <Background />
+      <Background showEyebrow={false} />
       <EntryPoints />
-      <Contact />
+      <Contact showEyebrow={false} />
       <ScrollEffects />
     </>
   );

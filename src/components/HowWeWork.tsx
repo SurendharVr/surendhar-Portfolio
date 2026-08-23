@@ -13,11 +13,15 @@ const steps = [
   { n: "05", title: "Optimise", body: "Measure, improve, grow." },
 ];
 
-export default function HowWeWork() {
+export default function HowWeWork({
+  showEyebrow = true,
+}: {
+  showEyebrow?: boolean;
+}) {
   return (
     <section className="section" id="how-we-work">
       <div className="container">
-        <p className="eyebrow">How We Work</p>
+        {showEyebrow && <p className="eyebrow">How We Work</p>}
         <h2>Good design isn&apos;t the starting point. Understanding is.</h2>
         <p className="background-intro">
           Before we design a page, we figure out what the page needs to accomplish.

@@ -1,9 +1,11 @@
 export default function Contact({
   headingLevel = "h2",
   standalone = false,
+  showEyebrow = true,
 }: {
   headingLevel?: "h1" | "h2";
   standalone?: boolean;
+  showEyebrow?: boolean;
 }) {
   const Heading = headingLevel;
   return (
@@ -13,7 +15,7 @@ export default function Contact({
     >
       <div className="container contact-grid">
         <div>
-          <p className="eyebrow eyebrow-on-dark">Contact</p>
+          {showEyebrow && <p className="eyebrow eyebrow-on-dark">Contact</p>}
           <Heading>Have a business problem worth solving?</Heading>
           <p className="contact-sub">
             Tell me what you&apos;re building, what&apos;s not working, and where you want

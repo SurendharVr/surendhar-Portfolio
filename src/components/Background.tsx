@@ -3,9 +3,11 @@ import Image from "next/image";
 export default function Background({
   showHowIWork = true,
   headingLevel = "h2",
+  showEyebrow = true,
 }: {
   showHowIWork?: boolean;
   headingLevel?: "h1" | "h2";
+  showEyebrow?: boolean;
 }) {
   const Heading = headingLevel;
   return (
@@ -13,7 +15,7 @@ export default function Background({
       <div className="container">
         <div className="about-grid">
           <div>
-            <p className="eyebrow">About</p>
+            {showEyebrow && <p className="eyebrow">About</p>}
             <Heading>10+ years in sales, now building digital growth</Heading>
             <p className="philosophy-line">
               I don&apos;t believe businesses need more digital noise — they need clarity

@@ -3,14 +3,16 @@ import { arrowIcon, offers, partnerships } from "@/lib/offers";
 
 export default function Services({
   headingLevel = "h2",
+  showEyebrow = true,
 }: {
   headingLevel?: "h1" | "h2";
+  showEyebrow?: boolean;
 }) {
   const Heading = headingLevel;
   return (
     <section className="section section-muted" id="services">
       <div className="container">
-        <p className="eyebrow">Services</p>
+        {showEyebrow && <p className="eyebrow">Services</p>}
         <Heading>How we can work together</Heading>
         <div className="offer-grid">
           {offers.map((offer) => (

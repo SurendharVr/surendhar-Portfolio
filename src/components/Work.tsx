@@ -14,14 +14,16 @@ const externalIcon = (
 
 export default function Work({
   headingLevel = "h2",
+  showEyebrow = true,
 }: {
   headingLevel?: "h1" | "h2";
+  showEyebrow?: boolean;
 }) {
   const Heading = headingLevel;
   return (
     <section className="section" id="work">
       <div className="container">
-        <p className="eyebrow">Work</p>
+        {showEyebrow && <p className="eyebrow">Work</p>}
         <Heading>Selected work</Heading>
 
         <div className="work-grid">

@@ -21,7 +21,6 @@ export default function WhyUs() {
   return (
     <section className="section section-muted">
       <div className="container">
-        <p className="eyebrow">Why Us</p>
         <h2>Why work with a small studio?</h2>
         <div className="capability-grid capability-grid-4">
           {reasons.map((reason) => (

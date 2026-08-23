@@ -5,9 +5,7 @@ import { useEffect } from "react";
 export default function ScrollEffects() {
   useEffect(() => {
     const revealTargets = Array.prototype.slice.call(
-      document.querySelectorAll(
-        ".stat-card, .offer-card, .work-card, .capability-card, .hero-copy, .hero-media, .background-intro"
-      )
+      document.querySelectorAll(".work-card")
     ) as HTMLElement[];
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
