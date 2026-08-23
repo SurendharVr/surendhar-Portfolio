@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <Background showHowIWork={false} />
+      <Background showHowIWork={false} headingLevel="h1" />
       <HowWeWork />
       <Contact />
       <ScrollEffects />

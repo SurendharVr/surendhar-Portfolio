@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <Services />
+      <Services headingLevel="h1" />
       <SignatureOffer />
       <Contact />
       <ScrollEffects />

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function ProductsPage() {
   return (
     <>
-      <Products />
+      <Products headingLevel="h1" />
       <Contact />
       <ScrollEffects />
     </>

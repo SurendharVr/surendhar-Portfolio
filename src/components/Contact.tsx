@@ -1,10 +1,15 @@
-export default function Contact() {
+export default function Contact({
+  headingLevel = "h2",
+}: {
+  headingLevel?: "h1" | "h2";
+}) {
+  const Heading = headingLevel;
   return (
     <section className="section section-dark" id="contact">
       <div className="container contact-grid">
         <div>
           <p className="eyebrow eyebrow-on-dark">Contact</p>
-          <h2>Have a business problem worth solving?</h2>
+          <Heading>Have a business problem worth solving?</Heading>
           <p className="contact-sub">
             Tell me what you&apos;re building, what&apos;s not working, and where you want
             to go. We&apos;ll figure out whether I&apos;m the right person to help.

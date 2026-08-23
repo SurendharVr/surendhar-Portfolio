@@ -1,12 +1,17 @@
 import Link from "next/link";
 import { arrowIcon, offers, partnerships } from "@/lib/offers";
 
-export default function Services() {
+export default function Services({
+  headingLevel = "h2",
+}: {
+  headingLevel?: "h1" | "h2";
+}) {
+  const Heading = headingLevel;
   return (
     <section className="section section-muted" id="services">
       <div className="container">
         <p className="eyebrow">Services</p>
-        <h2>How we can work together</h2>
+        <Heading>How we can work together</Heading>
         <div className="offer-grid">
           {offers.map((offer) => (
             <article className="offer-card" key={offer.title}>

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <Contact />
+      <Contact headingLevel="h1" />
       <ScrollEffects />
     </>
   );

@@ -723,6 +723,7 @@ button:focus-visible {
   pointer-events: none;
 }
 .section-dark p,
+.section-dark h1,
 .section-dark h2 { color: var(--color-on-primary); }
 .section-dark .btn-outline {
   color: var(--color-on-primary);

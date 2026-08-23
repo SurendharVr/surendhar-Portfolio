@@ -2,16 +2,19 @@ import Image from "next/image";
 
 export default function Background({
   showHowIWork = true,
+  headingLevel = "h2",
 }: {
   showHowIWork?: boolean;
+  headingLevel?: "h1" | "h2";
 }) {
+  const Heading = headingLevel;
   return (
     <section className="section" id="background">
       <div className="container">
         <div className="about-grid">
           <div>
             <p className="eyebrow">About</p>
-            <h2>10+ years in sales, now building digital growth</h2>
+            <Heading>10+ years in sales, now building digital growth</Heading>
             <p className="philosophy-line">
               I don&apos;t believe businesses need more digital noise — they need clarity
               in what they offer, who it&apos;s for, and why someone should care.

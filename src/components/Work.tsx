@@ -12,12 +12,17 @@ const externalIcon = (
   </svg>
 );
 
-export default function Work() {
+export default function Work({
+  headingLevel = "h2",
+}: {
+  headingLevel?: "h1" | "h2";
+}) {
+  const Heading = headingLevel;
   return (
     <section className="section" id="work">
       <div className="container">
         <p className="eyebrow">Work</p>
-        <h2>Selected work</h2>
+        <Heading>Selected work</Heading>
 
         <div className="work-grid">
           <article className="work-card">

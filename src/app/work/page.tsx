@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function WorkPage() {
   return (
     <>
-      <Work />
+      <Work headingLevel="h1" />
       <Contact />
       <ScrollEffects />
     </>

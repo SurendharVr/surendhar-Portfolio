@@ -12,12 +12,17 @@ const externalIcon = (
   </svg>
 );
 
-export default function Products() {
+export default function Products({
+  headingLevel = "h2",
+}: {
+  headingLevel?: "h1" | "h2";
+}) {
+  const Heading = headingLevel;
   return (
     <section className="section section-muted" id="products">
       <div className="container">
         <p className="eyebrow">Digital Products</p>
-        <h2>Not every business needs us to build it for them.</h2>
+        <Heading>Not every business needs us to build it for them.</Heading>
         <p className="background-intro">
           Sometimes you just need the right starting point.
         </p>
