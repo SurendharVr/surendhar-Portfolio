@@ -18,12 +18,17 @@ const reasons = [
 ];
 
 export default function WhyUs() {
+  const [lead, ...rest] = reasons;
   return (
     <section className="section section-muted">
       <div className="container">
         <h2>Why work with a small studio?</h2>
-        <div className="capability-grid capability-grid-4">
-          {reasons.map((reason) => (
+        <div className="reasons-grid">
+          <div className="capability-card reasons-lead">
+            <p className="mini-heading">{lead.title}</p>
+            <p>{lead.body}</p>
+          </div>
+          {rest.map((reason) => (
             <div className="capability-card" key={reason.title}>
               <p className="mini-heading">{reason.title}</p>
               <p>{reason.body}</p>

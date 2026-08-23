@@ -4,10 +4,12 @@ export default function Background({
   showHowIWork = true,
   headingLevel = "h2",
   showEyebrow = true,
+  priority = false,
 }: {
   showHowIWork?: boolean;
   headingLevel?: "h1" | "h2";
   showEyebrow?: boolean;
+  priority?: boolean;
 }) {
   const Heading = headingLevel;
   return (
@@ -37,13 +39,14 @@ export default function Background({
                 alt="Portrait of Surendhar Venkatesh"
                 width={360}
                 height={360}
+                priority={priority}
               />
             </div>
           </div>
         </div>
 
-        <div className={`capability-grid${showHowIWork ? "" : " capability-grid-2"}`}>
-          <div className="capability-card">
+        <div className="capability-rows">
+          <div className="capability-row">
             <p className="mini-heading">What I build</p>
             <p>
               Websites, social media management, and digital products — planned, designed,
@@ -51,7 +54,7 @@ export default function Background({
             </p>
           </div>
           {showHowIWork && (
-            <div className="capability-card">
+            <div className="capability-row">
               <p className="mini-heading">How I work</p>
               <p>
                 Every project runs through the same system — Discover, Define, Design,
@@ -59,7 +62,7 @@ export default function Background({
               </p>
             </div>
           )}
-          <div className="capability-card">
+          <div className="capability-row">
             <p className="mini-heading">What you get</p>
             <p>
               10+ years of reading what makes people buy shapes every page, post, and
