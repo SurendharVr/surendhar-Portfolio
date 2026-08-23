@@ -5,7 +5,6 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SmoothScroll from "@/components/SmoothScroll";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
-import "./globals.css";
 import "./site.css";
 
 const geist = Geist({
