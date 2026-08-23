@@ -14,6 +14,8 @@ const LINKS = [
 export default function HomeQuickNav() {
   const [active, setActive] = useState<string>("");
   const navRef = useRef<HTMLElement>(null);
+  const indicatorRef = useRef<HTMLSpanElement>(null);
+  const progressRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const sections = LINKS.map((link) => document.getElementById(link.href.slice(1))).filter(
@@ -36,13 +38,54 @@ export default function HomeQuickNav() {
   }, []);
 
   useEffect(() => {
-    const activeLink = navRef.current?.querySelector('a[aria-current="true"]');
+    const activeLink = navRef.current?.querySelector<HTMLAnchorElement>('a[aria-current="true"]');
     activeLink?.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+
+    const indicator = indicatorRef.current;
+    if (!indicator) return;
+    if (!activeLink) {
+      indicator.style.opacity = "0";
+      return;
+    }
+    indicator.style.opacity = "1";
+    indicator.style.width = `${activeLink.offsetWidth}px`;
+    indicator.style.transform = `translateX(${activeLink.offsetLeft}px)`;
   }, [active]);
+
+  useEffect(() => {
+    const startEl = document.getElementById("work");
+    const endEl = document.getElementById("contact");
+    if (!startEl || !endEl) return;
+
+    let frame = 0;
+    const update = () => {
+      const start = startEl.offsetTop;
+      const end = endEl.offsetTop + endEl.offsetHeight;
+      const total = end - start;
+      const pct = total > 0 ? Math.min(1, Math.max(0, (window.scrollY - start) / total)) : 0;
+      if (progressRef.current) {
+        progressRef.current.style.transform = `scaleX(${pct})`;
+      }
+    };
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
 
   return (
     <nav className="quick-nav" aria-label="Jump to section" ref={navRef}>
       <div className="container quick-nav-inner">
+        <span className="quick-nav-indicator" ref={indicatorRef} aria-hidden="true" />
         {LINKS.map((link) => (
           <a
             key={link.href}
@@ -54,6 +97,9 @@ export default function HomeQuickNav() {
           </a>
         ))}
       </div>
+      <span className="quick-nav-progress-track" aria-hidden="true">
+        <span className="quick-nav-progress-fill" ref={progressRef} />
+      </span>
     </nav>
   );
 }
