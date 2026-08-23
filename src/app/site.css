@@ -78,6 +78,37 @@
   }
 }
 
+/* Explicit overrides for the nav theme toggle — beat the media query above
+   (higher specificity via the attribute selector) regardless of system setting. */
+:root[data-theme="light"] {
+  --color-background: #F7F1E4;
+  --color-foreground: #241F19;
+  --color-card: color-mix(in srgb, var(--color-accent) 1.5%, #FDFBF5);
+  --color-card-foreground: #241F19;
+  --color-muted: #EFE6D2;
+  --color-muted-foreground: #5A5344;
+  --color-border: #E6DAC0;
+  --color-secondary: #4A4437;
+  --color-accent: #2E5CFF;
+  --color-accent-strong: #1D3FD1;
+  --shadow-card: 0 1px 2px rgba(36, 31, 25, 0.05), 0 10px 30px -14px rgba(36, 31, 25, 0.16);
+  --shadow-card-hover: 0 4px 10px rgba(36, 31, 25, 0.06), 0 20px 40px -16px rgba(46, 92, 255, 0.28);
+}
+:root[data-theme="dark"] {
+  --color-background: #17130E;
+  --color-foreground: #F3ECDD;
+  --color-card: #221D16;
+  --color-card-foreground: #F3ECDD;
+  --color-muted: #1D1811;
+  --color-muted-foreground: #B8AD95;
+  --color-border: #332C1E;
+  --color-secondary: #B8AD95;
+  --color-accent: #5B82FF;
+  --color-accent-strong: #7C9BFF;
+  --shadow-card: 0 1px 2px rgba(0,0,0,0.4), 0 10px 30px -14px rgba(0,0,0,0.6);
+  --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.4), 0 20px 44px -16px rgba(91, 130, 255, 0.35);
+}
+
 /* ===== Reset ===== */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -247,6 +278,23 @@ button:focus-visible {
   right: 0;
 }
 .nav-cta { white-space: nowrap; padding: 10px 22px; }
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--color-foreground);
+  min-width: 40px;
+  min-height: 40px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.theme-toggle:hover {
+  background: var(--color-muted);
+  color: var(--color-accent);
+}
 .nav-toggle {
   display: none;
   background: none;

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { waLink } from "@/lib/whatsapp";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -49,6 +50,8 @@ export default function SiteHeader() {
         >
           Start a Project
         </a>
+
+        <ThemeToggle />
 
         <button
           className="nav-toggle"
