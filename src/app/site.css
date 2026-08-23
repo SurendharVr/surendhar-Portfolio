@@ -3,8 +3,8 @@
   - Grid: 12 columns desktop / 4 columns mobile, gutter = --space-4.
     Asymmetric splits (hero, contact) use a 7/5 column ratio; card grids
     (offers, work, stats) use equal-fr repeats within the same container/gutter rhythm.
-  - Typography: one display face (--font-display, grotesk) for headings/numbers,
-    one neutral sans (--font-sans) for body/UI text. No serif, no italics.
+  - Typography: one display face (--font-display, Geist) for headings/numbers,
+    one neutral sans (--font-sans, IBM Plex Sans) for body/UI text. No serif, no italics.
   - Radius: restrained (6/10/16px). Pills reserved for small tags/badges only —
     buttons are rectangular with a subtle radius, not pill-shaped.
   - Spacing: generous section rhythm (--space-6/7/8), the page is meant to breathe.
@@ -33,8 +33,8 @@
   --color-border: #E3E7F0;
   --color-ring: #2E5CFF;
 
-  --font-display: var(--font-grotesk), 'Arial Narrow', system-ui, sans-serif;
-  --font-sans: var(--font-inter), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: var(--font-geist), 'Segoe UI', system-ui, sans-serif;
+  --font-sans: var(--font-plex-sans), system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --space-1: 4px;
   --space-2: 8px;
