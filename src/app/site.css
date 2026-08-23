@@ -292,6 +292,8 @@ button:focus-visible {
   position: relative;
   z-index: 1;
   max-width: 760px;
+  margin-inline: auto;
+  text-align: center;
 }
 .about-grid {
   display: grid;
@@ -322,13 +324,14 @@ button:focus-visible {
   color: var(--color-accent);
 }
 .hero-line { display: inline-block; }
-.hero-sub { font-size: 1.1rem; max-width: 52ch; }
+.hero-sub { font-size: 1.1rem; max-width: 52ch; margin-inline: auto; }
 .hero-actions {
   display: flex;
   gap: var(--space-3);
   flex-wrap: wrap;
   margin-top: var(--space-5);
 }
+.hero-copy-solo .hero-actions { justify-content: center; }
 .hero-media { position: relative; }
 .hero-portrait {
   width: 100%;
@@ -796,8 +799,6 @@ button:focus-visible {
 }
 
 @media (max-width: 768px) {
-  .hero-copy-solo { text-align: center; margin-inline: auto; }
-  .hero-sub { margin-inline: auto; }
   .hero-actions { justify-content: center; }
   .about-grid { grid-template-columns: 1fr; text-align: center; }
   .main-nav {
