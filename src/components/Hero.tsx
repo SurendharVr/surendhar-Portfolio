@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import gsap from "gsap";
 
 export default function Hero() {
   const line1Ref = useRef<HTMLSpanElement>(null);
@@ -17,39 +16,57 @@ export default function Hero() {
     );
     if (!targets.length) return;
 
-    gsap.set(targets, { opacity: 0, y: 16 });
-    gsap.to(targets, {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      ease: "power2.out",
-      stagger: 0.12,
-      delay: 0.1,
+    let cancelled = false;
+    import("gsap").then(({ default: gsap }) => {
+      if (cancelled) return;
+      gsap.set(targets, { opacity: 0, y: 16 });
+      gsap.to(targets, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        stagger: 0.12,
+        delay: 0.1,
+      });
     });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
     const el = ctaRef.current;
     if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const xTo = gsap.quickTo(el, "x", { duration: 0.4, ease: "power3" });
-    const yTo = gsap.quickTo(el, "y", { duration: 0.4, ease: "power3" });
+    let cancelled = false;
+    let detach: (() => void) | undefined;
 
-    function handleMove(e: MouseEvent) {
-      const rect = el!.getBoundingClientRect();
-      xTo((e.clientX - rect.left - rect.width / 2) * 0.3);
-      yTo((e.clientY - rect.top - rect.height / 2) * 0.3);
-    }
-    function handleLeave() {
-      xTo(0);
-      yTo(0);
-    }
+    import("gsap").then(({ default: gsap }) => {
+      if (cancelled) return;
+      const xTo = gsap.quickTo(el, "x", { duration: 0.4, ease: "power3" });
+      const yTo = gsap.quickTo(el, "y", { duration: 0.4, ease: "power3" });
 
-    el.addEventListener("mousemove", handleMove);
-    el.addEventListener("mouseleave", handleLeave);
+      function handleMove(e: MouseEvent) {
+        const rect = el!.getBoundingClientRect();
+        xTo((e.clientX - rect.left - rect.width / 2) * 0.3);
+        yTo((e.clientY - rect.top - rect.height / 2) * 0.3);
+      }
+      function handleLeave() {
+        xTo(0);
+        yTo(0);
+      }
+
+      el.addEventListener("mousemove", handleMove);
+      el.addEventListener("mouseleave", handleLeave);
+      detach = () => {
+        el.removeEventListener("mousemove", handleMove);
+        el.removeEventListener("mouseleave", handleLeave);
+      };
+    });
+
     return () => {
-      el.removeEventListener("mousemove", handleMove);
-      el.removeEventListener("mouseleave", handleLeave);
+      cancelled = true;
+      detach?.();
     };
   }, []);
 
