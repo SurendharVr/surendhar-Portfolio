@@ -208,14 +208,12 @@ button:focus-visible {
   z-index: 50;
   background: color-mix(in srgb, var(--color-background) 85%, transparent);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--color-border);
 }
 .nav-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding-block: var(--space-3);
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 .logo {
   font-family: var(--font-display);
@@ -225,9 +223,9 @@ button:focus-visible {
 }
 .main-nav {
   display: flex;
+  align-items: center;
   gap: var(--space-5);
-  flex: 1;
-  justify-content: center;
+  margin-left: auto;
 }
 .main-nav a {
   font-weight: 600;
@@ -293,7 +291,6 @@ button:focus-visible {
   z-index: 1;
   max-width: 760px;
   margin-inline: auto;
-  text-align: center;
 }
 .about-grid {
   display: grid;
@@ -324,14 +321,13 @@ button:focus-visible {
   color: var(--color-accent);
 }
 .hero-line { display: inline-block; }
-.hero-sub { font-size: 1.1rem; max-width: 52ch; margin-inline: auto; }
+.hero-sub { font-size: 1.1rem; max-width: 52ch; }
 .hero-actions {
   display: flex;
   gap: var(--space-3);
   flex-wrap: wrap;
   margin-top: var(--space-5);
 }
-.hero-copy-solo .hero-actions { justify-content: center; }
 .hero-media { position: relative; }
 .hero-portrait {
   width: 100%;
