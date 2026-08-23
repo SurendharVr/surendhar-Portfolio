@@ -8,6 +8,7 @@ const LINKS = [
   { href: "#digital-presence-system", label: "The System" },
   { href: "#how-we-work", label: "Process" },
   { href: "#products", label: "Products" },
+  { href: "#background", label: "About" },
   { href: "#contact", label: "Contact" },
 ];
 
