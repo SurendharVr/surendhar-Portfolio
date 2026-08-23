@@ -395,6 +395,11 @@ button:focus-visible {
 /* ===== Sections ===== */
 .section { padding-block: var(--space-8); }
 .section-muted { background: var(--color-muted); }
+.section-standalone {
+  display: flex;
+  align-items: center;
+  min-height: calc(100dvh - 151px);
+}
 .section h1,
 .section h2 {
   font-size: clamp(1.75rem, 3.2vw, 2.5rem);

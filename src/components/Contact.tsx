@@ -1,11 +1,16 @@
 export default function Contact({
   headingLevel = "h2",
+  standalone = false,
 }: {
   headingLevel?: "h1" | "h2";
+  standalone?: boolean;
 }) {
   const Heading = headingLevel;
   return (
-    <section className="section section-dark" id="contact">
+    <section
+      className={`section section-dark${standalone ? " section-standalone" : ""}`}
+      id="contact"
+    >
       <div className="container contact-grid">
         <div>
           <p className="eyebrow eyebrow-on-dark">Contact</p>
