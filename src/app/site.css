@@ -11,9 +11,9 @@
 */
 /* ===== Design tokens ===== */
 :root {
-  --color-primary: #0B1120;
-  --color-on-primary: #FFFFFF;
-  --color-secondary: #334155;
+  --color-primary: #241F19;
+  --color-on-primary: #F7F1E4;
+  --color-secondary: #4A4437;
   --color-on-secondary: #FFFFFF;
   --color-accent: #2E5CFF;
   --color-accent-strong: #1D3FD1;
@@ -24,13 +24,13 @@
   --color-accent-fill: #2E5CFF;
   --color-accent-fill-hover: #1D3FD1;
   --color-highlight: #FFD84D;
-  --color-background: #F7F8FB;
-  --color-foreground: #0B1120;
-  --color-card: color-mix(in srgb, var(--color-accent) 1.5%, white);
-  --color-card-foreground: #0B1120;
-  --color-muted: #EEF1F7;
-  --color-muted-foreground: #52607A;
-  --color-border: #E3E7F0;
+  --color-background: #F7F1E4;
+  --color-foreground: #241F19;
+  --color-card: color-mix(in srgb, var(--color-accent) 1.5%, #FDFBF5);
+  --color-card-foreground: #241F19;
+  --color-muted: #EFE6D2;
+  --color-muted-foreground: #5A5344;
+  --color-border: #E6DAC0;
   --color-ring: #2E5CFF;
 
   --font-display: var(--font-geist), 'Segoe UI', system-ui, sans-serif;
@@ -54,8 +54,8 @@
   --grid-columns-mobile: 4;
   --grid-gutter: var(--space-4);
 
-  --shadow-card: 0 1px 2px rgba(11, 17, 32, 0.05), 0 10px 30px -14px rgba(11, 17, 32, 0.16);
-  --shadow-card-hover: 0 4px 10px rgba(11, 17, 32, 0.06), 0 20px 40px -16px rgba(46, 92, 255, 0.28);
+  --shadow-card: 0 1px 2px rgba(36, 31, 25, 0.05), 0 10px 30px -14px rgba(36, 31, 25, 0.16);
+  --shadow-card-hover: 0 4px 10px rgba(36, 31, 25, 0.06), 0 20px 40px -16px rgba(46, 92, 255, 0.28);
   --shadow-accent: 0 12px 24px -10px rgba(46, 92, 255, 0.45);
   --transition-fast: 180ms ease;
   --transition-medium: 320ms cubic-bezier(.22,1,.36,1);
@@ -63,13 +63,14 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: #070B16;
-    --color-foreground: #F3F5FA;
-    --color-card: #10162A;
-    --color-card-foreground: #F3F5FA;
-    --color-muted: #131A30;
-    --color-muted-foreground: #97A2C0;
-    --color-border: #212A44;
+    --color-background: #17130E;
+    --color-foreground: #F3ECDD;
+    --color-card: #221D16;
+    --color-card-foreground: #F3ECDD;
+    --color-muted: #1D1811;
+    --color-muted-foreground: #B8AD95;
+    --color-border: #332C1E;
+    --color-secondary: #B8AD95;
     --color-accent: #5B82FF;
     --color-accent-strong: #7C9BFF;
     --shadow-card: 0 1px 2px rgba(0,0,0,0.4), 0 10px 30px -14px rgba(0,0,0,0.6);
@@ -303,9 +304,9 @@ button:focus-visible {
   margin-bottom: var(--space-3);
 }
 .hero-copy h1 {
-  font-size: clamp(2.6rem, 6vw, 4.5rem);
+  font-size: clamp(2.9rem, 6.5vw, 5.25rem);
   letter-spacing: -0.02em;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-foreground);
 }
 .hl {
@@ -391,7 +392,7 @@ button:focus-visible {
 }
 .section h1,
 .section h2 {
-  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+  font-size: clamp(2rem, 3.6vw, 2.85rem);
   color: var(--color-foreground);
   max-width: 30ch;
 }
