@@ -572,7 +572,7 @@ button:focus-visible {
   margin-top: var(--space-6);
 }
 .capability-grid-4 { grid-template-columns: repeat(4, 1fr); }
-.capability-grid-2 { grid-template-columns: repeat(2, 1fr); max-width: 760px; }
+.capability-grid-2 { grid-template-columns: repeat(2, 1fr); }
 .capability-card {
   background: var(--color-card);
   border: 1px solid var(--color-border);
