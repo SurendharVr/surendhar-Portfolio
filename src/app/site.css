@@ -446,6 +446,7 @@ button:focus-visible {
   transition: gap var(--transition-fast);
 }
 .offer-card .offer-link {
+  align-self: flex-start;
   margin-top: auto;
   padding-top: var(--space-3);
 }
@@ -615,6 +616,7 @@ button:focus-visible {
 .work-card-soon:hover { transform: none; box-shadow: none; }
 .work-tag {
   display: inline-block;
+  align-self: flex-start;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-size: 0.72rem;
@@ -659,6 +661,7 @@ button:focus-visible {
 .work-link {
   display: inline-flex;
   align-items: center;
+  align-self: flex-start;
   gap: 6px;
   margin-top: auto;
   padding-top: var(--space-4);
