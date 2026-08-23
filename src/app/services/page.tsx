@@ -4,10 +4,16 @@ import SignatureOffer from "@/components/SignatureOffer";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
 
+const title = "Services — Surendhar Venkatesh";
+const description =
+  "Website design, social media management, digital product design, and growth strategy for small businesses — plus ongoing partnerships for after launch.";
+
 export const metadata: Metadata = {
-  title: "Services — Surendhar Venkatesh",
-  description:
-    "Website design, social media management, digital product design, and growth strategy for small businesses — plus ongoing partnerships for after launch.",
+  title,
+  description,
+  alternates: { canonical: "/services" },
+  openGraph: { title, description, url: "/services" },
+  twitter: { title, description },
 };
 
 export default function ServicesPage() {

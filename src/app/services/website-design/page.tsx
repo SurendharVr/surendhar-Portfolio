@@ -5,10 +5,16 @@ import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
 import { waLink } from "@/lib/whatsapp";
 
+const title = "Website Design — Surendhar Venkatesh";
+const description =
+  "Strategic websites designed around credibility, clarity, and conversion for small businesses — including Flavours Tec Kitchen and VAAV Kitchen & Caterers.";
+
 export const metadata: Metadata = {
-  title: "Website Design — Surendhar Venkatesh",
-  description:
-    "Strategic websites designed around credibility, clarity, and conversion for small businesses — including Flavours Tec Kitchen and VAAV Kitchen & Caterers.",
+  title,
+  description,
+  alternates: { canonical: "/services/website-design" },
+  openGraph: { title, description, url: "/services/website-design" },
+  twitter: { title, description },
 };
 
 export default function WebsiteDesignPage() {

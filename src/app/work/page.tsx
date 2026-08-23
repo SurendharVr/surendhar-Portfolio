@@ -3,10 +3,16 @@ import Work from "@/components/Work";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
 
+const title = "Work — Surendhar Venkatesh";
+const description =
+  "Real websites and digital products built by Surendhar Venkatesh, including Flavours Tec Kitchen, VAAV Kitchen & Caterers, and a published Kindle ebook.";
+
 export const metadata: Metadata = {
-  title: "Work — Surendhar Venkatesh",
-  description:
-    "Real websites and digital products built by Surendhar Venkatesh, including Flavours Tec Kitchen, VAAV Kitchen & Caterers, and a published Kindle ebook.",
+  title,
+  description,
+  alternates: { canonical: "/work" },
+  openGraph: { title, description, url: "/work" },
+  twitter: { title, description },
 };
 
 export default function WorkPage() {

@@ -4,10 +4,16 @@ import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
 import { waLink } from "@/lib/whatsapp";
 
+const title = "Social Media Management — Surendhar Venkatesh";
+const description =
+  "Ongoing content creation, page handling, and social media marketing built to convert followers into customers, backed by 10+ years in sales.";
+
 export const metadata: Metadata = {
-  title: "Social Media Management — Surendhar Venkatesh",
-  description:
-    "Ongoing content creation, page handling, and social media marketing built to convert followers into customers, backed by 10+ years in sales.",
+  title,
+  description,
+  alternates: { canonical: "/services/social-media" },
+  openGraph: { title, description, url: "/services/social-media" },
+  twitter: { title, description },
 };
 
 export default function SocialMediaPage() {

@@ -5,10 +5,16 @@ import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
 import { waLink } from "@/lib/whatsapp";
 
+const title = "Digital Product Design — Surendhar Venkatesh";
+const description =
+  "Turn an idea into a polished, sellable digital product — from ebooks to tools and templates, including the published Kindle ebook 'Eight Hours, Still Exhausted.'";
+
 export const metadata: Metadata = {
-  title: "Digital Product Design — Surendhar Venkatesh",
-  description:
-    "Turn an idea into a polished, sellable digital product — from ebooks to tools and templates, including the published Kindle ebook 'Eight Hours, Still Exhausted.'",
+  title,
+  description,
+  alternates: { canonical: "/services/digital-products" },
+  openGraph: { title, description, url: "/services/digital-products" },
+  twitter: { title, description },
 };
 
 export default function DigitalProductsServicePage() {

@@ -4,10 +4,16 @@ import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
 import { waLink } from "@/lib/whatsapp";
 
+const title = "Digital Growth & Strategy — Surendhar Venkatesh";
+const description =
+  "Sales-backed strategy behind every page, post, and product decision — for small businesses that want to grow smarter, not just louder.";
+
 export const metadata: Metadata = {
-  title: "Digital Growth & Strategy — Surendhar Venkatesh",
-  description:
-    "Sales-backed strategy behind every page, post, and product decision — for small businesses that want to grow smarter, not just louder.",
+  title,
+  description,
+  alternates: { canonical: "/services/growth-strategy" },
+  openGraph: { title, description, url: "/services/growth-strategy" },
+  twitter: { title, description },
 };
 
 const steps = [
