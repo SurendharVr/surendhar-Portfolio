@@ -309,6 +309,49 @@ button:focus-visible {
   border-radius: var(--radius-sm);
 }
 
+/* ===== Home quick nav ===== */
+.quick-nav {
+  position: sticky;
+  top: 76px;
+  z-index: 40;
+  background: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
+}
+.quick-nav-inner {
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-block: var(--space-2);
+}
+.quick-nav-inner::-webkit-scrollbar { display: none; }
+.quick-nav a {
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-muted-foreground);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-pill);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.quick-nav a:hover { color: var(--color-foreground); background: var(--color-muted); }
+.quick-nav a.active {
+  color: var(--color-accent-strong);
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+}
+
+/* Sections targeted by the quick nav / any direct #fragment link should
+   clear the sticky header (+ quick nav, on the homepage) when scrolled to. */
+#work,
+#services,
+#digital-presence-system,
+#how-we-work,
+#products,
+#contact {
+  scroll-margin-top: 132px;
+}
+
 /* ===== Hero ===== */
 .hero {
   position: relative;
