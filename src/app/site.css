@@ -598,6 +598,12 @@ button:focus-visible {
   justify-content: center;
   margin-bottom: var(--space-3);
 }
+.icon-badge-sm {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
 
 /* ===== Signature offer ===== */
 .system-chain {
@@ -659,17 +665,47 @@ button:focus-visible {
   color: var(--color-foreground);
   max-width: 60ch;
 }
-.problem-list {
+.pivot-line {
+  padding-left: var(--space-4);
+  border-left: 3px solid var(--color-accent);
+}
+.problem-grid {
   list-style: none;
   margin: var(--space-5) 0;
   padding: 0;
-  max-width: 60ch;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: var(--space-3);
 }
-.problem-list li {
-  font-size: 1.1rem;
+.problem-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
+}
+.problem-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: color-mix(in srgb, var(--color-accent) 30%, var(--color-border));
+}
+.problem-mark {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-muted);
+  color: var(--color-muted-foreground);
+}
+.problem-card p {
+  margin: 0;
+  font-size: 1.05rem;
   font-weight: 600;
   color: var(--color-foreground);
 }
@@ -904,6 +940,8 @@ button:focus-visible {
 .section-dark .hero-actions { margin-top: var(--space-5); }
 .contact-sub { max-width: 46ch; opacity: 0.85; }
 .section-dark .eyebrow-on-dark { color: var(--color-highlight); background: rgba(255, 216, 77, 0.14); }
+.section-dark .icon-badge { color: var(--color-highlight); background: rgba(255, 216, 77, 0.14); }
+.cta-heading { font-size: clamp(2.25rem, 4.2vw, 3.25rem); }
 .contact-grid {
   position: relative;
   z-index: 1;
@@ -974,6 +1012,7 @@ button:focus-visible {
   .ladder-item { flex-direction: row; align-items: center; gap: var(--space-5); }
   .ladder-item:hover { padding-inline: var(--space-2); }
   .offer-grid { grid-template-columns: repeat(2, 1fr); }
+  .problem-grid { grid-template-columns: repeat(2, 1fr); }
   .process-steps li { flex-basis: calc((100% - 2 * var(--space-4)) / 3); }
 }
 

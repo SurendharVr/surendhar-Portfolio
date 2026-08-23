@@ -12,6 +12,8 @@ const GROUPS: { container: string; item: string }[] = [
   { container: ".ladder-list", item: ".ladder-item" },
   { container: ".process-steps", item: "li" },
   { container: ".system-chain", item: "li" },
+  { container: ".problem-grid", item: ".problem-card" },
+  { container: ".contact-list", item: "li" },
 ];
 
 export default function ScrollEffects() {
