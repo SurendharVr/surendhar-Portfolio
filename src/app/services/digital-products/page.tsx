@@ -19,7 +19,7 @@ export default function DigitalProductsServicePage() {
           <p className="eyebrow">Services · Digital Product Design</p>
           <h1>Turn a good idea into something people can actually use.</h1>
           <p className="background-intro">
-            From ebooks to tools and templates, we turn ideas into intuitive products that
+            From ebooks to tools and templates, I turn ideas into intuitive products that
             are useful, understandable, and commercially viable.
           </p>
           <div className="hero-actions">

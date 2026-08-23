@@ -18,7 +18,7 @@ export default function SocialMediaPage() {
           <p className="eyebrow">Services · Social Media Management</p>
           <h1>A page that builds trust before they even visit.</h1>
           <p className="background-intro">
-            Your social page is often seen before your website. We manage it to build
+            Your social page is often seen before your website. I manage it to build
             confidence and familiarity consistently — not just to keep up appearances.
           </p>
           <div className="hero-actions">

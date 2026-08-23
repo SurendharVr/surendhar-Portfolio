@@ -94,7 +94,7 @@ export default function Hero() {
             </span>
           </h1>
           <p className="hero-sub" ref={subRef}>
-            We turn complex businesses, offers and ideas into clear digital experiences
+            I turn complex businesses, offers and ideas into clear digital experiences
             that people understand, trust and act on.
           </p>
           <div className="hero-actions" ref={actionsRef}>

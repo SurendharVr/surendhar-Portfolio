@@ -14,7 +14,7 @@ export default function Services({
     <section className="section section-muted" id="services">
       <div className="container">
         {showEyebrow && <p className="eyebrow">Services</p>}
-        <Heading>How we can work together</Heading>
+        <Heading>Ways I can help</Heading>
         <div className="offer-grid">
           {offers.map((offer) => (
             <article className="offer-card" key={offer.title}>

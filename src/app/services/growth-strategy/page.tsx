@@ -26,7 +26,7 @@ export default function GrowthStrategyPage() {
           <p className="eyebrow">Services · Digital Growth &amp; Strategy</p>
           <h1>Your digital presence may not need a redesign. It may need better decisions.</h1>
           <p className="background-intro">
-            We identify where visitors hesitate, get confused, or disappear — then improve
+            I identify where visitors hesitate, get confused, or disappear — then improve
             the experience around those moments, backed by 10+ years of sales insight.
           </p>
           <div className="hero-actions">

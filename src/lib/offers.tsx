@@ -30,7 +30,7 @@ export const offers: Offer[] = [
     ),
     category: "Website Design",
     title: "A website that does more than look professional.",
-    body: "Your website is often the first serious interaction someone has with your business. We design it to answer the questions that matter, build confidence quickly, and move the right visitors toward action.",
+    body: "Your website is often the first serious interaction someone has with your business. I design it to answer the questions that matter, build confidence quickly, and move the right visitors toward action.",
     cta: "Explore Website Design",
   },
   {
@@ -48,7 +48,7 @@ export const offers: Offer[] = [
     ),
     category: "Social Media Management",
     title: "A page that builds trust before they even visit.",
-    body: "Your social page is often seen before your website. We manage it to build confidence and familiarity consistently — not just to keep up appearances.",
+    body: "Your social page is often seen before your website. I manage it to build confidence and familiarity consistently — not just to keep up appearances.",
     cta: "Explore Social Media Management",
   },
   {
@@ -66,7 +66,7 @@ export const offers: Offer[] = [
     ),
     category: "Digital Product Design",
     title: "Turn a good idea into something people can actually use.",
-    body: "From ebooks to tools and templates, we turn ideas into intuitive products that are useful, understandable, and commercially viable.",
+    body: "From ebooks to tools and templates, I turn ideas into intuitive products that are useful, understandable, and commercially viable.",
     cta: "Explore Digital Products",
   },
   {
@@ -84,7 +84,7 @@ export const offers: Offer[] = [
     ),
     category: "Digital Growth & Strategy",
     title: "Your digital presence may not need a redesign. It may need better decisions.",
-    body: "We identify where visitors hesitate, get confused, or disappear — then improve the experience around those moments, backed by 10+ years of sales insight.",
+    body: "I identify where visitors hesitate, get confused, or disappear — then improve the experience around those moments, backed by 10+ years of sales insight.",
     cta: "Request an Audit",
   },
 ];

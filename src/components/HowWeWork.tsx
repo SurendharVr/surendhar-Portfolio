@@ -21,10 +21,10 @@ export default function HowWeWork({
   return (
     <section className="section" id="how-we-work">
       <div className="container">
-        {showEyebrow && <p className="eyebrow">How We Work</p>}
+        {showEyebrow && <p className="eyebrow">How I Work</p>}
         <h2>Good design isn&apos;t the starting point. Understanding is.</h2>
         <p className="background-intro">
-          Before we design a page, we figure out what the page needs to accomplish.
+          Before I design a page, I figure out what the page needs to accomplish.
         </p>
         <ul className="highlight-list">
           {questions.map((q) => (
@@ -32,7 +32,7 @@ export default function HowWeWork({
           ))}
         </ul>
         <p className="background-intro">
-          Only then do we design the experience — the same five steps every time:
+          Only then do I design the experience — the same five steps every time:
         </p>
         <ol className="process-steps">
           {steps.map((step) => (

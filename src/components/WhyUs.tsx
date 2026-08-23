@@ -5,7 +5,7 @@ const reasons = [
   },
   {
     title: "Business before aesthetics.",
-    body: "We don't start with colours and animations. We start with what needs to change.",
+    body: "I don't start with colours and animations. I start with what needs to change.",
   },
   {
     title: "Designed around your customer.",
@@ -13,7 +13,7 @@ const reasons = [
   },
   {
     title: "Built to evolve.",
-    body: "We create systems rather than one-off pages that become obsolete six months later.",
+    body: "I create systems rather than one-off pages that become obsolete six months later.",
   },
 ];
 

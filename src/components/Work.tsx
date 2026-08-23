@@ -149,7 +149,7 @@ function WorkCard({ study }: { study: CaseStudy }) {
       <p className="work-client">{study.client}</p>
       <dl className="work-details">
         <div>
-          <dt>Outcome</dt>
+          <dt>Status</dt>
           <dd>{study.outcome}</dd>
         </div>
       </dl>

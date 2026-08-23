@@ -10,7 +10,7 @@ export default function Problem() {
           <li>The path to action is buried.</li>
         </ul>
         <p className="philosophy-line">
-          We fix those problems before we start polishing pixels.
+          I fix those problems before I start polishing pixels.
         </p>
       </div>
     </section>

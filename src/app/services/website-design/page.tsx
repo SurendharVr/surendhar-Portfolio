@@ -20,7 +20,7 @@ export default function WebsiteDesignPage() {
           <h1>A website that does more than look professional.</h1>
           <p className="background-intro">
             Your website is often the first serious interaction someone has with your
-            business. We design it to answer the questions that matter, build confidence
+            business. I design it to answer the questions that matter, build confidence
             quickly, and move the right visitors toward action.
           </p>
           <div className="hero-actions">

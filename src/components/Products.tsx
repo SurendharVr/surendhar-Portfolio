@@ -24,7 +24,7 @@ export default function Products({
     <section className="section section-muted" id="products">
       <div className="container">
         {showEyebrow && <p className="eyebrow">Digital Products</p>}
-        <Heading>Not every business needs us to build it for them.</Heading>
+        <Heading>Not every business needs me to build it for them.</Heading>
         <p className="background-intro">
           Sometimes you just need the right starting point.
         </p>
