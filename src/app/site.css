@@ -1161,6 +1161,9 @@ button:focus-visible {
   .main-nav a::after { display: block; }
   .nav-toggle { display: none; }
   .nav-cta { display: inline-flex; }
+  /* Desktop already shows the full site nav in the header; the homepage's
+     in-page quick-nav is a mobile/tablet aid only. */
+  .quick-nav { display: none; }
 }
 
 /* Desktop */
