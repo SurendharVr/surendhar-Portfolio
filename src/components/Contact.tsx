@@ -1,3 +1,5 @@
+import { waLink } from "@/lib/whatsapp";
+
 export default function Contact({
   headingLevel = "h2",
   standalone = false,
@@ -24,13 +26,17 @@ export default function Contact({
           <div className="hero-actions">
             <a
               className="btn btn-accent"
-              href="mailto:venkateshsurendhar@gmail.com?subject=Start%20a%20Project"
+              href={waLink("Hi, I'd like to start a project.")}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Start a Project
             </a>
             <a
               className="btn btn-outline"
-              href="mailto:venkateshsurendhar@gmail.com?subject=Website%20Audit%20request"
+              href={waLink("Hi, I'd like to request a website audit.")}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Get a Website Audit
             </a>
@@ -61,7 +67,7 @@ export default function Contact({
                 strokeLinejoin="round"
               />
             </svg>
-            <a href="tel:+917013333935">+91 70133 33935</a>
+            <a href="tel:+919655326333">+91 96553 26333</a>
           </li>
           <li>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -81,7 +87,7 @@ export default function Contact({
               />
             </svg>
             <a
-              href="https://wa.me/917013333935"
+              href={waLink("Hi, I'd like to get in touch.")}
               target="_blank"
               rel="noopener noreferrer"
             >

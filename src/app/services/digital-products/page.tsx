@@ -3,6 +3,7 @@ import Link from "next/link";
 import WorkThumb from "@/components/WorkThumb";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
+import { waLink } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   title: "Digital Product Design — Surendhar Venkatesh",
@@ -22,9 +23,16 @@ export default function DigitalProductsServicePage() {
             are useful, understandable, and commercially viable.
           </p>
           <div className="hero-actions">
-            <Link className="btn btn-accent" href="/contact">
+            <a
+              className="btn btn-accent"
+              href={waLink(
+                "Hi, I'm interested in Digital Product Design and would like to discuss."
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Let&apos;s discuss
-            </Link>
+            </a>
             <Link className="btn btn-outline" href="/products">
               See digital products
             </Link>

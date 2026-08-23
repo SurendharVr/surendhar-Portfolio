@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { waLink } from "@/lib/whatsapp";
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -40,9 +41,14 @@ export default function SiteHeader() {
           ))}
         </nav>
 
-        <Link className="btn btn-accent nav-cta" href="/contact">
+        <a
+          className="btn btn-accent nav-cta"
+          href={waLink("Hi, I'd like to start a project.")}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Start a Project
-        </Link>
+        </a>
 
         <button
           className="nav-toggle"

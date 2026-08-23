@@ -1,3 +1,5 @@
+import { waLink } from "@/lib/whatsapp";
+
 const arrowIcon = (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path
@@ -10,7 +12,16 @@ const arrowIcon = (
   </svg>
 );
 
-const rungs = [
+type Rung = {
+  tier: string;
+  title: string;
+  body: string;
+  cta: string;
+  href: string;
+  external?: boolean;
+};
+
+const rungs: Rung[] = [
   {
     tier: "Low commitment",
     title: "Explore the Work",
@@ -23,7 +34,8 @@ const rungs = [
     title: "Get a Website Audit",
     body: "A specific look at what's working and what isn't on your current site.",
     cta: "Request an Audit",
-    href: "mailto:venkateshsurendhar@gmail.com?subject=Website%20Audit%20request",
+    href: waLink("Hi, I'd like to request a website audit."),
+    external: true,
   },
   {
     tier: "Ready-made",
@@ -37,7 +49,8 @@ const rungs = [
     title: "Start a Project",
     body: "Ready to build something real, from a website to a full campaign.",
     cta: "Start a Project",
-    href: "mailto:venkateshsurendhar@gmail.com?subject=Start%20a%20Project",
+    href: waLink("Hi, I'd like to start a project."),
+    external: true,
   },
   {
     tier: "Premium",
@@ -65,7 +78,11 @@ export default function EntryPoints() {
                 <h3>{rung.title}</h3>
                 <p>{rung.body}</p>
               </div>
-              <a className="offer-link ladder-link" href={rung.href}>
+              <a
+                className="offer-link ladder-link"
+                href={rung.href}
+                {...(rung.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              >
                 {rung.cta} {arrowIcon}
               </a>
             </li>

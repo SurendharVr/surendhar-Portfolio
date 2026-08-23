@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import { waLink } from "@/lib/whatsapp";
 
 export default function Hero() {
   const eyebrowRef = useRef<HTMLParagraphElement>(null);
@@ -97,9 +98,15 @@ export default function Hero() {
             that people understand, trust and act on.
           </p>
           <div className="hero-actions" ref={actionsRef}>
-            <Link className="btn btn-accent" href="/contact" ref={ctaRef}>
+            <a
+              className="btn btn-accent"
+              href={waLink("Hi, I'd like to start a project.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              ref={ctaRef}
+            >
               Start a Project
-            </Link>
+            </a>
             <Link className="btn btn-outline" href="/work">
               See the Work
             </Link>

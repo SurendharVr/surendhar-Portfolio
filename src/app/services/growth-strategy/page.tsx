@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
+import { waLink } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   title: "Digital Growth & Strategy — Surendhar Venkatesh",
@@ -29,9 +30,16 @@ export default function GrowthStrategyPage() {
             the experience around those moments, backed by 10+ years of sales insight.
           </p>
           <div className="hero-actions">
-            <Link className="btn btn-accent" href="/contact">
+            <a
+              className="btn btn-accent"
+              href={waLink(
+                "Hi, I'd like to request a Digital Growth & Strategy audit."
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Request an Audit
-            </Link>
+            </a>
             <Link className="btn btn-outline" href="/services">
               See the full system
             </Link>

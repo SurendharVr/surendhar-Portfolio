@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { arrowIcon, offers, partnerships } from "@/lib/offers";
+import { waLink } from "@/lib/whatsapp";
 
 export default function Services({
   headingLevel = "h2",
@@ -51,7 +52,14 @@ export default function Services({
                 <h3>{plan.title}</h3>
               </div>
               <p>{plan.body}</p>
-              <a className="offer-link" href="/contact">
+              <a
+                className="offer-link"
+                href={waLink(
+                  `Hi, I'm interested in your ${plan.title} partnership and would like to discuss.`
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {plan.cta} {arrowIcon}
               </a>
             </article>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
+import { waLink } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   title: "Social Media Management — Surendhar Venkatesh",
@@ -21,9 +22,16 @@ export default function SocialMediaPage() {
             confidence and familiarity consistently — not just to keep up appearances.
           </p>
           <div className="hero-actions">
-            <Link className="btn btn-accent" href="/contact">
+            <a
+              className="btn btn-accent"
+              href={waLink(
+                "Hi, I'm interested in Social Media Management and would like to discuss."
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Let&apos;s discuss
-            </Link>
+            </a>
             <Link className="btn btn-outline" href="/about">
               About the sales background
             </Link>

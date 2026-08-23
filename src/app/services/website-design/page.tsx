@@ -3,6 +3,7 @@ import Link from "next/link";
 import WorkThumb from "@/components/WorkThumb";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
+import { waLink } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   title: "Website Design — Surendhar Venkatesh",
@@ -23,9 +24,16 @@ export default function WebsiteDesignPage() {
             quickly, and move the right visitors toward action.
           </p>
           <div className="hero-actions">
-            <Link className="btn btn-accent" href="/contact">
+            <a
+              className="btn btn-accent"
+              href={waLink(
+                "Hi, I'm interested in Website Design and would like to discuss a project."
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Start a Project
-            </Link>
+            </a>
             <Link className="btn btn-outline" href="/work">
               See full case studies
             </Link>

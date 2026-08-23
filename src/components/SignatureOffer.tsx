@@ -1,3 +1,5 @@
+import { waLink } from "@/lib/whatsapp";
+
 const steps = [
   "Strategy",
   "Positioning",
@@ -29,7 +31,14 @@ export default function SignatureOffer({
             <li key={step}>{step}</li>
           ))}
         </ol>
-        <a className="btn btn-accent" href="/contact">
+        <a
+          className="btn btn-accent"
+          href={waLink(
+            "Hi, I'm interested in the Digital Presence System and would like to discuss a project."
+          )}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Start a Project
         </a>
       </div>
