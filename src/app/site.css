@@ -821,9 +821,7 @@ button:focus-visible {
   .process-steps li { flex-basis: calc((100% - 2 * var(--space-4)) / 3); }
 }
 
-@media (max-width: 768px) {
-  .hero-actions { justify-content: center; }
-  .about-grid { grid-template-columns: 1fr; text-align: center; }
+@media (max-width: 860px) {
   .main-nav {
     position: absolute;
     top: 100%;
@@ -840,6 +838,11 @@ button:focus-visible {
   .main-nav a::after { display: none; }
   .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
   .nav-cta { display: none; }
+}
+
+@media (max-width: 768px) {
+  .hero-actions { justify-content: center; }
+  .about-grid { grid-template-columns: 1fr; text-align: center; }
   .contact-grid { grid-template-columns: 1fr; text-align: center; }
   .contact-list li { justify-content: center; }
   .contact-list li:hover { transform: none; }
