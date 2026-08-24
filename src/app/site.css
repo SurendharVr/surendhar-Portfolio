@@ -67,7 +67,12 @@
   --text-fluid-sm: clamp(1.75rem, 3.6vw, 2.85rem); /* section h1/h2 */
   --text-fluid-md: clamp(1.9rem, 4.5vw, 2.5rem);   /* stat numerals */
   --text-fluid-lg: clamp(2rem, 4.2vw, 3.25rem);    /* CTA headings */
-  --text-fluid-xl: clamp(2.1rem, 6.5vw, 5.25rem);  /* hero h1 */
+  /* hero h1. Max capped at 4rem (was 5.25rem): at the old ceiling, each
+     ~45-49 character hero sentence needed 3 lines inside .hero-copy-solo's
+     760px column at every viewport from 1024px up through past 1440px,
+     making the hero taller than the viewport and pushing the primary CTA
+     below the fold everywhere on desktop/laptop. */
+  --text-fluid-xl: clamp(2.1rem, 6.5vw, 4rem);
 
   --space-1: 4px;
   --space-2: 8px;
@@ -529,7 +534,7 @@ button:focus-visible {
 .hero-copy-solo {
   position: relative;
   z-index: 1;
-  max-width: 760px;
+  max-width: 880px;
   margin-inline: auto;
 }
 .about-grid {
