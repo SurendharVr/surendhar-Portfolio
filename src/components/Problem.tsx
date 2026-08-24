@@ -16,9 +16,12 @@ const crossIcon = (
   </svg>
 );
 
-export default function Problem() {
+export default function Problem({ className }: { className?: string } = {}) {
   return (
-    <section className="section section-muted">
+    <section
+      className={`section section-muted${className ? ` ${className}` : ""}`}
+      id="snap-problem"
+    >
       <div className="container">
         <h2>Most businesses don&apos;t have a design problem. They have a clarity problem.</h2>
         <ul className="problem-grid">

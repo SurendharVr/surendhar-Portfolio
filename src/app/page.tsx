@@ -1,32 +1,32 @@
 import Hero from "@/components/Hero";
-import HomeQuickNav from "@/components/HomeQuickNav";
 import Problem from "@/components/Problem";
-import TrustStrip from "@/components/TrustStrip";
-import HowWeWork from "@/components/HowWeWork";
-import Work from "@/components/Work";
-import Services from "@/components/Services";
+import SnapProve from "@/components/SnapProve";
+import SnapExplain from "@/components/SnapExplain";
 import SignatureOffer from "@/components/SignatureOffer";
-import EntryPoints from "@/components/EntryPoints";
-import Products from "@/components/Products";
-import Background from "@/components/Background";
-import Contact from "@/components/Contact";
+import SnapTrust from "@/components/SnapTrust";
+import SnapConvert from "@/components/SnapConvert";
+import SnapController from "@/components/SnapController";
 import ScrollEffects from "@/components/ScrollEffects";
 
+// INTRODUCE -> PROBLEM -> PROVE -> EXPLAIN -> OFFER -> TRUST -> CONVERT.
+// Full-screen scroll-snap: native CSS (.snap-container / .snap-section in
+// site.css) drives the actual scrolling; SnapController only adds keyboard
+// support and the progress dots on top of it. See
+// C:\Users\ASUS\.claude\plans\tingly-hugging-journal.md for the plan this
+// implements.
 export default function Home() {
   return (
     <>
-      <Hero />
-      <HomeQuickNav />
-      <Problem />
-      <TrustStrip />
-      <Work showEyebrow={false} />
-      <Services showEyebrow={false} />
-      <SignatureOffer />
-      <HowWeWork />
-      <Products />
-      <Background />
-      <EntryPoints />
-      <Contact showEyebrow={false} />
+      <div className="snap-container">
+        <Hero className="snap-section" />
+        <Problem className="snap-section" />
+        <SnapProve />
+        <SnapExplain />
+        <SignatureOffer className="snap-section" showEyebrow={false} />
+        <SnapTrust />
+        <SnapConvert />
+      </div>
+      <SnapController />
       <ScrollEffects />
     </>
   );

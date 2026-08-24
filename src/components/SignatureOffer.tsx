@@ -13,11 +13,16 @@ const steps = [
 
 export default function SignatureOffer({
   showEyebrow = true,
+  className,
 }: {
   showEyebrow?: boolean;
+  className?: string;
 }) {
   return (
-    <section className="section signature-offer" id="digital-presence-system">
+    <section
+      className={`section signature-offer${className ? ` ${className}` : ""}`}
+      id="digital-presence-system"
+    >
       <div className="container">
         {showEyebrow && <p className="eyebrow">The Flagship Offer</p>}
         <h2>The Digital Presence System</h2>

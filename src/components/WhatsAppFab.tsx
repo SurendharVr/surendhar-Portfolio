@@ -10,7 +10,7 @@ export default function WhatsAppFab() {
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
     >
-      <WhatsAppIcon size={34} />
+      <WhatsAppIcon size={56} />
     </a>
   );
 }

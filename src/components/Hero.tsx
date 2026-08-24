@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { waLink } from "@/lib/whatsapp";
 
-export default function Hero() {
+export default function Hero({ className }: { className?: string } = {}) {
   const eyebrowRef = useRef<HTMLParagraphElement>(null);
   const line1Ref = useRef<HTMLSpanElement>(null);
   const line2Ref = useRef<HTMLSpanElement>(null);
@@ -92,7 +92,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="hero" id="top">
+    <section className={`hero${className ? ` ${className}` : ""}`} id="top">
       <div className="container">
         <div className="hero-copy hero-copy-solo">
           <p className="eyebrow" ref={eyebrowRef}>

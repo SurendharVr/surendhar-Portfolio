@@ -15,6 +15,7 @@ const GROUPS: { container: string; item: string }[] = [
   { container: ".problem-grid", item: ".problem-card" },
   { container: ".question-grid", item: ".question-card" },
   { container: ".contact-list", item: "li" },
+  { container: ".proof-cases", item: ".proof-case-card" },
 ];
 
 export default function ScrollEffects() {
@@ -53,6 +54,14 @@ export default function ScrollEffects() {
           if (cancelled) return;
           gsap.registerPlugin(ScrollTrigger);
 
+          // The scroll-snap homepage scrolls inside .snap-container, not the
+          // document -- ScrollTrigger defaults to watching window/document,
+          // so without pointing it at the real scroller every trigger here
+          // would sit stuck at "not yet entered" and content would stay
+          // permanently at its from(opacity:0) state.
+          const snapContainer = document.querySelector<HTMLElement>(".snap-container");
+          const scroller = snapContainer ?? undefined;
+
           ctx = gsap.context(() => {
             gsap.utils.toArray<HTMLElement>(HEADING_SELECTOR).forEach((el) => {
               gsap.from(el, {
@@ -62,6 +71,7 @@ export default function ScrollEffects() {
                 ease: "power2.out",
                 scrollTrigger: {
                   trigger: el,
+                  scroller,
                   start: "top 88%",
                   toggleActions: "play none none none",
                   onEnter: () => armFallback([el]),
@@ -81,6 +91,7 @@ export default function ScrollEffects() {
                   stagger: 0.08,
                   scrollTrigger: {
                     trigger: group,
+                    scroller,
                     start: "top 88%",
                     toggleActions: "play none none none",
                     onEnter: () => armFallback(Array.from(items)),

@@ -1,10 +1,17 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import type Lenis from "lenis";
 
 export default function SmoothScroll() {
+  const pathname = usePathname();
+
   useEffect(() => {
+    // The homepage drives its own scroll via native CSS scroll-snap; Lenis's
+    // virtualized scroll would fight that (and violates "no scroll hijacking"
+    // for the snap experience), so it only runs on every other page.
+    if (pathname === "/") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
@@ -36,7 +43,7 @@ export default function SmoothScroll() {
       if (frame !== undefined) cancelAnimationFrame(frame);
       lenis?.destroy();
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }
