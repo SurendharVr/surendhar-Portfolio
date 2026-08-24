@@ -1,10 +1,25 @@
 /*
   Technical design system
-  - Grid: 12 columns desktop / 4 columns mobile, gutter = --space-4.
+  - Breakpoints are content-driven layout tiers, not device targets (per MDN
+    guidance — change the layout where the content itself breaks):
+      Mobile   <768px   — 390px reference (360px as a fluid-type stress test),
+                           4-col conceptual grid, single-column stacked content,
+                           auto-height hero.
+      Tablet   768px+   — 768px reference, 6–8 col, mostly stacked content,
+                           nav stays the mobile logo+menu pattern.
+      Laptop   1024px+  — 1024px reference, 8–12 col, reduced spacing,
+                           nav switches to full horizontal, hero locks to
+                           80–90vh so the next section can peek into view.
+      Desktop  1280px+  — 1440px reference, 12-col grid, 24px gutters,
+                           large typography/spacing. Content is capped at
+                           --container-max (1280px) beyond this tier so extra
+                           viewport width becomes side whitespace, not wider
+                           content.
     Asymmetric splits (hero, contact) use a 7/5 column ratio; card grids
     (offers, work, stats) use equal-fr repeats within the same container/gutter rhythm.
   - Typography: one display face (--font-display, Geist) for headings/numbers,
     one neutral sans (--font-sans, IBM Plex Sans) for body/UI text. No serif, no italics.
+    Headings are fluid via clamp() rather than snapping at breakpoints.
   - Radius: restrained (6/10/16px). Pills reserved for small tags/badges only —
     buttons are rectangular with a subtle radius, not pill-shaped.
   - Spacing: generous section rhythm (--space-6/7/8), the page is meant to breathe.
@@ -36,6 +51,24 @@
   --font-display: var(--font-geist), 'Segoe UI', system-ui, sans-serif;
   --font-sans: var(--font-plex-sans), system-ui, -apple-system, 'Segoe UI', sans-serif;
 
+  /* Type scale — fixed steps for UI/body text, fluid steps (clamp) for
+     anything large enough to need a different size on a phone than on a
+     wide desktop. Values are the actual sizes already in use across the
+     site, consolidated from ~30 one-off rem literals down to these 11
+     named steps; nothing here is a fresh invention. */
+  --text-xs: 0.75rem;    /* micro-labels: eyebrows, category tags, dt labels, numbered badges */
+  --text-sm: 0.85rem;    /* secondary/meta text: footer, nav links, captions, work-client */
+  --text-base: 0.95rem;  /* body/UI default: buttons, paragraph copy, links */
+  --text-md: 1.05rem;    /* emphasized/lead paragraph text */
+  --text-lg: 1.2rem;     /* card subheadings (h3-level) */
+  --text-xl: 1.6rem;     /* display numerals inside cards (process step numbers) */
+
+  --text-fluid-xs: clamp(1.2rem, 2vw, 1.5rem);     /* pull-quote line (philosophy statement) */
+  --text-fluid-sm: clamp(1.75rem, 3.6vw, 2.85rem); /* section h1/h2 */
+  --text-fluid-md: clamp(1.9rem, 4.5vw, 2.5rem);   /* stat numerals */
+  --text-fluid-lg: clamp(2rem, 4.2vw, 3.25rem);    /* CTA headings */
+  --text-fluid-xl: clamp(2.1rem, 6.5vw, 5.25rem);  /* hero h1 */
+
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 16px;
@@ -52,8 +85,11 @@
   --radius-pill: 999px;
 
   --grid-columns-desktop: 12;
+  --grid-columns-laptop: 12;
+  --grid-columns-tablet: 8;
   --grid-columns-mobile: 4;
   --grid-gutter: var(--space-4);
+  --container-max: 1280px;
 
   --shadow-card: 0 1px 2px rgba(36, 31, 25, 0.05), 0 10px 30px -14px rgba(36, 31, 25, 0.16);
   --shadow-card-hover: 0 4px 10px rgba(36, 31, 25, 0.06), 0 20px 40px -16px rgba(46, 92, 255, 0.28);
@@ -154,9 +190,49 @@ h3 {
 p { margin: 0 0 var(--space-3); color: var(--color-muted-foreground); }
 
 .container {
-  max-width: 1120px;
+  max-width: var(--container-max);
   margin-inline: auto;
   padding-inline: var(--space-4);
+}
+
+/* ===== Layout primitives (Stack / Cluster / Grid) =====
+   Composition, not components — each reads spacing from a local custom
+   property with a sane default, so one section can override just its gap
+   or column count without a new class or a copy-pasted rule.
+
+   Grid replaces what used to be a hand-written `grid-template-columns:
+   repeat(N, minmax(0,1fr))` (or, for the flex-based card rows, a manual
+   flex-basis: calc((100% - k * var(--space-4)) / N) gap-subtraction) in
+   every card section. It's applied here by grouping each section's own
+   class into this shared ruleset — .offer-grid, .stat-grid etc. stay the
+   selectors components and ScrollEffects.tsx already target; only the
+   mechanics they share move here. Each section then sets --grid-cols at
+   its own breakpoints below. */
+.stack,
+.ladder-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-gap, var(--space-4));
+}
+.cluster,
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cluster-gap, var(--space-3));
+}
+.grid,
+.offer-grid,
+.problem-grid,
+.question-grid,
+.mindmap-nodes,
+.reasons-grid,
+.stat-grid,
+.work-grid,
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols, 1), minmax(0, 1fr));
+  gap: var(--grid-gap, var(--space-4));
 }
 
 /* ===== Focus ===== */
@@ -190,7 +266,7 @@ button:focus-visible {
   padding: 14px 28px;
   border-radius: var(--radius-sm);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   cursor: pointer;
   border: 2px solid transparent;
   transition: transform var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
@@ -222,15 +298,26 @@ button:focus-visible {
   display: flex;
   align-items: center;
   padding-block: var(--space-3);
-  /* Tight at the narrowest phones so the logo + both icon buttons fit at
-     320px without overflowing; restored to the full gap at 481px+. */
+  /* Tight at the narrowest phones so the logo + hamburger fit at 320px
+     without overflowing; restored to the full gap at the 768px tablet tier. */
   gap: var(--space-2);
 }
 .logo {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: var(--text-base);
+  letter-spacing: -0.01em;
   white-space: nowrap;
+}
+/* Reuses the hero heading's .hl accent-highlight language (one bold color
+   accent, not a new pattern) so the header's identity mark and the hero's
+   emphasis read as the same design decision. */
+.logo-mark {
+  color: var(--color-accent);
+  transition: color var(--transition-fast);
+}
+.logo:hover .logo-mark {
+  color: var(--color-accent-strong);
 }
 /* Mobile-first base: a fixed dropdown panel, hidden until toggled open.
    Restored to a horizontal inline row for tablet/desktop in the responsive section. */
@@ -253,7 +340,7 @@ button:focus-visible {
 .main-nav.open { display: flex; }
 .main-nav a {
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   color: var(--color-muted-foreground);
   padding: var(--space-2) 0;
   position: relative;
@@ -297,10 +384,11 @@ button:focus-visible {
   background: var(--color-muted);
   color: var(--color-accent);
 }
-/* Below 481px there isn't room for logo + WhatsApp icon + theme toggle +
+/* Below the 768px tablet tier there isn't room for logo + theme toggle +
    hamburger in one row, so the row's theme toggle is hidden and a copy
-   inside the mobile nav dropdown takes over; both are <button class="theme-toggle">
-   so they're told apart by DOM position, not an extra class. */
+   inside the mobile nav dropdown takes over; both are <button
+   class="theme-toggle"> so they're told apart by DOM position, not an
+   extra class. */
 .nav-row > button.theme-toggle { display: none; }
 .main-nav > button.theme-toggle { align-self: flex-start; margin-top: var(--space-2); }
 .nav-toggle {
@@ -315,6 +403,36 @@ button:focus-visible {
   min-height: 44px;
   cursor: pointer;
   border-radius: var(--radius-sm);
+}
+
+/* ===== WhatsApp floating action button =====
+   Lives outside .nav-row on purpose: the icon is a self-contained brand-green
+   circle (see WhatsAppIcon/.whatsapp-badge), which clashed with the header's
+   monochrome currentColor icons when it sat inline next to them. As a
+   standalone fixed widget it reads as the familiar chat-bubble pattern
+   instead of a stray colored dot in an otherwise restrained nav. */
+.whatsapp-fab {
+  position: fixed;
+  right: var(--space-4);
+  bottom: max(var(--space-4), env(safe-area-inset-bottom));
+  z-index: 55;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-pill);
+  background: var(--color-card);
+  box-shadow: var(--shadow-card-hover);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.whatsapp-fab:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-accent);
+}
+.whatsapp-fab:focus-visible {
+  border-radius: var(--radius-pill);
+  outline-offset: 3px;
 }
 
 /* ===== Home quick nav ===== */
@@ -354,7 +472,7 @@ button:focus-visible {
   position: relative;
   flex-shrink: 0;
   white-space: nowrap;
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--color-muted-foreground);
   padding: var(--space-2) var(--space-3);
@@ -426,7 +544,7 @@ button:focus-visible {
   align-items: center;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   font-weight: 700;
   color: var(--color-accent-strong);
   background: color-mix(in srgb, var(--color-accent) 12%, transparent);
@@ -435,7 +553,7 @@ button:focus-visible {
   margin-bottom: var(--space-3);
 }
 .hero-copy h1 {
-  font-size: clamp(2.1rem, 6.5vw, 5.25rem);
+  font-size: var(--text-fluid-xl);
   letter-spacing: -0.02em;
   font-weight: 700;
   color: var(--color-foreground);
@@ -444,11 +562,8 @@ button:focus-visible {
   color: var(--color-accent);
 }
 .hero-line { display: inline-block; }
-.hero-sub { font-size: 1.1rem; max-width: 52ch; }
+.hero-sub { font-size: var(--text-md); max-width: 52ch; }
 .hero-actions {
-  display: flex;
-  gap: var(--space-3);
-  flex-wrap: wrap;
   justify-content: center;
   margin-top: var(--space-5);
 }
@@ -474,25 +589,21 @@ button:focus-visible {
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   font-weight: 700;
   color: var(--color-muted-foreground);
   margin-bottom: var(--space-5);
 }
 .stat-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-4);
   margin-top: var(--space-5);
 }
 .stat-grid-3 { margin-top: 0; }
-/* Mobile-first: 1 column by default; 2 columns from 481px; the 4/3-column
-   desktop split (plus the stat-grid-3 3-up variant) is restored at 1025px+. */
+/* Mobile-first: 1 column by default; 2 columns from the 768px tablet tier;
+   the 4/3-column split (plus the stat-grid-3 3-up variant) kicks in at the
+   1024px laptop tier. */
 .stat-card {
   position: relative;
   overflow: hidden;
-  flex: 0 0 100%;
   background: var(--color-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -529,7 +640,7 @@ button:focus-visible {
   position: relative;
   display: block;
   font-family: var(--font-display);
-  font-size: 2.5rem;
+  font-size: var(--text-fluid-md);
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--color-accent-strong);
@@ -538,7 +649,7 @@ button:focus-visible {
 .stat-label {
   position: relative;
   color: var(--color-muted-foreground);
-  font-size: 0.92rem;
+  font-size: var(--text-base);
 }
 
 @keyframes stat-glow-pulse {
@@ -556,18 +667,15 @@ button:focus-visible {
 }
 .section h1,
 .section h2 {
-  font-size: clamp(1.75rem, 3.6vw, 2.85rem);
+  font-size: var(--text-fluid-sm);
   color: var(--color-foreground);
   max-width: 30ch;
 }
 .service-hero { padding-bottom: var(--space-5); }
-.service-hero .background-intro { font-size: 1.05rem; }
+.service-hero .background-intro { font-size: var(--text-md); }
 
 /* ===== Services (offer cards) ===== */
 .offer-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-4);
   margin-top: var(--space-5);
 }
 .offer-card {
@@ -595,19 +703,19 @@ button:focus-visible {
 .offer-category {
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   font-weight: 700;
   color: var(--color-accent);
   margin-bottom: var(--space-1);
 }
-.offer-card h3 { font-size: 1.25rem; color: var(--color-foreground); margin-bottom: 0; }
-.offer-card p { font-size: 0.98rem; }
+.offer-card h3 { font-size: var(--text-lg); color: var(--color-foreground); margin-bottom: 0; }
+.offer-card p { font-size: var(--text-base); }
 .offer-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-weight: 700;
-  font-size: 0.92rem;
+  font-size: var(--text-base);
   color: var(--color-accent);
   transition: gap var(--transition-fast);
 }
@@ -622,7 +730,7 @@ button:focus-visible {
   padding-top: var(--space-6);
   border-top: 1px solid var(--color-border);
 }
-.services-subgroup .mini-heading { font-size: 0.95rem; }
+.services-subgroup .mini-heading { font-size: var(--text-base); }
 .services-subgroup .background-intro { margin-bottom: 0; }
 
 /* ===== Entry point ladder ===== */
@@ -631,11 +739,9 @@ button:focus-visible {
   border-top: 1px solid var(--color-border);
 }
 .ladder-item {
-  display: flex;
-  flex-direction: column;
+  --stack-gap: var(--space-3);
   align-items: flex-start;
   justify-content: space-between;
-  gap: var(--space-3);
   padding-block: var(--space-5);
   border-bottom: 1px solid var(--color-border);
   transition: padding-inline var(--transition-medium);
@@ -644,12 +750,12 @@ button:focus-visible {
 .ladder-tier {
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   font-weight: 700;
   color: var(--color-accent);
   margin-bottom: var(--space-1);
 }
-.ladder-meta h3 { font-size: 1.15rem; margin-bottom: var(--space-1); }
+.ladder-meta h3 { font-size: var(--text-lg); margin-bottom: var(--space-1); }
 .ladder-meta p:last-child { margin-bottom: 0; max-width: 52ch; }
 .ladder-link {
   flex-shrink: 0;
@@ -686,7 +792,7 @@ button:focus-visible {
 
 /* ===== Signature offer — mind map =====
    Mobile-first: hub label + a stacked list of numbered branch cards.
-   Desktop (1025px+) rearranges the same markup into a radial diagram —
+   Laptop (1024px+) rearranges the same markup into a radial diagram —
    the hub and nodes switch to position:absolute using the --x/--y
    custom properties, and the SVG connector lines become visible. */
 .mindmap { margin: var(--space-5) 0; }
@@ -698,7 +804,7 @@ button:focus-visible {
   text-align: center;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   color: var(--color-on-accent);
   background: var(--color-accent-fill);
   border-radius: var(--radius-md);
@@ -706,12 +812,10 @@ button:focus-visible {
   box-shadow: var(--shadow-accent);
 }
 .mindmap-nodes {
+  --grid-gap: var(--space-2);
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-2);
 }
 .mindmap-node {
   display: flex;
@@ -740,7 +844,7 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
   font-family: var(--font-sans);
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   font-weight: 700;
   background: color-mix(in srgb, var(--color-accent) 14%, transparent);
   color: var(--color-accent);
@@ -750,7 +854,7 @@ button:focus-visible {
 .mini-heading {
   font-family: var(--font-sans);
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--color-accent);
@@ -758,12 +862,10 @@ button:focus-visible {
 }
 .background-intro { max-width: 68ch; }
 .question-grid {
+  --grid-gap: var(--space-2);
   list-style: none;
   margin: var(--space-4) 0 var(--space-6);
   padding: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-2);
 }
 .question-card {
   display: flex;
@@ -787,14 +889,14 @@ button:focus-visible {
 }
 .question-card p {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   font-weight: 600;
   color: var(--color-foreground);
 }
 .process-label { margin-top: var(--space-2); }
 .philosophy-line {
   font-family: var(--font-display);
-  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-size: var(--text-fluid-xs);
   font-weight: 600;
   color: var(--color-foreground);
   max-width: 60ch;
@@ -804,12 +906,10 @@ button:focus-visible {
   border-left: 3px solid var(--color-accent);
 }
 .problem-grid {
+  --grid-gap: var(--space-3);
   list-style: none;
   margin: var(--space-5) 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-3);
 }
 .problem-card {
   display: flex;
@@ -839,7 +939,7 @@ button:focus-visible {
 }
 .problem-card p {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: var(--text-md);
   font-weight: 600;
   color: var(--color-foreground);
 }
@@ -849,18 +949,15 @@ button:focus-visible {
   border-radius: var(--radius-md);
   padding: var(--space-4);
 }
-.capability-card p:last-child { margin-bottom: 0; font-size: 0.95rem; }
+.capability-card p:last-child { margin-bottom: 0; font-size: var(--text-base); }
 .reasons-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-4);
   margin-top: var(--space-6);
 }
 .reasons-lead {
   grid-column: 1 / -1;
   padding: var(--space-5);
 }
-.reasons-lead .mini-heading { font-size: 1.2rem; }
+.reasons-lead .mini-heading { font-size: var(--text-lg); }
 
 .capability-rows {
   margin-top: var(--space-6);
@@ -875,19 +972,15 @@ button:focus-visible {
 
 /* ===== Work / case studies ===== */
 .work-grid {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: center;
-  gap: var(--space-4);
+  align-items: start;
   margin-top: var(--space-5);
 }
-/* Mobile-first: 1 column by default; 2 columns from 481px; the 3/2-column
-   desktop split (work-grid vs. the work-grid-2 variant) is restored at 1025px+. */
+/* Mobile-first: 1 column by default; 2 columns from the 768px tablet tier;
+   the 3/2-column split (work-grid vs. the work-grid-2 variant) kicks in at
+   the 1024px laptop tier. */
 .work-card {
   display: flex;
   flex-direction: column;
-  flex: 0 0 100%;
   background: var(--color-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -913,7 +1006,7 @@ button:focus-visible {
   align-self: flex-start;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   font-weight: 700;
   color: var(--color-accent);
   background: color-mix(in srgb, var(--color-accent) 12%, transparent);
@@ -922,12 +1015,12 @@ button:focus-visible {
   margin-bottom: var(--space-3);
 }
 .work-card h3 {
-  font-size: 1.15rem;
+  font-size: var(--text-lg);
   color: var(--color-foreground);
   margin-bottom: var(--space-1);
 }
 .work-client {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--color-muted-foreground);
   margin-bottom: var(--space-3);
@@ -939,7 +1032,7 @@ button:focus-visible {
   margin: 0;
 }
 .work-details dt {
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -948,7 +1041,7 @@ button:focus-visible {
 }
 .work-details dd {
   margin: 0;
-  font-size: 0.92rem;
+  font-size: var(--text-base);
   color: var(--color-secondary);
   line-height: 1.55;
 }
@@ -962,7 +1055,7 @@ button:focus-visible {
   background: none;
   border: none;
   padding: 10px 0;
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-weight: 700;
   color: var(--color-accent);
   cursor: pointer;
@@ -991,7 +1084,7 @@ button:focus-visible {
   margin-top: auto;
   padding-top: var(--space-4);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: var(--text-base);
   color: var(--color-accent);
   transition: gap var(--transition-fast);
 }
@@ -1020,15 +1113,10 @@ button:focus-visible {
 
 /* ===== Process ===== */
 .process-steps {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-4);
   margin-top: var(--space-6);
 }
 .process-steps li {
   position: relative;
-  flex: 0 0 100%;
   background: var(--color-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -1043,13 +1131,13 @@ button:focus-visible {
 .process-number {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: var(--text-xl);
   font-weight: 800;
   color: color-mix(in srgb, var(--color-accent) 80%, transparent);
   margin-bottom: var(--space-2);
 }
-.process-steps h3 { font-size: 1.05rem; color: var(--color-foreground); margin-bottom: var(--space-1); }
-.process-steps p { font-size: 0.9rem; margin-bottom: 0; }
+.process-steps h3 { font-size: var(--text-md); color: var(--color-foreground); margin-bottom: var(--space-1); }
+.process-steps p { font-size: var(--text-base); margin-bottom: 0; }
 
 /* ===== Contact ===== */
 .section-dark {
@@ -1089,7 +1177,7 @@ button:focus-visible {
    this actually wins instead of silently losing to that rule's font-size. */
 h1.cta-heading,
 h2.cta-heading {
-  font-size: clamp(2rem, 4.2vw, 3.25rem);
+  font-size: var(--text-fluid-lg);
 }
 .contact-grid {
   position: relative;
@@ -1130,28 +1218,25 @@ h2.cta-heading {
 }
 .site-footer p {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   text-align: center;
   color: var(--color-muted-foreground);
 }
 
-/* ===== Responsive (mobile-first: base styles above are for phones; each
-   tier below layers on progressively larger-screen enhancements) ===== */
+/* ===== Responsive (mobile-first: base styles above are the <768px mobile
+   tier — single-column, content-sized hero, logo+hamburger nav. Three named
+   tiers layer on top; see the design-system comment at the top of this file
+   for what each one represents. 360px/390px phones and 320px-narrow phones
+   all share this base tier — there is no separate breakpoint for them, the
+   layout just compresses via fluid clamp() type and flex-wrap.) ===== */
 
-/* Large phone / small tablet portrait */
-@media (min-width: 481px) {
+/* Tablet: 768px reference, 6–8 col, mostly stacked content. Nav stays the
+   mobile logo+menu pattern here — it only goes fully horizontal at Laptop. */
+@media (min-width: 768px) {
   .nav-row { gap: var(--space-5); }
-  .logo { font-size: 1.1rem; }
+  .logo { font-size: var(--text-md); }
   .nav-row > button.theme-toggle { display: inline-flex; }
   .main-nav > button.theme-toggle { display: none; }
-  .stat-card { flex-basis: calc((100% - var(--space-4)) / 2); }
-  .reasons-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .work-card { flex-basis: calc((100% - var(--space-4)) / 2); }
-  .process-steps li { flex-basis: calc((100% - var(--space-4)) / 2); }
-}
-
-/* Tablet */
-@media (min-width: 769px) {
   :root {
     --space-6: 56px;
     --space-7: 88px;
@@ -1164,16 +1249,25 @@ h2.cta-heading {
   .contact-list li:hover { transform: translateX(4px); }
   .ladder-item { flex-direction: row; align-items: center; gap: var(--space-5); }
   .ladder-item:hover { padding-inline: var(--space-2); }
-  .offer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .problem-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .question-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .mindmap-nodes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .process-steps li { flex-basis: calc((100% - 2 * var(--space-4)) / 3); }
+  /* 2-up divides evenly into the tablet tier's 8-col grid; the 12-col tiers
+     below move most of these up to a wider row instead. */
+  .stat-grid,
+  .reasons-grid,
+  .work-grid,
+  .offer-grid,
+  .problem-grid,
+  .question-grid,
+  .mindmap-nodes,
+  .process-steps {
+    --grid-cols: 2;
+  }
 }
 
-/* Tablet landscape / small desktop: nav switches from the mobile dropdown
-   to a horizontal inline row. */
-@media (min-width: 861px) {
+/* Laptop: 1024px reference, 8–12 col, reduced spacing relative to full
+   Desktop. Nav switches from the mobile dropdown to a horizontal inline row,
+   and the hero locks to a viewport-relative height so the next section can
+   peek into view instead of the page reading as one long scroll. */
+@media (min-width: 1024px) {
   .main-nav {
     display: flex;
     position: static;
@@ -1193,16 +1287,18 @@ h2.cta-heading {
   /* Desktop already shows the full site nav in the header; the homepage's
      in-page quick-nav is a mobile/tablet aid only. */
   .quick-nav { display: none; }
-}
 
-/* Desktop */
-@media (min-width: 1025px) {
-  .stat-card { flex-basis: calc((100% - 3 * var(--space-4)) / 4); }
-  .stat-grid-3 .stat-card { flex-basis: calc((100% - 2 * var(--space-4)) / 3); }
-  .reasons-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .work-card { flex-basis: calc((100% - 2 * var(--space-4)) / 3); }
-  .work-grid-2 .work-card { flex-basis: calc((100% - var(--space-4)) / 2); }
-  .process-steps li { flex-basis: calc((100% - 4 * var(--space-4)) / 5); }
+  /* min-height (not height) so a long hero copy block can still grow past
+     this instead of clipping; 85vh keeps ~10-15% of the next section
+     visible as a scroll cue rather than filling the full viewport. */
+  .hero { min-height: 85vh; display: flex; align-items: center; }
+
+  .stat-grid { --grid-cols: 4; }
+  .stat-grid-3 { --grid-cols: 3; }
+  .reasons-grid { --grid-cols: 3; }
+  .work-grid { --grid-cols: 3; }
+  .work-grid-2 { --grid-cols: 2; }
+  .process-steps { --grid-cols: 5; }
 
   /* Mind map: switch from the stacked list to a radial hub-and-spoke diagram. */
   .mindmap-canvas {
@@ -1243,7 +1339,21 @@ h2.cta-heading {
     flex-direction: column;
     text-align: center;
     padding: var(--space-2) var(--space-3);
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
   }
   .mindmap-node:hover { transform: translate(-50%, -50%) translateY(-3px); }
+}
+
+/* Desktop: 1440px reference, 1280px+ breakpoint, 12-col grid, 24px gutters
+   (--space-4, already the container's gutter at every tier). Content is
+   already capped at --container-max (1280px) via .container, so the only
+   thing this tier adds is the extra breathing room a full desktop canvas
+   affords — hero locks a touch taller and the outer section rhythm opens up;
+   card grid column counts stay the same as Laptop, since 12 columns are
+   already active there. */
+@media (min-width: 1280px) {
+  .hero { min-height: 90vh; }
+  :root {
+    --space-8: 160px;
+  }
 }
