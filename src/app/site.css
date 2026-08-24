@@ -30,14 +30,19 @@
   --color-on-primary: #F7F1E4;
   --color-secondary: #4A4437;
   --color-on-secondary: #FFFFFF;
-  --color-accent: #2E5CFF;
-  --color-accent-strong: #1D3FD1;
+  /* Deepened from the original #2E5CFF -- same hue family (won't clash with
+     existing screenshots/assets), but richer and less "default SaaS blue,"
+     reading as more considered against the warm cream base. Contrast vs
+     --color-on-accent (#FFFFFF) improves from 5.13:1 to 7.41:1 (AAA for
+     normal text); vs the cream background it's 6.59:1. */
+  --color-accent: #2A3FDB;
+  --color-accent-strong: #1B2AA8;
   --color-on-accent: #FFFFFF;
   /* Fixed across themes (unlike --color-accent, which lightens in dark mode for
      legibility as text/borders) — solid fills behind --color-on-accent text need
      to stay dark enough for AA contrast regardless of theme. */
-  --color-accent-fill: #2E5CFF;
-  --color-accent-fill-hover: #1D3FD1;
+  --color-accent-fill: #2A3FDB;
+  --color-accent-fill-hover: #1B2AA8;
   --color-highlight: #FFD84D;
   --color-background: #F7F1E4;
   --color-foreground: #241F19;
@@ -46,7 +51,7 @@
   --color-muted: #EFE6D2;
   --color-muted-foreground: #5A5344;
   --color-border: #E6DAC0;
-  --color-ring: #2E5CFF;
+  --color-ring: #2A3FDB;
 
   --font-display: var(--font-geist), 'Segoe UI', system-ui, sans-serif;
   --font-sans: var(--font-plex-sans), system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -98,9 +103,14 @@
   --container-max: 1280px;
 
   --shadow-card: 0 1px 2px rgba(36, 31, 25, 0.05), 0 10px 30px -14px rgba(36, 31, 25, 0.16);
-  --shadow-card-hover: 0 4px 10px rgba(36, 31, 25, 0.06), 0 20px 40px -16px rgba(46, 92, 255, 0.28);
-  --shadow-accent: 0 12px 24px -10px rgba(46, 92, 255, 0.45);
-  --transition-fast: 180ms ease;
+  --shadow-card-hover: 0 4px 10px rgba(36, 31, 25, 0.06), 0 20px 40px -16px rgba(42, 63, 219, 0.28);
+  --shadow-accent: 0 12px 24px -10px rgba(42, 63, 219, 0.45);
+  /* Same custom deceleration curve as --transition-medium, not the browser's
+     generic "ease" -- small, fast interactions (button/link hovers, focus
+     rings) previously used a different, off-the-shelf timing function than
+     the site's cards/sections, which reads as two different hands doing the
+     motion work instead of one considered system. */
+  --transition-fast: 180ms cubic-bezier(.22,1,.36,1);
   --transition-medium: 320ms cubic-bezier(.22,1,.36,1);
 }
 
@@ -114,10 +124,10 @@
     --color-muted-foreground: #B8AD95;
     --color-border: #332C1E;
     --color-secondary: #B8AD95;
-    --color-accent: #5B82FF;
-    --color-accent-strong: #7C9BFF;
+    --color-accent: #6B7EFF;
+    --color-accent-strong: #96A8FF;
     --shadow-card: 0 1px 2px rgba(0,0,0,0.4), 0 10px 30px -14px rgba(0,0,0,0.6);
-    --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.4), 0 20px 44px -16px rgba(91, 130, 255, 0.35);
+    --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.4), 0 20px 44px -16px rgba(107, 126, 255, 0.35);
   }
 }
 
@@ -132,10 +142,10 @@
   --color-muted-foreground: #5A5344;
   --color-border: #E6DAC0;
   --color-secondary: #4A4437;
-  --color-accent: #2E5CFF;
-  --color-accent-strong: #1D3FD1;
+  --color-accent: #2A3FDB;
+  --color-accent-strong: #1B2AA8;
   --shadow-card: 0 1px 2px rgba(36, 31, 25, 0.05), 0 10px 30px -14px rgba(36, 31, 25, 0.16);
-  --shadow-card-hover: 0 4px 10px rgba(36, 31, 25, 0.06), 0 20px 40px -16px rgba(46, 92, 255, 0.28);
+  --shadow-card-hover: 0 4px 10px rgba(36, 31, 25, 0.06), 0 20px 40px -16px rgba(42, 63, 219, 0.28);
 }
 :root[data-theme="dark"] {
   --color-background: #17130E;
@@ -146,10 +156,10 @@
   --color-muted-foreground: #B8AD95;
   --color-border: #332C1E;
   --color-secondary: #B8AD95;
-  --color-accent: #5B82FF;
-  --color-accent-strong: #7C9BFF;
+  --color-accent: #6B7EFF;
+  --color-accent-strong: #96A8FF;
   --shadow-card: 0 1px 2px rgba(0,0,0,0.4), 0 10px 30px -14px rgba(0,0,0,0.6);
-  --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.4), 0 20px 44px -16px rgba(91, 130, 255, 0.35);
+  --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.4), 0 20px 44px -16px rgba(107, 126, 255, 0.35);
 }
 
 /* ===== Reset ===== */
@@ -279,18 +289,30 @@ button:focus-visible {
   min-height: 44px;
 }
 .btn:hover { transform: translateY(-2px); }
+/* Hover had lift and color feedback but nothing on the actual click -- a
+   button that doesn't visibly respond to being pressed reads as unresponsive
+   regardless of how polished its hover state is. Faster, snappier duration
+   than the hover transition so the press itself feels immediate. */
+.btn:active { transform: translateY(0) scale(0.97); transition-duration: 90ms; }
 .btn-accent {
   background: var(--color-accent-fill);
   color: var(--color-on-accent);
   box-shadow: var(--shadow-accent);
 }
-.btn-accent:hover { background: var(--color-accent-fill-hover); }
+.btn-accent:hover {
+  background: var(--color-accent-fill-hover);
+  box-shadow: 0 16px 32px -12px rgba(42, 63, 219, 0.55);
+}
 .btn-outline {
   background: transparent;
   color: var(--color-foreground);
   border-color: var(--color-border);
 }
-.btn-outline:hover { background: var(--color-muted); border-color: var(--color-accent); }
+.btn-outline:hover {
+  background: var(--color-muted);
+  border-color: var(--color-accent);
+  box-shadow: 0 8px 20px -14px rgba(36, 31, 25, 0.3);
+}
 
 /* ===== Header / nav ===== */
 .site-header {
@@ -324,6 +346,18 @@ body.snap-page .hero {
    the copy keeps both capability rows intact. */
 body.snap-page .hero-portrait {
   max-width: 260px;
+}
+/* .hero-media's glow (see the base rule) is sized/positioned for the 420px
+   long-scroll portrait, where it reads as a subtle accent smaller than the
+   photo itself (340/420 ≈ 0.81x). Unscaled, it would be 1.3x *larger* than
+   this section's 260px portrait -- the glow overpowering the photo instead
+   of sitting behind it. Scaled to the same ~0.8x ratio instead. */
+body.snap-page .hero-media::before {
+  width: 210px;
+  height: 210px;
+  top: -20px;
+  right: -20px;
+  filter: blur(55px);
 }
 /* Explicit height rather than relying on the img's own aspect-ratio:1/1 to
    recompute here — inside this grid cell it kept the original 360px
@@ -428,9 +462,14 @@ body.snap-page .hero-portrait img {
   body.snap-page .mindmap-node { padding: var(--space-2); font-size: var(--text-xs); }
 
   /* TRUST: portrait shrinks further and stacks above a single, shorter
-     capability row instead of two. */
+     capability row instead of two. Glow dropped rather than scaled down
+     again -- at 140px it's a small enough element, and this tight mobile
+     screen, that a soft-focus blur circle risks reading as a smudge rather
+     than an accent; matches this same block's existing "distill, don't
+     shrink everything proportionally forever" approach elsewhere. */
   body.snap-page .hero-portrait,
   body.snap-page .hero-portrait img { max-width: 140px; height: 140px; }
+  body.snap-page .hero-media::before { display: none; }
   body.snap-page .about-grid { gap: var(--space-3); }
   body.snap-page .capability-rows { margin-top: var(--space-3); }
   body.snap-page .capability-row:nth-child(n + 2) { display: none; }
@@ -730,9 +769,31 @@ body.snap-page .hero-portrait img {
   margin-top: var(--space-5);
 }
 .hero-media { position: relative; }
+/* Same soft ambient-glow technique as .hero::before / .section-dark::before
+   -- reused rather than invented so the portrait ties into the same visual
+   language instead of introducing a new one. Sized to peek from behind the
+   portrait's corner rather than engulf it. */
+.hero-media::before {
+  content: "";
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  top: -30px;
+  right: -30px;
+  border-radius: 50%;
+  filter: blur(70px);
+  background: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  z-index: 0;
+  pointer-events: none;
+}
 .hero-portrait {
+  position: relative;
+  z-index: 1;
   width: 100%;
-  max-width: 360px;
+  /* Was 360px, capped well short of the ~470px column it actually has at
+     desktop -- measured 110px of unclaimed space inside its own grid cell,
+     which read as small/adrift rather than deliberately composed. */
+  max-width: 420px;
   margin-inline: auto;
 }
 .hero-portrait img {
@@ -914,11 +975,16 @@ body.snap-page .hero-portrait img {
   flex-shrink: 0;
   white-space: nowrap;
 }
+/* A flat tint reads noticeably flatter next to the cards' own two-layer
+   shadow system right beside it -- a hairline border in the same hue gives
+   it a touch of the same considered depth without adding motion or a new
+   visual language. */
 .icon-badge {
   width: 46px;
   height: 46px;
   border-radius: var(--radius-sm);
   background: color-mix(in srgb, var(--color-accent) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 18%, transparent);
   color: var(--color-accent);
   display: flex;
   align-items: center;
