@@ -318,14 +318,6 @@ button:focus-visible {
 body.snap-page .hero {
   min-height: 100svh;
 }
-/* The System diagram's canvas is a fixed 620px square on the normal
-   long-scroll page, where extra height just means the visitor scrolls a
-   little further. Inside one fixed 100svh screen that fixed size is the
-   single biggest overflow risk, so it scales against the viewport's own
-   height instead. */
-body.snap-page .mindmap-canvas {
-  max-width: min(620px, 34svh);
-}
 /* TRUST's portrait + two capability rows measured ~40-70px taller than a
    short-height laptop screen (see the plan's viewport matrix) once the
    fixed header's padding is subtracted. Trimming the portrait rather than
@@ -375,22 +367,46 @@ body.snap-page .hero-portrait img {
     margin-bottom: var(--space-3);
   }
   body.snap-page .snap-convert-copyright {
-    /* Not centered here: the FAB only eats into the right side, so a
-       centered box needs to be uncomfortably narrow (verified empirically
-       -- even 240px, correctly centered, still had its right edge landing
-       inside the FAB's zone) to keep clear on both sides evenly. A plain
-       right margin reserving the FAB's footprint, with the text still
-       centering itself within what's left, reads just as balanced and
-       actually stays clear. */
+    /* Centering this line's own (narrower, right-margined) box doesn't
+       center the line itself relative to the h2/paragraph/contact-list
+       above -- those size to the section's full width, so their centered
+       text lands on the section's true center, while this box's center
+       sits wherever the leftover space after the FAB's reserved margin
+       happens to be. The result reads as visibly out of line with
+       everything above it, not just "not centered." Left-aligned instead:
+       it starts flush with the same left edge every sibling above it also
+       starts from, so it reads as an intentional footer convention rather
+       than a broken center attempt, and it only has to clear the FAB on
+       one side rather than fit evenly within a shrunk box on both. The
+       margin itself is still needed -- the FAB's `right: var(--space-4)`
+       offset means its left edge sits a constant ~56px in from the
+       container's own right edge at every viewport width this site
+       supports (checked 320-428px), so a fixed reservation here stays
+       correct at every width rather than needing to scale with it. */
+    text-align: left;
     margin-right: 90px;
   }
 
   /* PROVE: 3 tiny stat cards fit fine 3-across even at 360px; the case
-     cards don't at full length, so they drop to title + link only. */
+     cards don't at full length, so they drop to title + link only.
+     .stat-number is now a small pill tag, not the big bold numeral this
+     block was originally tuned for -- growing it here (the old rule) sized
+     it past a 104px-wide mobile card and made "Launched" overflow its own
+     card sideways (inline-block sizes to its content before wrapping, and
+     a single unbroken word has nowhere to break). Shrunk to fit instead,
+     with nowrap since it's meant to read as one short label, not hyphenate
+     mid-word. .stat-label is the primary readable line now (see the
+     desktop rule), so it's no longer shrunk down to the old secondary-text
+     size either. */
   body.snap-page .stat-grid { --grid-cols: 3; --grid-gap: var(--space-2); }
   body.snap-page .stat-card { padding: var(--space-2); }
-  body.snap-page .stat-number { font-size: var(--text-md); }
-  body.snap-page .stat-label { font-size: var(--text-xs); }
+  body.snap-page .stat-number {
+    font-size: 11px;
+    padding: 3px 8px;
+    max-width: 100%;
+    white-space: nowrap;
+  }
+  body.snap-page .stat-label { font-size: var(--text-sm); }
   body.snap-page .proof-cases { --grid-gap: var(--space-2); margin-top: var(--space-4); }
   body.snap-page .proof-case-card { padding: var(--space-3); }
   body.snap-page .proof-case-card .work-tag,
@@ -749,58 +765,41 @@ body.snap-page .hero-portrait img {
    1024px laptop tier. */
 .stat-card {
   position: relative;
-  overflow: hidden;
   background: var(--color-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: var(--space-5);
   transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
 }
-/* The "backlight" — a soft blurred glow seated behind the number, always
-   faintly lit, blooming brighter on hover. */
-.stat-card::before {
-  content: "";
-  position: absolute;
-  top: -60px;
-  left: -50px;
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--color-accent) 45%, transparent);
-  filter: blur(42px);
-  opacity: 0.28;
-  transition: opacity var(--transition-medium), transform var(--transition-medium);
-  animation: stat-glow-pulse 5s ease-in-out infinite;
-  pointer-events: none;
-}
 .stat-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-card-hover);
   border-color: color-mix(in srgb, var(--color-accent) 30%, var(--color-border));
 }
-.stat-card:hover::before {
-  opacity: 0.55;
-  transform: scale(1.15);
-}
+/* Not every card here is a real number ("10+ yrs" is; "Built"/"Launched"
+   aren't) -- a giant numeral treatment misread two of the three as
+   inflated stats. Restyled as a status tag instead (same pill language as
+   .work-tag elsewhere in this section), with the description promoted to
+   the primary readable line so the card still reads as substantial. */
 .stat-number {
   position: relative;
-  display: block;
-  font-family: var(--font-display);
-  font-size: var(--text-fluid-md);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--color-accent-strong);
-  margin-bottom: var(--space-1);
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  margin-bottom: var(--space-3);
 }
 .stat-label {
   position: relative;
-  color: var(--color-muted-foreground);
-  font-size: var(--text-base);
-}
-
-@keyframes stat-glow-pulse {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 0.4; }
+  display: block;
+  color: var(--color-foreground);
+  font-size: var(--text-md);
+  font-weight: 600;
 }
 
 /* ===== Sections ===== */
@@ -1594,6 +1593,38 @@ body.snap-page .site-footer { display: none; }
     max-width: 620px;
     aspect-ratio: 1 / 1;
     margin-inline: auto;
+  }
+  /* The System diagram's canvas is a fixed 620px square on the normal
+     long-scroll page, where extra height just means the visitor scrolls a
+     little further. Inside one fixed 100svh snap screen that fixed size is
+     the single biggest overflow risk, so it scales against the viewport's
+     own height instead. Scoped to this 1024px+ tier specifically -- below
+     it the mind map is a plain stacked list with no square/aspect-ratio
+     constraint, so a viewport-height-based max-width has no relevance
+     there and previously just needlessly narrowed the card grid (leaving
+     an empty gap on mobile instead of using the full available width).
+     34svh measured too small in practice -- at every laptop/desktop
+     height actually tested (1024x700, 1366x768, even 1280x1024) it
+     produced a canvas small enough that the 4 diagonal nodes overlapped
+     the hub label, and the 3 cardinal nodes (top/bottom/left/right)
+     overflowed the canvas edge outright. 44svh is the smallest value that
+     stays overlap/overflow-free at 1024x700 -- the shortest laptop height
+     this file's other tuning targets -- without pushing the section past
+     one 100svh screen. */
+  body.snap-page .mindmap-canvas {
+    max-width: min(620px, 44svh);
+  }
+  /* The hub label's 280px/text-lg sizing (below) is tuned for the normal
+     long-scroll page's uncapped 620px canvas. On the snap page the canvas
+     above is capped well below 620px at every realistic viewport height,
+     but the hub didn't shrink with it -- at a ~250-450px canvas the
+     mostly-fixed-width hub still ate enough central space to collide with
+     the 4 diagonal nodes (see the canvas comment above). Shrunk and scoped
+     to this tier only, so the long-scroll page's hub is untouched. */
+  body.snap-page .mindmap-hub {
+    max-width: 32%;
+    font-size: 12.5px;
+    padding: 8px;
   }
   .mindmap-lines {
     display: block;
