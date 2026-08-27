@@ -1,4 +1,4 @@
-import { waLink } from "@/lib/whatsapp";
+import { waLink } from "@/lib/contact";
 import ContactRows from "@/components/ContactRows";
 
 export default function SnapConvert() {

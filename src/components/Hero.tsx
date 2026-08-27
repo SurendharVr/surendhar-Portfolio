@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { waLink } from "@/lib/whatsapp";
+import { waLink } from "@/lib/contact";
 
 export default function Hero({ className }: { className?: string } = {}) {
   const eyebrowRef = useRef<HTMLParagraphElement>(null);

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { arrowIcon, offers, partnerships } from "@/lib/offers";
-import { waLink } from "@/lib/whatsapp";
+import { waLink } from "@/lib/contact";
 
 export default function Services({
   headingLevel = "h2",

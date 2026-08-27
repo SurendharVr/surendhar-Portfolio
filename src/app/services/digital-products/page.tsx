@@ -3,7 +3,7 @@ import Link from "next/link";
 import WorkThumb from "@/components/WorkThumb";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
-import { waLink } from "@/lib/whatsapp";
+import { waLink } from "@/lib/contact";
 
 const title = "Digital Product Design — Surendhar Venkatesh";
 const description =

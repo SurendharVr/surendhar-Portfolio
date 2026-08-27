@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { waLink } from "@/lib/whatsapp";
+import { waLink } from "@/lib/contact";
 import ThemeToggle from "@/components/ThemeToggle";
 
 export default function SiteHeader() {

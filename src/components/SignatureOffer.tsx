@@ -1,4 +1,4 @@
-import { waLink } from "@/lib/whatsapp";
+import { waLink } from "@/lib/contact";
 
 const steps = [
   { label: "Strategy", x: 50, y: 10 },

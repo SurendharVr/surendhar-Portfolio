@@ -1,4 +1,4 @@
-// Single source of truth for the studio's phone number.
+// Single source of truth for the studio's contact details.
 //
 // This used to be three independent hardcoded copies -- the wa.me digits here,
 // `telephone: "+919655326333"` in the layout's JSON-LD, and `tel:+919655326333`
@@ -11,6 +11,12 @@
 //
 // This file is imported by client components, so it must stay free of
 // server-only environment variables.
+//
+// The email had the same two-copies problem the phone number did -- once in
+// the contact row's mailto and link text, once in the layout's JSON-LD -- so
+// it lives here now as well. That is also why this module is no longer called
+// whatsapp.ts: it holds the phone, the email and the wa.me builder, and only
+// one of those is WhatsApp.
 const COUNTRY_CODE = "91";
 const SUBSCRIBER_NUMBER = "9655326333";
 
@@ -23,6 +29,9 @@ export const PHONE_E164 = `+${WHATSAPP_NUMBER}`;
 
 /** Human-readable grouping, for link text only -- never for an href. */
 export const PHONE_DISPLAY = "+91 96553 26333";
+
+/** Used for the mailto: href, the visible link text, and schema.org email. */
+export const EMAIL = "venkateshsurendhar@gmail.com";
 
 export function waLink(message: string) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;

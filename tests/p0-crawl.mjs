@@ -71,6 +71,23 @@ record("CONV-01a", "wa.me digits, JSON-LD telephone and tel: href all agree",
   numbers.size === 1,
   `distinct=${[...numbers].join(", ")} · jsonLd=${jsonLd?.telephone} · tel=${telMatch?.[1]}`);
 
+// ---------- CONV-01b: the email agrees across all three surfaces ----------
+// Same reasoning as the number above: the address is single-sourced in
+// lib/contact.ts, so this asserts the *rendered* surfaces still agree rather
+// than importing the constant -- a test that imports the value it is checking
+// would pass just as happily with a wrong value in it.
+const EXPECTED_EMAIL = "venkateshsurendhar@gmail.com";
+const mailtoHrefs = new Set(
+  [...contact.matchAll(/href="mailto:([^"]+)"/g)].map((m) => m[1])
+);
+const emailLinkText = new Set(
+  [...contact.matchAll(/href="mailto:[^"]+"[^>]*>([^<]+)</g)].map((m) => m[1])
+);
+const emails = new Set([...mailtoHrefs, ...emailLinkText, jsonLd?.email].filter(Boolean));
+record("CONV-01b", "mailto href, visible link text and JSON-LD email all agree",
+  emails.size === 1 && emails.has(EXPECTED_EMAIL),
+  `distinct=${[...emails].join(", ")} · hrefs=${mailtoHrefs.size} · jsonLd=${jsonLd?.email}`);
+
 // ---------- NAV-01: every internal link resolves ----------
 const internal = new Set();
 for (const [, { html }] of all) {

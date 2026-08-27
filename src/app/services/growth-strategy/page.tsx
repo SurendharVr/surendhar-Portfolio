@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
-import { waLink } from "@/lib/whatsapp";
+import { waLink } from "@/lib/contact";
 
 const title = "Digital Growth & Strategy — Surendhar Venkatesh";
 const description =

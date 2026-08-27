@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { waLink, PHONE_E164, PHONE_DISPLAY } from "@/lib/whatsapp";
+import { waLink, PHONE_E164, PHONE_DISPLAY, EMAIL } from "@/lib/contact";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
 
 // The contact list is rendered in two places with different subsets: five rows
@@ -35,7 +35,7 @@ const ROWS: Record<RowId, ReactNode> = {
           />
         </svg>
       </span>
-      <a href="mailto:venkateshsurendhar@gmail.com">venkateshsurendhar@gmail.com</a>
+      <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
     </>
   ),
   phone: (
