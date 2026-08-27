@@ -1,5 +1,5 @@
 import { waLink } from "@/lib/whatsapp";
-import WhatsAppIcon from "@/components/WhatsAppIcon";
+import ContactRows from "@/components/ContactRows";
 
 export default function SnapConvert() {
   const year = new Date().getFullYear();
@@ -33,50 +33,7 @@ export default function SnapConvert() {
           </div>
         </div>
 
-        <ul className="contact-list">
-          <li>
-            <span className="icon-badge icon-badge-sm" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="M4 4h16v16H4V4z" stroke="currentColor" strokeWidth="2" />
-                <path
-                  d="M4 6l8 7 8-7"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-            <a href="mailto:venkateshsurendhar@gmail.com">venkateshsurendhar@gmail.com</a>
-          </li>
-          <li>
-            <span className="whatsapp-badge" aria-hidden="true">
-              <WhatsAppIcon size={28} />
-            </span>
-            <a
-              href={waLink("Hi, I'd like to get in touch.")}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              WhatsApp
-            </a>
-          </li>
-          <li>
-            <span className="icon-badge icon-badge-sm" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M12 21s-7-5.33-7-11a7 7 0 0114 0c0 5.67-7 11-7 11z"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <circle cx="12" cy="10" r="2.5" stroke="currentColor" strokeWidth="2" />
-              </svg>
-            </span>
-            <span>Chennai, India</span>
-          </li>
-        </ul>
+        <ContactRows rows={["email", "whatsapp", "location"]} />
 
         <p className="snap-convert-copyright">&copy; {year} Surendhar Venkatesh. All rights reserved.</p>
       </div>
