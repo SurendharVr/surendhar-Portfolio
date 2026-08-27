@@ -36,16 +36,26 @@ export default function Hero({ className }: { className?: string } = {}) {
         ease: "power2.out",
         stagger: 0.12,
         delay: 0.1,
+        // Hand the elements back to the stylesheet once the intro lands, so
+        // no inline opacity/transform is left pinned on them -- inline styles
+        // outrank every CSS rule regardless of specificity, which is what
+        // silently disabled hover transforms elsewhere on the site. The
+        // magnetic CTA is a child of actionsRef, not one of these targets, so
+        // its own quickTo transform is unaffected.
+        clearProps: "opacity,transform",
       });
       // Safety net: if GSAP's rAF-driven ticker ever stalls (backgrounded
       // tab, throttling, etc.) the tween can freeze at its "from" state and
       // leave the hero permanently invisible. Force the true end state via
       // a plain timer so content can never get stuck hidden.
+      // Clearing rather than assigning: removing the inline properties falls
+      // back to the stylesheet values, which for these elements is the true
+      // end state, without pinning an inline style that would outrank CSS.
       fallback = window.setTimeout(() => {
         if (cancelled) return;
         targets.forEach((el) => {
-          el.style.opacity = "1";
-          el.style.transform = "none";
+          el.style.removeProperty("opacity");
+          el.style.removeProperty("transform");
         });
       }, 1500);
     });

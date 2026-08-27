@@ -1,4 +1,4 @@
-import { waLink } from "@/lib/whatsapp";
+import { waLink, PHONE_E164, PHONE_DISPLAY } from "@/lib/whatsapp";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
 
 export default function Contact({
@@ -72,7 +72,7 @@ export default function Contact({
                 />
               </svg>
             </span>
-            <a href="tel:+919655326333">+91 96553 26333</a>
+            <a href={`tel:${PHONE_E164}`}>{PHONE_DISPLAY}</a>
           </li>
           <li>
             <span className="whatsapp-badge" aria-hidden="true">

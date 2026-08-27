@@ -16,7 +16,7 @@ export default function SnapTrust() {
           <div className="hero-media">
             <div className="hero-portrait">
               <Image
-                src="/assets/profile.png"
+                src="/assets/profile.webp"
                 alt="Portrait of Surendhar Venkatesh"
                 width={360}
                 height={360}

@@ -21,7 +21,19 @@ function subscribe(callback: () => void) {
 
 function setTheme(next: Theme) {
   document.documentElement.dataset.theme = next;
-  window.localStorage.setItem("theme", next);
+  // Persisting is best-effort: localStorage throws in Safari private browsing,
+  // with site data blocked, and in some embedded webviews. It used to throw
+  // from between the line above and the line below, so the page's colours
+  // flipped while both toggle instances kept the old icon and the old
+  // aria-label -- leaving the control actively lying to screen readers. The
+  // theme itself is already applied by this point, so a failure to remember it
+  // across reloads must not stop subscribers from re-rendering. (The read path
+  // in layout.tsx's init script is already guarded the same way.)
+  try {
+    window.localStorage.setItem("theme", next);
+  } catch {
+    // Ignored: the theme still applies for this page view.
+  }
   listeners.forEach((listener) => listener());
 }
 

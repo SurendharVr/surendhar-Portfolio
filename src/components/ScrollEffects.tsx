@@ -9,7 +9,6 @@ const GROUPS: { container: string; item: string }[] = [
   { container: ".work-grid", item: ".work-card" },
   { container: ".stat-grid", item: ".stat-card" },
   { container: ".reasons-grid", item: ".capability-card" },
-  { container: ".ladder-list", item: ".ladder-item" },
   { container: ".process-steps", item: "li" },
   { container: ".system-chain", item: "li" },
   { container: ".problem-grid", item: ".problem-card" },
@@ -31,12 +30,21 @@ export default function ScrollEffects() {
     // state and leave content permanently invisible. Force the true end
     // state via a plain timer, scheduled from the moment each trigger fires,
     // so nothing can stay stuck hidden.
+    //
+    // Removing the inline properties rather than assigning end values is the
+    // whole point: writing `transform: none` here pinned an inline style onto
+    // every revealed element, and inline styles outrank stylesheet rules
+    // regardless of specificity -- so 1.5s after each group appeared, its CSS
+    // hover transforms (.work-card:hover, .contact-list li:hover, and the rest
+    // of GROUPS) stopped working permanently, sitewide. Clearing the props
+    // instead lets the element fall back to its stylesheet values, which for
+    // these elements *is* the true end state, and leaves hover intact.
     function armFallback(els: HTMLElement[]) {
       const id = window.setTimeout(() => {
         if (cancelled) return;
         els.forEach((el) => {
-          el.style.opacity = "1";
-          el.style.transform = "none";
+          el.style.removeProperty("opacity");
+          el.style.removeProperty("transform");
         });
       }, 1500);
       fallbacks.push(id);
@@ -69,6 +77,12 @@ export default function ScrollEffects() {
                 y: 16,
                 duration: 0.5,
                 ease: "power2.out",
+                // Without this GSAP leaves its own inline opacity/transform on
+                // the element after the tween finishes, which outranks every
+                // CSS hover rule for exactly the same reason the old fallback
+                // did. A completed `from` tween ends at the element's natural
+                // state, so clearing is equivalent -- and reversible by CSS.
+                clearProps: "opacity,transform",
                 scrollTrigger: {
                   trigger: el,
                   scroller,
@@ -89,6 +103,7 @@ export default function ScrollEffects() {
                   duration: 0.5,
                   ease: "power2.out",
                   stagger: 0.08,
+                  clearProps: "opacity,transform",
                   scrollTrigger: {
                     trigger: group,
                     scroller,

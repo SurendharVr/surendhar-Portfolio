@@ -6,6 +6,7 @@ import SiteFooter from "@/components/SiteFooter";
 import SmoothScroll from "@/components/SmoothScroll";
 import WhatsAppFab from "@/components/WhatsAppFab";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
+import { PHONE_E164 } from "@/lib/whatsapp";
 import "./site.css";
 
 const geist = Geist({
@@ -51,9 +52,9 @@ const personJsonLd = {
   "@type": "Person",
   name: "Surendhar Venkatesh",
   url: SITE_URL,
-  image: `${SITE_URL}/assets/profile.png`,
+  image: `${SITE_URL}/assets/profile.webp`,
   email: "venkateshsurendhar@gmail.com",
-  telephone: "+919655326333",
+  telephone: PHONE_E164,
   jobTitle: "Digital Studio — Websites, Social Media & Digital Products",
   address: {
     "@type": "PostalAddress",

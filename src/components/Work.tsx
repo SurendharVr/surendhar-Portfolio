@@ -102,7 +102,7 @@ const caseStudies: CaseStudy[] = [
   },
   {
     id: "ebook",
-    src: "/assets/work-ebook-cover.png",
+    src: "/assets/work-ebook-cover.webp",
     alt: "Eight Hours, Still Exhausted book cover",
     cover: true,
     tag: "Digital Product · Kindle Ebook",

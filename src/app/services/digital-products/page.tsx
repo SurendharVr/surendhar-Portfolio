@@ -52,7 +52,7 @@ export default function DigitalProductsServicePage() {
           <div className="work-grid work-grid-2">
             <article className="work-card">
               <WorkThumb
-                src="/assets/work-ebook-cover.png"
+                src="/assets/work-ebook-cover.webp"
                 alt="Eight Hours, Still Exhausted book cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 cover

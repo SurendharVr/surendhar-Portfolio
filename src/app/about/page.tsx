@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <Background showHowIWork={false} headingLevel="h1" priority />
+      <Background headingLevel="h1" priority />
       <WhyUs />
       <HowWeWork showEyebrow={false} />
       <Contact showEyebrow={false} />

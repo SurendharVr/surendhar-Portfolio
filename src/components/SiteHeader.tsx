@@ -11,6 +11,34 @@ export default function SiteHeader() {
   const pathname = usePathname();
   const navRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+
+  // The header's rendered height was hardcoded as 76px (68px on mobile) in
+  // four unrelated stylesheet rules -- the dropdown's top offset, the quick
+  // nav's sticky offset, and the snap sections' top padding and
+  // scroll-margin -- with nothing deriving them from the header itself. Raise
+  // the browser's minimum font size or zoom the page and the header grows past
+  // the constant, so the dropdown detaches from it and section headings slide
+  // underneath it.
+  //
+  // Publishing the measured height as --header-h makes those rules follow the
+  // real element at any zoom or font size. ResizeObserver rather than a resize
+  // listener because the header also changes height when the nav wraps, which
+  // no window event reports.
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const publish = () => {
+      document.documentElement.style.setProperty(
+        "--header-h",
+        `${Math.round(el.getBoundingClientRect().height)}px`
+      );
+    };
+    publish();
+    const observer = new ResizeObserver(publish);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const links = [
     { href: "/services", label: "Services" },
@@ -19,6 +47,25 @@ export default function SiteHeader() {
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
   ];
+
+  // The dropdown and its focus trap only exist below 1024px -- at and above
+  // that width .nav-toggle is display:none and .main-nav is a static inline
+  // row (see site.css). But `open` is React state that nothing was resetting,
+  // so opening the menu on a narrow window and then widening it (or rotating a
+  // tablet to landscape) left the trap armed over a nav that no longer looks
+  // like a menu: a keyboard user cycled the five header links indefinitely
+  // with nothing on screen explaining why, and Escape as the only way out.
+  // Closing on the breakpoint crossing ties the state to the layout that
+  // justifies it.
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    function sync() {
+      if (desktop.matches) setOpen(false);
+    }
+    sync();
+    desktop.addEventListener("change", sync);
+    return () => desktop.removeEventListener("change", sync);
+  }, []);
 
   // The toggle button sits after <nav> in DOM order, so without this a
   // keyboard user who opens the menu and presses Tab skips straight past
@@ -59,7 +106,7 @@ export default function SiteHeader() {
   }, [open]);
 
   return (
-    <header className="site-header">
+    <header className="site-header" ref={headerRef}>
       <div className="container nav-row">
         <Link href="/" className="logo">
           Surendhar Venkatesh<span className="logo-mark">.</span>

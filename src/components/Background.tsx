@@ -1,12 +1,10 @@
 import Image from "next/image";
 
 export default function Background({
-  showHowIWork = true,
   headingLevel = "h2",
   showEyebrow = true,
   priority = false,
 }: {
-  showHowIWork?: boolean;
   headingLevel?: "h1" | "h2";
   showEyebrow?: boolean;
   priority?: boolean;
@@ -35,7 +33,7 @@ export default function Background({
           <div className="hero-media">
             <div className="hero-portrait">
               <Image
-                src="/assets/profile.png"
+                src="/assets/profile.webp"
                 alt="Portrait of Surendhar Venkatesh"
                 width={360}
                 height={360}
@@ -53,15 +51,6 @@ export default function Background({
               and shipped end to end, not handed off in pieces.
             </p>
           </div>
-          {showHowIWork && (
-            <div className="capability-row">
-              <p className="mini-heading">How I work</p>
-              <p>
-                Every project runs through the same system — Discover, Define, Design,
-                Develop, Optimise — so decisions are based on the business, not guesswork.
-              </p>
-            </div>
-          )}
           <div className="capability-row">
             <p className="mini-heading">What you get</p>
             <p>

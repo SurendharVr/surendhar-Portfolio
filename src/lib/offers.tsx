@@ -10,7 +10,7 @@ export const arrowIcon = (
   </svg>
 );
 
-export type Offer = {
+type Offer = {
   slug: string;
   icon: React.ReactNode;
   category?: string;
