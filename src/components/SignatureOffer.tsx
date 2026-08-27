@@ -12,7 +12,7 @@ const steps = [
 ];
 
 export default function SignatureOffer({
-  showEyebrow = true,
+  showEyebrow = false,
   className,
 }: {
   showEyebrow?: boolean;

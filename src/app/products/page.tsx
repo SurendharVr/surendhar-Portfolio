@@ -18,8 +18,8 @@ export const metadata: Metadata = {
 export default function ProductsPage() {
   return (
     <>
-      <Products headingLevel="h1" />
-      <Contact showEyebrow={false} />
+      <Products headingLevel="h1" showEyebrow />
+      <Contact />
       <ScrollEffects />
     </>
   );

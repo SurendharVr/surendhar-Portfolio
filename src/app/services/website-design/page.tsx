@@ -98,7 +98,7 @@ export default function WebsiteDesignPage() {
         </div>
       </section>
 
-      <Contact showEyebrow={false} />
+      <Contact />
       <ScrollEffects />
     </>
   );

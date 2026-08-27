@@ -4,7 +4,7 @@ import WhatsAppIcon from "@/components/WhatsAppIcon";
 export default function Contact({
   headingLevel = "h2",
   standalone = false,
-  showEyebrow = true,
+  showEyebrow = false,
 }: {
   headingLevel?: "h1" | "h2";
   standalone?: boolean;

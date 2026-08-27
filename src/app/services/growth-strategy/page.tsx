@@ -73,7 +73,7 @@ export default function GrowthStrategyPage() {
         </div>
       </section>
 
-      <Contact showEyebrow={false} />
+      <Contact />
       <ScrollEffects />
     </>
   );

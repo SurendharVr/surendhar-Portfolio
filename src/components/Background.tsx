@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Background({
   headingLevel = "h2",
-  showEyebrow = true,
+  showEyebrow = false,
   priority = false,
 }: {
   headingLevel?: "h1" | "h2";

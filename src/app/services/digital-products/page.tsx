@@ -76,7 +76,7 @@ export default function DigitalProductsServicePage() {
         </div>
       </section>
 
-      <Contact showEyebrow={false} />
+      <Contact />
       <ScrollEffects />
     </>
   );

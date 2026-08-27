@@ -4,7 +4,7 @@ import { waLink } from "@/lib/whatsapp";
 
 export default function Services({
   headingLevel = "h2",
-  showEyebrow = true,
+  showEyebrow = false,
 }: {
   headingLevel?: "h1" | "h2";
   showEyebrow?: boolean;

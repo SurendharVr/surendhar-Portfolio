@@ -27,7 +27,7 @@ const questionIcon = (
 );
 
 export default function HowWeWork({
-  showEyebrow = true,
+  showEyebrow = false,
 }: {
   showEyebrow?: boolean;
 }) {

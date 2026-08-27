@@ -14,7 +14,7 @@ const externalIcon = (
 
 export default function Products({
   headingLevel = "h2",
-  showEyebrow = true,
+  showEyebrow = false,
 }: {
   headingLevel?: "h1" | "h2";
   showEyebrow?: boolean;

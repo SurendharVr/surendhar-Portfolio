@@ -18,7 +18,7 @@ const reasons = [
 ];
 
 export default function WhyUs({
-  showEyebrow = true,
+  showEyebrow = false,
 }: {
   showEyebrow?: boolean;
 }) {

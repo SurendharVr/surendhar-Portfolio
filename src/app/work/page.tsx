@@ -18,8 +18,8 @@ export const metadata: Metadata = {
 export default function WorkPage() {
   return (
     <>
-      <Work headingLevel="h1" />
-      <Contact showEyebrow={false} />
+      <Work headingLevel="h1" showEyebrow />
+      <Contact />
       <ScrollEffects />
     </>
   );

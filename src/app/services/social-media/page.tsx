@@ -65,7 +65,7 @@ export default function SocialMediaPage() {
         </div>
       </section>
 
-      <Contact showEyebrow={false} />
+      <Contact />
       <ScrollEffects />
     </>
   );

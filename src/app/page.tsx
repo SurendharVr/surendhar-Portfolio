@@ -22,7 +22,7 @@ export default function Home() {
         <Problem className="snap-section" />
         <SnapProve />
         <SnapExplain />
-        <SignatureOffer className="snap-section" showEyebrow={false} />
+        <SignatureOffer className="snap-section" />
         <SnapTrust />
         <SnapConvert />
       </div>

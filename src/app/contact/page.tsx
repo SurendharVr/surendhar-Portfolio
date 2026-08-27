@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <Contact headingLevel="h1" standalone />
+      <Contact headingLevel="h1" standalone showEyebrow />
       <ScrollEffects />
     </>
   );

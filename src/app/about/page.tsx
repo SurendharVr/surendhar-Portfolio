@@ -20,10 +20,10 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <Background headingLevel="h1" priority />
-      <WhyUs />
-      <HowWeWork showEyebrow={false} />
-      <Contact showEyebrow={false} />
+      <Background headingLevel="h1" priority showEyebrow />
+      <WhyUs showEyebrow />
+      <HowWeWork />
+      <Contact />
       <ScrollEffects />
     </>
   );
