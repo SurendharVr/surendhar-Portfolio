@@ -1,0 +1,32 @@
+# Line endings.
+#
+# Everything committed here has always been LF, but nothing enforced it. A
+# clone with core.autocrlf=true (the Git for Windows default) checks files out
+# as CRLF, and any client that then adds a file without normalising puts CRLF
+# into the repository. That is how commit 334840a landed: nine config files
+# uploaded through GitHub's web UI, byte-identical to their counterparts on the
+# working branch apart from line endings, which made next.config.ts diff as 114
+# insertions and 114 deletions and would have conflicted on every line at merge.
+#
+# `text=auto eol=lf` normalises on the way in and checks out LF everywhere, so
+# the same file has one representation regardless of who committed it or on
+# which platform. Note this governs git clients only -- it cannot stop a web
+# upload from storing whatever bytes it is handed, so the real safeguard
+# remains pushing from a clone rather than uploading through the browser.
+* text=auto eol=lf
+
+# Binary assets: never normalise, never diff as text. The two WebP photographs
+# are the output of a lossy re-encode and the PNGs are client screenshots --
+# a stray byte in any of them is corruption, not a whitespace change.
+*.png   binary
+*.webp  binary
+*.ico   binary
+*.woff2 binary
+
+# Playwright's visual baselines are compared byte-for-byte. These have not been
+# generated yet (CI's first run bootstraps them -- see tests/README.md), so this
+# rule is here before the files are, not after something has mangled them.
+tests/**/*.png binary
+
+# Generated. Collapsed in reviews so a lockfile refresh does not bury the diff.
+package-lock.json -diff linguist-generated
