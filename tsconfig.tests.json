@@ -1,0 +1,14 @@
+{
+  // Test tooling is type-checked separately from the app on purpose. Left in
+  // the app's tsconfig, a breaking change in Playwright's types would fail
+  // `next build` and block a deploy over code that never ships to a visitor.
+  // CI runs this alongside the app build, so the types are still checked --
+  // just not on the critical path to production.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": ["tests/**/*.ts", "playwright.config.ts"],
+  "exclude": ["node_modules"]
+}

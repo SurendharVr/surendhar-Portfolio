@@ -1,0 +1,172 @@
+name: CI
+
+# The repo's default branch is `main`; local work has been happening on
+# `master`, so both are watched rather than silently skipping one.
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+# Least privilege for the workflow token. Without this the token inherits the
+# repository default, which on older repos is read AND write across contents,
+# packages and more -- handed to every job. These jobs run `npm ci` and
+# `next build`, which execute hundreds of third-party packages; a single
+# compromised dependency holding a write-capable token can push to the repo.
+# None of these jobs writes to the repository, so read is all they need.
+# (Artifact upload uses its own runtime token and is unaffected.)
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Fast feedback: fails in ~1 min on a type error or lint break, without
+  # waiting for the browser suite.
+  build:
+    name: Lint & build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # SEC-05: a clean dependency tree is a snapshot, not a property. This is
+      # what turns a published advisory into a red build instead of something
+      # nobody sees for months. Threshold is `high` on purpose -- blocking a
+      # solo developer's deploy on a moderate advisory in a dev-only transitive
+      # package trains people to pass --force, which is worse than no gate.
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
+
+      # SEC-04: the two libraries that execute in every visitor's browser must
+      # not float. A caret here means a routine `npm install` while adding an
+      # unrelated package can silently lift the pin and ship new third-party
+      # code to the live site.
+      - name: Runtime dependencies must be exactly pinned
+        run: |
+          node -e '
+            const deps = require("./package.json").dependencies || {};
+            const loose = Object.entries(deps).filter(([, v]) => /^[\^~]/.test(v));
+            if (loose.length) {
+              console.error("::error::Floating runtime dependencies: " +
+                loose.map(([k, v]) => k + "@" + v).join(", ") +
+                ". Pin these exactly -- Dependabot proposes upgrades as reviewable PRs.");
+              process.exit(1);
+            }
+            console.log("All " + Object.keys(deps).length + " runtime dependencies exactly pinned.");
+          '
+
+      # SEC-03: a tag is a movable pointer. Pinning to a commit SHA means the
+      # code that runs in CI cannot change without a diff someone reviews.
+      # Dependabot maintains SHA pins the same way it maintains tags, so this
+      # costs nothing ongoing.
+      - name: GitHub Actions must be pinned to commit SHAs
+        run: |
+          if grep -rnE 'uses: [^@]+@(v?[0-9]+(\.[0-9]+)*|main|master)\s*$' .github/workflows/; then
+            echo "::error::The actions above are pinned to a mutable tag or branch. Pin to a full commit SHA with the version in a trailing comment."
+            exit 1
+          fi
+          echo "All actions pinned to commit SHAs."
+
+      - run: npm run lint
+      - run: npm run typecheck:tests
+      - run: npm run build
+        env:
+          # Without this the build warns and falls back to the registered
+          # domain. Set the repo variable to the real production host.
+          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://surendharvenkatesh.com' }}
+      # Guards the property that makes this site cheap and fast: every route
+      # prerendered. A stray dynamic API silently turns a static page into a
+      # server-rendered one, changing both cost and performance profile.
+      - name: Assert every route is still static
+        run: |
+          if grep -rqE '"type"\s*:\s*"(dynamic|ssr)"' .next/prerender-manifest.json 2>/dev/null; then
+            echo "::error::A route is no longer statically prerendered."
+            exit 1
+          fi
+          echo "All routes static."
+
+  e2e:
+    name: REG-01 visual + REG-02 overflow
+    runs-on: ubuntu-latest
+    # The official image pins the same browser build and font stack Playwright
+    # ships, which is what keeps rendered snapshots byte-stable between runs.
+    # Must match the @playwright/test version in package.json.
+    container:
+      image: mcr.microsoft.com/playwright:v1.62.1-noble
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # Dependabot will happily bump @playwright/test but has no idea this job
+      # pins a matching browser image above. Drift there is nasty rather than
+      # obvious: a different browser build rasterises text slightly
+      # differently, so all 60 visual baselines start failing and it reads as
+      # "the site changed" rather than "the container is out of date". Failing
+      # loudly here turns a confusing afternoon into a one-line fix.
+      - name: Container image must match @playwright/test
+        run: |
+          PKG=$(node -p "require('@playwright/test/package.json').version")
+          IMG=$(grep -oP 'mcr\.microsoft\.com/playwright:v\K[0-9]+\.[0-9]+\.[0-9]+' .github/workflows/ci.yml | head -1)
+          echo "package=$PKG  image=$IMG"
+          if [ "$PKG" != "$IMG" ]; then
+            echo "::error::@playwright/test is $PKG but the CI container is pinned to v$IMG. Update the image tag in .github/workflows/ci.yml and .github/workflows/update-visual-baselines.yml, then regenerate the visual baselines."
+            exit 1
+          fi
+
+      # On a fresh clone this fails with "A snapshot doesn't exist at
+      # …-linux.png" until the Linux baselines have been generated once via the
+      # "Update visual baselines" workflow. That is expected on first run —
+      # see tests/README.md.
+      - name: Run Playwright suite
+        run: npx playwright test
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://surendharvenkatesh.com' }}
+          HOME: /root
+
+      # Diffs are the whole point of a failing visual run — without the report
+      # a red build tells you something moved but not what.
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
+
+  # P0 crawl checks (CONV-01/02, NAV-01, SEO-01/02, MOTION-01) against the
+  # production build. Plain Node, no browser needed, so it stays fast.
+  p0:
+    name: P0 crawl checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://surendharvenkatesh.com' }}
+      - name: Start production server
+        run: |
+          npm start &
+          for i in $(seq 1 60); do
+            if curl -sf -o /dev/null http://localhost:3000; then
+              echo "Server up after ${i}s"; exit 0
+            fi
+            sleep 1
+          done
+          echo "::error::Server did not start within 60s"; exit 1
+      - run: npm run test:p0

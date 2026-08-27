@@ -1,0 +1,60 @@
+name: Update visual baselines
+
+# Run this by hand (Actions -> Update visual baselines -> Run workflow) whenever
+# a visual change is intentional, and once at the start to create the initial
+# Linux baseline set.
+#
+# Why it exists: Playwright suffixes every snapshot with the OS that rendered
+# it, so baselines generated on a Windows or macOS laptop are never compared
+# against CI's Linux run — CI would just report them missing. This regenerates
+# them inside the exact container CI uses and hands them back as an artifact
+# to commit.
+on:
+  workflow_dispatch:
+
+# Least privilege for the workflow token. Without this the token inherits the
+# repository default, which on older repos is read AND write across contents,
+# packages and more -- handed to every job. These jobs run `npm ci` and
+# `next build`, which execute hundreds of third-party packages; a single
+# compromised dependency holding a write-capable token can push to the repo.
+# None of these jobs writes to the repository, so read is all they need.
+# (Artifact upload uses its own runtime token and is unaffected.)
+permissions:
+  contents: read
+
+jobs:
+  update:
+    name: Regenerate Linux baselines
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.62.1-noble
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Regenerate snapshots
+        run: npx playwright test --update-snapshots
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://surendharvenkatesh.com' }}
+          HOME: /root
+
+      - name: Show what changed
+        run: |
+          echo "### Baseline changes" >> "$GITHUB_STEP_SUMMARY"
+          git status --porcelain tests >> "$GITHUB_STEP_SUMMARY" || true
+
+      # Uploaded rather than committed straight back: a visual baseline is a
+      # statement that the new rendering is correct, and a person should look
+      # at the diff before that becomes the reference everything else is
+      # measured against.
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: updated-visual-baselines
+          path: tests/**/*-linux.png
+          retention-days: 14
+          if-no-files-found: error

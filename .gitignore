@@ -39,3 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Visual baselines are platform-specific (Playwright suffixes each snapshot
+# with the OS it was rendered on). CI renders on Linux, so the -linux set is
+# the committed, authoritative one; baselines a developer generates locally on
+# Windows or macOS are personal scratch and must not be committed.
+tests/**/*-win32.png
+tests/**/*-darwin.png

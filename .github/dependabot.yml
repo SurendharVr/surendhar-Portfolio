@@ -1,0 +1,79 @@
+version: 2
+
+# Dependabot is the answer to SEC-05: `npm audit` is clean today, and nothing
+# in the pipeline would have told anyone when that stopped being true. For a
+# site that may go months between commits, the gap between an advisory landing
+# and someone noticing was previously unbounded.
+#
+# This is only safe to switch on because CI now exists. Every PR raised here is
+# gated by lint, typecheck, the production build, 63 overflow checks, 60 visual
+# snapshots and the P0 crawl suite — so an upgrade that changes rendering or
+# breaks a route shows up as a red build rather than as a silent regression on
+# the live site.
+#
+# Updates are grouped deliberately. Ungrouped, this repo would raise five or six
+# PRs a week for a site that is mostly finished, and the realistic outcome of
+# that is a developer who stops reading them.
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
+    groups:
+      # These must move together or the build breaks: eslint-config-next is
+      # version-locked to next, and the React types have to match the runtime.
+      next:
+        patterns:
+          - "next"
+          - "eslint-config-next"
+          - "@next/*"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      # Everything else that only moves a minor or patch, batched into one PR
+      # each. Majors are deliberately excluded so they arrive alone and get
+      # read properly.
+      dev-minor-patch:
+        dependency-type: "development"
+        update-types: ["minor", "patch"]
+        exclude-patterns:
+          - "next"
+          - "eslint-config-next"
+          - "@types/react*"
+      prod-minor-patch:
+        dependency-type: "production"
+        update-types: ["minor", "patch"]
+        exclude-patterns:
+          - "next"
+          - "react"
+          - "react-dom"
+
+  # Keeps the actions in .github/workflows current, and — once SEC-03 is done
+  # and they are pinned to commit SHAs — maintains those pins automatically.
+  # That is what makes SHA pinning cost nothing ongoing.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    groups:
+      actions:
+        patterns:
+          - "*"
