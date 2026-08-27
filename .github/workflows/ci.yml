@@ -93,7 +93,7 @@ jobs:
           echo "All routes static."
 
   e2e:
-    name: REG-01 visual + REG-02 overflow
+    name: REG-01 visual + REG-02 overflow + REG-03 snap
     runs-on: ubuntu-latest
     # The official image pins the same browser build and font stack Playwright
     # ships, which is what keeps rendered snapshots byte-stable between runs.
@@ -125,10 +125,16 @@ jobs:
             exit 1
           fi
 
-      # On a fresh clone this fails with "A snapshot doesn't exist at
-      # …-linux.png" until the Linux baselines have been generated once via the
-      # "Update visual baselines" workflow. That is expected on first run —
-      # see tests/README.md.
+      # "A snapshot doesn't exist at …-linux.png" means references are missing
+      # for a suite, not that the pipeline is broken. The committed set covers
+      # REG-01 and REG-03 today, so the way to hit this now is to add a new
+      # spec: its baselines do not exist yet, and the bootstrap step below will
+      # NOT create them, because its guard only fires when no Linux baseline is
+      # committed at all.
+      #
+      # That refusal is deliberate, not a gap. Run the "Update visual
+      # baselines" workflow instead, review the images, and commit them with
+      # the change — see tests/README.md.
       - name: Run Playwright suite
         run: npx playwright test
         env:
