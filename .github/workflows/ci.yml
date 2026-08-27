@@ -135,6 +135,41 @@ jobs:
           NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://surendharvenkatesh.com' }}
           HOME: /root
 
+      # Bootstrap, and only bootstrap.
+      #
+      # Visual baselines are platform-specific, so the committed set has to be
+      # rendered on Linux -- which in practice means rendered here. That created
+      # a deadlock: the "Update visual baselines" workflow is workflow_dispatch,
+      # and GitHub only offers that button for workflows already on the default
+      # branch. On a branch that has never been merged, there was no way to
+      # generate the baselines that CI needs in order to pass.
+      #
+      # This breaks the deadlock exactly once. It runs only when the run failed
+      # AND no Linux baseline is committed at all, so it cannot be used to
+      # rubber-stamp a genuine visual regression later -- once baselines exist,
+      # a failure is a real diff and this step deliberately does nothing.
+      # The job still fails either way; it just hands you something actionable.
+      - name: Bootstrap Linux baselines (first run only)
+        if: failure()
+        run: |
+          if find tests -name '*-linux.png' -print -quit | grep -q .; then
+            echo "::notice::Linux baselines already committed -- this failure is a real visual change, not a bootstrap. Download playwright-report to see the diff."
+            exit 0
+          fi
+          echo "::warning::No Linux baselines committed yet. Generating them for review -- download the bootstrap-visual-baselines artifact, check the images, and commit them."
+          npx playwright test --update-snapshots || true
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://surendharvenkatesh.com' }}
+          HOME: /root
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: failure()
+        with:
+          name: bootstrap-visual-baselines
+          path: tests/**/*-linux.png
+          retention-days: 14
+          if-no-files-found: ignore
+
       # Diffs are the whole point of a failing visual run — without the report
       # a red build tells you something moved but not what.
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

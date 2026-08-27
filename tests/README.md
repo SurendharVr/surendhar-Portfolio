@@ -22,12 +22,27 @@ rasterisation differs between platforms — a baseline made on Windows would nev
 match CI's Linux run. CI's Linux set is the authoritative one, and `.gitignore`
 keeps developers' local `-win32`/`-darwin` baselines out of the repo.
 
-To create them:
+**Before the branch is on `main`**, the CI run itself produces them. GitHub only
+offers the *Run workflow* button for `workflow_dispatch` workflows that already
+exist on the default branch, so on a first PR there is no button to press — the
+`e2e` job bootstraps instead:
+
+1. Let CI run. It fails (correctly) on the missing baselines.
+2. Download the **`bootstrap-visual-baselines`** artifact from that run.
+3. Unzip it into `tests/reg-01-visual.spec.ts-snapshots/`, **look at the
+   images**, and commit the `*-linux.png` files.
+
+That bootstrap step fires only when no Linux baseline is committed at all. Once
+they exist it does nothing, so it can never be used to rubber-stamp a real
+visual regression as the new reference.
+
+**Afterwards**, use the dedicated workflow whenever a visual change is
+*intentional*:
 
 1. GitHub → **Actions** → **Update visual baselines** → **Run workflow**.
 2. Download the `updated-visual-baselines` artifact.
-3. Unzip it into `tests/reg-01-visual.spec.ts-snapshots/` and commit the
-   `*-linux.png` files.
+3. Unzip into `tests/reg-01-visual.spec.ts-snapshots/` and commit the
+   `*-linux.png` files with the change that caused them.
 
 Re-run that same workflow whenever a visual change is **intentional**, and commit
 the updated baselines with the change that caused them. The workflow uploads
