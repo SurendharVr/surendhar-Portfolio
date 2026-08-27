@@ -61,6 +61,28 @@ export default defineConfig({
         contextOptions: { reducedMotion: "reduce" },
       },
     },
+    // REG-03 runs once per theme and deliberately does NOT set reducedMotion.
+    // That omission is the whole point: SnapController treats reduced motion as
+    // a reason to fall back to plain long-scroll, so the two projects above can
+    // never photograph snap mode -- they photograph the page it replaces.
+    //
+    // Determinism is recovered by waiting for GSAP to finish rather than
+    // stopping it from starting; see settleReveals in tests/routes.ts.
+    //
+    // Do not add contextOptions.reducedMotion here to "stabilise" a flake. It
+    // would make the suite pass while covering nothing, which is the failure it
+    // was written to prevent -- the spec asserts the mode and fails loudly with
+    // that explanation if it is ever added.
+    {
+      name: "snap-light",
+      testMatch: /reg-03-snap\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"], colorScheme: "light" },
+    },
+    {
+      name: "snap-dark",
+      testMatch: /reg-03-snap\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"], colorScheme: "dark" },
+    },
   ],
 
   webServer: {

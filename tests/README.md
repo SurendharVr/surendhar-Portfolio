@@ -4,9 +4,17 @@
 | --- | --- | --- |
 | `reg-01-visual.spec.ts` | Full-page appearance of all 10 routes × 3 layout tiers × both themes (60 shots) | `npm run test:visual` |
 | `reg-02-overflow.spec.ts` | No horizontal overflow at 320/360/390/414/768/1024px, menu open and closed (63 checks) | `npm run test:overflow` |
+| `reg-03-snap.spec.ts` | The homepage's scroll-snap sequence — 7 sections × both themes at 1440×900 (14 shots) | `npm run test:snap` |
 | `p0-crawl.mjs` | WhatsApp links, internal links, canonicals, sitemap, no-JS content | `npm run test:p0` |
 
-`npm run test:e2e` runs both Playwright suites. The config builds and starts the
+REG-01 and REG-03 divide the homepage between them. REG-01 uses
+`reducedMotion`, which makes SnapController fall back to plain long-scroll, so
+it owns every route in its long-scroll form. REG-03 runs *without* it — the only
+way snap mode engages at all — and owns the homepage in its snap form. REG-03
+asserts the mode it is in and fails loudly rather than quietly re-photographing
+what REG-01 already covers.
+
+`npm run test:e2e` runs all three Playwright suites. The config builds and starts the
 **production** server itself — `next dev` renders differently enough that
 snapshots taken against it would be worthless.
 
@@ -29,8 +37,12 @@ exist on the default branch, so on a first PR there is no button to press — th
 
 1. Let CI run. It fails (correctly) on the missing baselines.
 2. Download the **`bootstrap-visual-baselines`** artifact from that run.
-3. Unzip it into `tests/reg-01-visual.spec.ts-snapshots/`, **look at the
-   images**, and commit the `*-linux.png` files.
+3. Unzip it into **`tests/`** — not into a snapshot folder. Both workflows
+   upload `tests/**/*-linux.png`, so the archive already contains the
+   `reg-01-visual.spec.ts-snapshots/` and `reg-03-snap.spec.ts-snapshots/`
+   directories at its top level; unzipping one level deeper nests them and
+   Playwright still reports the baselines missing.
+4. **Look at the images**, then commit the `*-linux.png` files.
 
 That bootstrap step fires only when no Linux baseline is committed at all. Once
 they exist it does nothing, so it can never be used to rubber-stamp a real
@@ -41,8 +53,8 @@ visual regression as the new reference.
 
 1. GitHub → **Actions** → **Update visual baselines** → **Run workflow**.
 2. Download the `updated-visual-baselines` artifact.
-3. Unzip into `tests/reg-01-visual.spec.ts-snapshots/` and commit the
-   `*-linux.png` files with the change that caused them.
+3. Unzip into **`tests/`** (see the note above) and commit the `*-linux.png`
+   files with the change that caused them.
 
 Re-run that same workflow whenever a visual change is **intentional**, and commit
 the updated baselines with the change that caused them. The workflow uploads

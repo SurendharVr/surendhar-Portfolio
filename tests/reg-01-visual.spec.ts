@@ -10,15 +10,18 @@ import { ROUTES, VISUAL_VIEWPORTS, slug, stabilize } from "./routes";
 // nothing mechanical noticed when a fix broke something else. This converts
 // that whole class of regression from post-release discovery into a red build.
 //
-// KNOWN GAP: `reducedMotion: "reduce"` is what makes these shots
-// deterministic — it stops GSAP and Lenis initialising, so no tween is ever
-// mid-flight — but SnapController treats reduced motion as a reason to fall
-// back to plain scrolling. So the homepage is captured in its plain long-scroll
-// form, and the scroll-snap presentation is NOT covered here. The separate
-// snap-mode assertions live in the P0 suite; if snap-mode visuals are wanted
-// later they need per-section element screenshots, because in snap mode the
-// document itself does not scroll and a full-page shot captures only the first
-// screen.
+// SCOPE: `reducedMotion: "reduce"` is what makes these shots deterministic —
+// it stops GSAP and Lenis initialising, so no tween is ever mid-flight — but
+// SnapController treats reduced motion as a reason to fall back to plain
+// scrolling. The homepage is therefore captured here in its plain long-scroll
+// form, which is a real rendering the site serves (reduced-motion visitors, and
+// any viewport too short for the sequence), not an artefact.
+//
+// The scroll-snap presentation is covered by REG-03 instead, which runs without
+// reducedMotion and shoots per-section viewports — in snap mode the document
+// does not scroll, so a full-page shot here would only ever capture the first
+// screen. The two suites are complementary: this one owns every route in its
+// long-scroll form, REG-03 owns the homepage in its snap form.
 test.describe("REG-01 visual baseline", () => {
   for (const route of ROUTES) {
     for (const vp of VISUAL_VIEWPORTS) {

@@ -12,7 +12,8 @@
     "test:overflow": "playwright test --project=overflow",
     "test:visual": "playwright test --project=visual-light --project=visual-dark",
     "test:p0": "node tests/p0-crawl.mjs",
-    "typecheck:tests": "tsc -p tsconfig.tests.json"
+    "typecheck:tests": "tsc -p tsconfig.tests.json",
+    "test:snap": "playwright test --project=snap-light --project=snap-dark"
   },
   "dependencies": {
     "gsap": "3.15.0",
