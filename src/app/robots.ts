@@ -1,38 +1,49 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
 
-// Crawling is disabled while the site is served from its Vercel-assigned
-// hostname. SITE_URL resolves from the deployment environment, so with no
-// domain registered yet it currently resolves to
-// surendhar-portfolio-two.vercel.app -- and every canonical, Open Graph URL
-// and sitemap entry names that host. Anything indexed under it now would have
-// to be migrated to the real domain later rather than simply published, which
-// is slower to undo than it is to prevent.
+// Crawling is allowed, and the host it is allowed on is a Vercel-assigned one
+// -- currently surendhar-space.vercel.app. That is a deliberate trade, made
+// with the cost in view, and it reverses the earlier decision in this file.
 //
-// TO GO LIVE, in this order -- the order matters, because pointing SITE_URL at
-// a domain that does not resolve yet is worse than pointing it at this one:
-//   1. Register the domain and add it to the Vercel project.
-//   2. Set NEXT_PUBLIC_SITE_URL to it (first in the resolution order in
-//      lib/site.ts, so it overrides the Vercel-assigned host).
-//   3. Restore this file to:
-//        import { SITE_URL } from "@/lib/site";
-//        rules: { userAgent: "*", allow: "/" },
-//        sitemap: `${SITE_URL}/sitemap.xml`,
+// What it costs. Every signal Google accumulates accrues to a hostname that is
+// meant to be temporary, and results will display "surendhar-space.vercel.app"
+// rather than a brand. For a studio that sells website design, the second of
+// those is the sharper cost, and it is visible to every person who sees the
+// listing.
 //
-// Note the limit of what this does: it asks crawlers not to fetch, which is
-// not a guarantee of non-indexing. A URL discovered through an inbound link
-// can still surface as a bare result with no snippet. Nothing links to this
-// host yet, which is why the cheap directive is enough for now. The stronger
-// tool is `X-Robots-Tag: noindex` in next.config.ts, and note that the two do
-// not stack: noindex only works if the crawl is *allowed*, so that the header
-// can actually be read.
+// Why it is acceptable anyway. The migration this file previously warned about
+// scales with the authority already earned, and a site nobody links to yet has
+// almost none to carry across. Waiting does not preserve authority that does
+// not exist; it only postpones the point at which any is earned at all, and
+// keeps Search Console empty in the meantime.
 //
-// /sitemap.xml stays routed and correct, it is just no longer advertised here.
-// The P0 suite's SEO-02 check fetches it directly and is unaffected.
+// WHEN THE DOMAIN ARRIVES, in this order:
+//   1. Register it and add it to the Vercel project.
+//   2. Make it the project's primary domain. SITE_URL resolves from
+//      VERCEL_PROJECT_PRODUCTION_URL (see lib/site.ts), so every canonical,
+//      Open Graph URL, JSON-LD id and sitemap entry follows automatically --
+//      no code change, no env var to remember. Setting NEXT_PUBLIC_SITE_URL
+//      would pin it instead, and is only worth doing if the production domain
+//      must differ from the one Vercel considers primary.
+//   3. Configure the .vercel.app host to 301 to the new domain, in the Vercel
+//      dashboard. This is the step that carries the signals over, and it is
+//      the one with no code in it, so it is the one most likely to be
+//      forgotten.
+//   4. Re-run the audit. The canonical host changing is exactly the kind of
+//      thing worth a crawl afterwards.
+//
+// Note what allow does and does not do. It permits fetching; it is not a
+// request to index, and the two are separate. If the goal ever becomes
+// "crawlable but not indexed" -- reasonable on a staging host -- the tool is
+// `X-Robots-Tag: noindex` in next.config.ts, and it only works while the crawl
+// is allowed, so that the header can be read at all. The two do not stack in
+// the other direction: a disallowed crawl cannot see a noindex header.
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      disallow: "/",
+      allow: "/",
     },
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }
