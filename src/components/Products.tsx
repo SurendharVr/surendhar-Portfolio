@@ -1,3 +1,4 @@
+import Link from "next/link";
 import WorkThumb from "./WorkThumb";
 
 const externalIcon = (
@@ -20,13 +21,19 @@ export default function Products({
   showEyebrow?: boolean;
 }) {
   const Heading = headingLevel;
+  // Card titles sit directly under the section heading, so their level has
+  // to follow it: h2 under the standalone page's h1, h3 under a section h2.
+  // Hardcoding h3 skipped a level on this page, where headingLevel is "h1".
+  const CardHeading = headingLevel === "h1" ? "h2" : "h3";
   return (
     <section className="section section-muted" id="products">
       <div className="container">
         {showEyebrow && <p className="eyebrow">Digital Products</p>}
         <Heading>Not every business needs me to build it for them.</Heading>
         <p className="background-intro">
-          Sometimes you just need the right starting point.
+          Sometimes you just need the right starting point. If you&apos;d rather have one
+          built for you, that&apos;s{" "}
+          <Link href="/services/digital-products">digital product design</Link>.
         </p>
         <div className="work-grid work-grid-2">
           <article className="work-card">
@@ -37,7 +44,7 @@ export default function Products({
               cover
             />
             <p className="work-tag">Live now · Kindle Ebook</p>
-            <h3>&quot;Eight Hours, Still Exhausted&quot;</h3>
+            <CardHeading>&quot;Eight Hours, Still Exhausted&quot;</CardHeading>
             <p>A research-backed digital product, written, designed, and published solo.</p>
             <a
               className="work-link"
@@ -50,9 +57,9 @@ export default function Products({
           </article>
           <article className="work-card work-card-soon">
             <p className="work-tag">Coming soon</p>
-            <h3>Templates, tools, and resources</h3>
+            <CardHeading>Templates, tools, and resources</CardHeading>
             <p>
-              Proven structures without starting from a blank screen, practical systems for
+              Ready-made structures instead of a blank screen, practical systems for
               making better digital decisions, and frameworks built from real project work
               — in development.
             </p>

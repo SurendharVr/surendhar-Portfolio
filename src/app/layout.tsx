@@ -23,7 +23,7 @@ const plexSans = IBM_Plex_Sans({
 
 const title = "Surendhar Venkatesh — Digital Studio";
 const description =
-  "Surendhar Venkatesh is a digital studio of one: websites, social media, and digital products built to make small businesses easier to trust and easier to buy from — backed by 10+ years in sales.";
+  "A digital studio of one: websites, social media, and digital products built to make small businesses easier to trust and easier to buy from.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -56,13 +56,19 @@ const personJsonLd = {
   email: EMAIL,
   telephone: PHONE_E164,
   jobTitle: "Digital Studio — Websites, Social Media & Digital Products",
+  // Only properties the pages actually display. "Tamil Nadu" was asserted here
+  // while every page shows "Chennai, India" and nothing else -- structured data
+  // has to reflect visible content, and the region buys no rich result on a
+  // Person anyway. Locality and country are both on the page, so both stay.
   address: {
     "@type": "PostalAddress",
     addressLocality: "Chennai",
-    addressRegion: "Tamil Nadu",
     addressCountry: "IN",
   },
-  sameAs: ["https://www.linkedin.com/in/surendhar-venkatesh"],
+  sameAs: [
+    "https://www.linkedin.com/in/surendhar-venkatesh",
+    "https://www.instagram.com/surendhar_space/",
+  ],
 };
 
 const themeInitScript = `(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark"){t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}document.documentElement.dataset.theme=t;}catch(e){}})();`;

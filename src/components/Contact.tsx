@@ -44,7 +44,9 @@ export default function Contact({
           </div>
         </div>
 
-        <ContactRows rows={["email", "phone", "whatsapp", "linkedin", "location"]} />
+        <ContactRows
+          rows={["email", "phone", "whatsapp", "linkedin", "instagram", "location"]}
+        />
       </div>
     </section>
   );

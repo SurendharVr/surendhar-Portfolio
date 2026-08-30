@@ -26,6 +26,8 @@ const questionIcon = (
   </svg>
 );
 
+import Link from "next/link";
+
 export default function HowWeWork({
   showEyebrow = false,
 }: {
@@ -37,7 +39,9 @@ export default function HowWeWork({
         {showEyebrow && <p className="eyebrow">How I Work</p>}
         <h2>Good design isn&apos;t the starting point. Understanding is.</h2>
         <p className="background-intro">
-          Before I design a page, I figure out what it needs to accomplish.
+          Before I design a page, I figure out what it needs to accomplish. That thinking
+          is also available on its own, as{" "}
+          <Link href="/services/growth-strategy">digital growth &amp; strategy</Link>.
         </p>
         <ul className="question-grid">
           {questions.map((q) => (

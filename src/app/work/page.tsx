@@ -3,7 +3,7 @@ import Work from "@/components/Work";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
 
-const title = "Work — Surendhar Venkatesh";
+const title = "Work — Websites & Digital Products | Surendhar Venkatesh";
 const description =
   "Real websites and digital products built by Surendhar Venkatesh, including Flavours Tec Kitchen, VAAV Kitchen & Caterers, and a published Kindle ebook.";
 

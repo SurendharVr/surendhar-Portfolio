@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Background({
   headingLevel = "h2",
@@ -47,8 +48,10 @@ export default function Background({
           <div className="capability-row">
             <p className="mini-heading">What I build</p>
             <p>
-              Websites, social media management, and digital products — planned, designed,
-              and shipped end to end, not handed off in pieces.
+              <Link href="/services/website-design">Websites</Link>,{" "}
+              <Link href="/services/social-media">social media management</Link>, and{" "}
+              <Link href="/services/digital-products">digital products</Link> — planned,
+              designed, and shipped end to end, not handed off in pieces.
             </p>
           </div>
           <div className="capability-row">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Services from "@/components/Services";
 import SignatureOffer from "@/components/SignatureOffer";
+import Engagement from "@/components/Engagement";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
 
@@ -21,6 +22,7 @@ export default function ServicesPage() {
     <>
       <Services headingLevel="h1" showEyebrow />
       <SignatureOffer />
+      <Engagement />
       <Contact />
       <ScrollEffects />
     </>
