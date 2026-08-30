@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
 import { waLink } from "@/lib/contact";
@@ -17,11 +18,36 @@ export const metadata: Metadata = {
 };
 
 const steps = [
-  { n: "01", title: "Discover", body: "Understand the business." },
-  { n: "02", title: "Define", body: "Find the positioning and opportunity." },
-  { n: "03", title: "Design", body: "Build the experience." },
-  { n: "04", title: "Develop", body: "Turn the system into reality." },
-  { n: "05", title: "Optimise", body: "Measure, improve, grow." },
+  {
+    n: "01",
+    title: "Discover",
+    body:
+      "Understand the business. Four questions come first: who is it for, what are they trying to decide, what is stopping them, and why should they choose you.",
+  },
+  {
+    n: "02",
+    title: "Define",
+    body:
+      "Find the positioning and the opportunity, which are often narrower than expected. For Flavours Tec Kitchen it was corporate and high-value events, not everyday catering enquiries.",
+  },
+  {
+    n: "03",
+    title: "Design",
+    body:
+      "Build the experience around the audience you actually want, and around the enquiry you actually want to receive — not around what a competitor's site happens to look like.",
+  },
+  {
+    n: "04",
+    title: "Develop",
+    body:
+      "Turn the system into a real, working thing: a responsive site, the supporting collateral, and the technical groundwork underneath it.",
+  },
+  {
+    n: "05",
+    title: "Optimise",
+    body:
+      "Measure, improve, grow. This is the step most work skips, and the reason a launch is a starting point rather than a finish line.",
+  },
 ];
 
 export default function GrowthStrategyPage() {
@@ -29,7 +55,12 @@ export default function GrowthStrategyPage() {
     <>
       <section className="section service-hero">
         <div className="container">
-          <p className="eyebrow">Services · Digital Growth &amp; Strategy</p>
+          <Breadcrumbs
+            trail={[
+              { label: "Services", href: "/services" },
+              { label: "Digital Growth & Strategy" },
+            ]}
+          />
           <h1>Your digital presence may not need a redesign. It may need better decisions.</h1>
           <p className="background-intro">
             I identify where visitors hesitate, get confused, or disappear — then improve
@@ -53,6 +84,24 @@ export default function GrowthStrategyPage() {
         </div>
       </section>
 
+      <section className="section">
+        <div className="container">
+          <h2>Rebuilding is the expensive way to find out.</h2>
+          <p className="background-intro">
+            When results go flat, the instinct is to rebuild. It feels like progress, and
+            it is the one option everyone recognises.
+          </p>
+          <p className="background-intro">
+            The trouble is that a redesign changes everything at once. If it works, you
+            don&apos;t know which part worked; if it doesn&apos;t, you have spent the
+            budget and still don&apos;t know where people were dropping off. Often the
+            thing costing you enquiries is one unclear paragraph, one missing answer, or
+            one step that asks for too much too early — and none of those need a new
+            website to fix.
+          </p>
+        </div>
+      </section>
+
       <section className="section section-muted">
         <div className="container">
           <h2>Discover, define, design, develop, optimise</h2>
@@ -70,6 +119,35 @@ export default function GrowthStrategyPage() {
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+
+      <section className="section">
+        <div className="container">
+          <h2>The audit isn&apos;t a separate spend.</h2>
+          <p className="background-intro">
+            If the audit turns into a build, what you paid for it is credited against the
+            build.
+          </p>
+          <p className="background-intro">
+            So there is no decision to make between finding out what is actually costing
+            you enquiries and doing something about it. You are not paying twice to answer
+            one question.
+          </p>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <p className="background-intro">
+            Every engagement runs the same way, from signed contract through to a
+            structured handover you keep:{" "}
+            <Link href="/services#how-working-together-works">
+              see what happens after you say yes
+            </Link>
+            .
+          </p>
         </div>
       </section>
 
