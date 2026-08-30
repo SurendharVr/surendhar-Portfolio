@@ -45,6 +45,23 @@ export const metadata: Metadata = {
     title,
     description,
   },
+  // Search Console ownership for the URL-prefix property
+  // https://surendhar-space.vercel.app/. DNS verification was not an option:
+  // that method proves a Domain property by TXT record at the registrar, and
+  // nobody but Vercel can add records under vercel.app. Google issues a
+  // separate token per method, so this is not the DNS string.
+  //
+  // Rendered site-wide rather than on "/" alone because Next puts it in the
+  // head of every page, which costs nothing and keeps the property verified if
+  // the homepage ever changes shape.
+  //
+  // Registering a real domain does not retire this. That will be a *separate*
+  // Search Console property with its own token, and keeping this one verified
+  // is what lets the old host be watched through the migration -- which is the
+  // window where the 301 either works or quietly does not.
+  verification: {
+    google: "n2vSCUvXfXFhgnQO6BFN0onFDbcCdMwvyCyzXgnIRHU",
+  },
 };
 
 const personJsonLd = {
