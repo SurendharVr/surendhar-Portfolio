@@ -10,6 +10,10 @@ export default function Services({
   showEyebrow?: boolean;
 }) {
   const Heading = headingLevel;
+  // Card titles sit directly under the section heading, so their level has
+  // to follow it: h2 under the standalone page's h1, h3 under a section h2.
+  // Hardcoding h3 skipped a level on /services, where headingLevel is "h1".
+  const CardHeading = headingLevel === "h1" ? "h2" : "h3";
   return (
     <section className="section section-muted" id="services">
       <div className="container">
@@ -24,7 +28,7 @@ export default function Services({
                 </div>
                 <div>
                   <p className="offer-category">{offer.category}</p>
-                  <h3>{offer.title}</h3>
+                  <CardHeading>{offer.title}</CardHeading>
                 </div>
               </div>
               <p>{offer.body}</p>
@@ -36,7 +40,7 @@ export default function Services({
         </div>
 
         <div className="services-subgroup">
-          <p className="mini-heading">Ongoing partnerships</p>
+          <CardHeading className="mini-heading">Ongoing partnerships</CardHeading>
           <p className="background-intro">
             Not every engagement ends at launch — these are ongoing ways to keep working
             together once a website, page, or product is live.

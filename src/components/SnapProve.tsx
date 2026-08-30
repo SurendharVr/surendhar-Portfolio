@@ -23,7 +23,7 @@ export default function SnapProve() {
     <section className="snap-section" id="snap-prove">
       <div className="container">
         <p className="eyebrow">Proof</p>
-        <h2>Real businesses, real results.</h2>
+        <h2>Real businesses. Real work, live.</h2>
         <div className="stat-grid stat-grid-3">
           <div className="stat-card">
             <span className="stat-number">Built</span>

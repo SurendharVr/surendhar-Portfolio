@@ -5,7 +5,7 @@ import HowWeWork from "@/components/HowWeWork";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
 
-const title = "About — Surendhar Venkatesh";
+const title = "About Surendhar Venkatesh — From Sales to Digital Studio";
 const description =
   "10+ years in B2B/B2C sales, now building websites, social media, and digital products for small businesses.";
 

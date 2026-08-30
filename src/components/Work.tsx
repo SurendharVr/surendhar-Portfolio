@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import WorkThumb from "./WorkThumb";
 
 const externalIcon = (
@@ -132,7 +133,17 @@ const caseStudies: CaseStudy[] = [
   },
 ];
 
-function WorkCard({ study }: { study: CaseStudy }) {
+function WorkCard({
+  study,
+  headingLevel,
+}: {
+  study: CaseStudy;
+  // Follows the section heading rather than being hardcoded: h2 under the
+  // standalone /work page's h1, h3 under a section h2. Hardcoding h3 skipped
+  // a level on /work.
+  headingLevel: "h2" | "h3";
+}) {
+  const CardHeading = headingLevel;
   const [open, setOpen] = useState(false);
   const detailsId = `${study.id}-details`;
 
@@ -145,7 +156,7 @@ function WorkCard({ study }: { study: CaseStudy }) {
         cover={study.cover}
       />
       <p className="work-tag">{study.tag}</p>
-      <h3>{study.title}</h3>
+      <CardHeading>{study.title}</CardHeading>
       <p className="work-client">{study.client}</p>
       <dl className="work-details">
         <div>
@@ -195,10 +206,18 @@ export default function Work({
       <div className="container">
         {showEyebrow && <p className="eyebrow">Work</p>}
         <Heading>Selected work</Heading>
+        <p className="background-intro">
+          Two <Link href="/services/website-design">website design</Link> projects and one{" "}
+          <Link href="/services/digital-products">digital product</Link>.
+        </p>
 
         <div className="work-grid">
           {caseStudies.map((study) => (
-            <WorkCard key={study.id} study={study} />
+            <WorkCard
+              key={study.id}
+              study={study}
+              headingLevel={headingLevel === "h1" ? "h2" : "h3"}
+            />
           ))}
         </div>
       </div>

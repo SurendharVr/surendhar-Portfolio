@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Contact from "@/components/Contact";
 import ScrollEffects from "@/components/ScrollEffects";
 
-const title = "Contact — Surendhar Venkatesh";
+const title = "Contact Surendhar Venkatesh — Start a Project or Website Audit";
 const description =
   "Start a project or request a website audit. Websites, social media, and digital products for small businesses.";
 
